@@ -1,0 +1,3 @@
+rootProject.name = 'projectSapphire'
+
+include ':app'
