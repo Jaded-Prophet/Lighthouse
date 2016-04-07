@@ -1,6 +1,8 @@
 var React = require('react-native');
 // var api = require('../Utils/api');
 var Signup = require('./Signup');
+var Dashboard = require('./Dashboard');
+
 
 var {
   View,
@@ -35,7 +37,10 @@ class Main extends React.Component{
   }
 
   handleSubmit() {
-
+    this.props.navigator.push({
+      title: 'Dashboard',
+      component: Dashboard,
+    });
   }
 
   render() {
