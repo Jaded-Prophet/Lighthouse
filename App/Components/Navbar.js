@@ -9,6 +9,10 @@ var {
   TabBarIOS
 } = React;
 
+import Dashboard from './Dashboard';
+import Main from './Main';
+import Friends from './Friends';
+
 class TabBar extends React.Component {
   constructor(){
     super();
@@ -26,9 +30,7 @@ class TabBar extends React.Component {
           selected={this.state.selectedTab === 'tabOne'}
           onPress={() => this.setTab('tabOne')}
           systemIcon="history">
-            <View style={styles.tabContent}>
-              <Text style={styles.tabText}>Tab One</Text>
-            </View>
+          <Friends />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabTwo'}

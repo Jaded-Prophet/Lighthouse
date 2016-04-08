@@ -91,8 +91,6 @@ class Dashboard extends React.Component{
           underlayColor='#88D4F5' >
             <Text style={styles.buttonText}> View Map </Text>
         </TouchableHighlight>
-
-        {Navbar}
       </View>
     )
   }
