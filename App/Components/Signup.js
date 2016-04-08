@@ -25,37 +25,66 @@ class Signup extends React.Component{
   }
 
   createUser() {
-    // update our indicatorIOS spinner
-    this.setState({
-      // will toggle on Activity Indicator when true;
-      isLoading: true
-    });
-
-    api.addUser(this.state.username, this.state.phone, this.state.password)
-      .then((response) => {
-        if (response === 'Not Found') {
-          this.setState({
-            error: 'Error creating user',
-            isLoading: false 
-          });
-        } else {
-          console.log(response.name);
-          this.props.navigator.push({
-            title: 'Dashboard',
-            component: Dashboard
-          });
-          // clear state for Signup component
-          this.setState({
-            isLoading: false,
-            error: false,
-            username: '',
-            phone: '',
-            password: ''
-          });
-        }
+    // if username field is empty, send error
+    if (this.state.username.length === 0 || this.state.phone.length === 0 || this.state.password.length === 0) {
+      this.setState({
+        error: 'Please do not leave any fields blank'
       });
-
-
+    } else {
+      // update our indicatorIOS spinner
+      this.setState({
+        // will toggle on Activity Indicator when true;
+        isLoading: true
+      });
+      // Get all users to check if DB has this user already
+      api.getUsers()
+        .then((response) => {
+          // if response has no items in it
+          if (response.length === 0) {
+            this.setState({
+              // send 'database error' message and turn off spinner
+              error: 'Error loading database',
+              isLoading: false 
+            });
+          } else {
+            for (var key in response) {
+              var user = response[key];
+              // if username is in use
+              if (user.username === this.state.username.toLowerCase().trim()) {
+                // send "user exists" message and turn off spinner
+                this.setState({
+                  error: 'This user already exists',
+                  isLoading: false 
+                });
+              } else {
+                api.addUser(this.state.username, this.state.phone, this.state.password)
+                  .then((res) => {
+                    if (res === 'Not Found') {
+                      this.setState({
+                        error: 'Error creating user',
+                        isLoading: false 
+                      });
+                    } else {
+                      console.log(res.name);
+                      this.props.navigator.push({
+                        title: 'Dashboard',
+                        component: Dashboard
+                      });
+                      // clear state for Signup component
+                      this.setState({
+                        isLoading: false,
+                        error: false,
+                        username: '',
+                        phone: '',
+                        password: ''
+                      });
+                    }
+                  });
+              }
+            }
+          }
+        });
+    }
   }
 
   handleUsername(event) {

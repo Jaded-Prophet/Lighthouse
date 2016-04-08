@@ -3,7 +3,6 @@ var api = require('../Utils/api');
 var Signup = require('./Signup');
 var Dashboard = require('./Dashboard');
 
-
 var {
   View,
   Text,
@@ -38,11 +37,16 @@ class Main extends React.Component{
   }
 
   loggingIn() {
+    // if username field is empty, send error
+    if (this.state.username.length === 0 || this.state.password.length === 0) {
+      this.setState({
+        error: 'Please do not leave any fields blank'
+      });
+    } else {
     // will toggle on Activity Indicator when true;
     this.setState({
       isLoading: true
     });
-
     // Get all users
     api.getUsers()
     .then((response) => {
@@ -89,6 +93,8 @@ class Main extends React.Component{
         }
       }
     });
+      
+    }
 
   }
 
