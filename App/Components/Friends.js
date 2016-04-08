@@ -8,11 +8,20 @@ import React, {
 class Friends extends Component{
   render(){
     return (
-      <View>
-        <Text>Hello world</Text>
+      <View style={styles.container}>
+        <Text style={styles.hello}>Hello world</Text>
       </View>
     )
   }
 }
+
+var styles = {
+  container: {
+    marginTop: 55
+  },
+  hello: {
+    fontSize: 100
+  }
+};
 
 module.exports = Friends;
