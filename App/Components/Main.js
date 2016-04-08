@@ -59,9 +59,9 @@ class Main extends React.Component{
           value={this.state.username}
           onChange={this.handleChange.bind(this)} />
 
-
         <Text>Password</Text>
         <TextInput
+          secureTextEntry={true}
           style={styles.searchInput}
           value={this.state.password}
           onChange={this.handleChange.bind(this)} />
