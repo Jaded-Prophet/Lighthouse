@@ -1,5 +1,8 @@
 var React = require('react-native');
+var Firebase = require('firebase');
 var Map = require('./Map');
+var api = require('../Utils/api');
+
 
 var {
   View,
@@ -40,7 +43,10 @@ class Dashboard extends React.Component{
   }
 
   goToRepos() {
+    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    var myId = ref.getAuth().uid;
 
+    api.addFriend(myId, 'testdata');
   }
 
   goToMap() {
@@ -51,8 +57,19 @@ class Dashboard extends React.Component{
   }
 
   render() {
+
+    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    ref.child('Friends').on('value', function(item) {
+      item.val();
+    });
+
+
+
+
     return (
       <View style={styles.container}>
+
+        <Text>These are my friends</Text>
 
         <TouchableHighlight
           style={this.makeBackground(0)}

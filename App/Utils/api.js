@@ -1,3 +1,5 @@
+var Firebase = require('firebase');
+
 var api = {
 
   // GETTING AND POSTING DATA TO FIREBASE RESTFUL API
@@ -20,6 +22,18 @@ var api = {
         groups:{}
       })
     }).then((res) => res.json());
+  },
+
+  addFriend(userId, friendId) {
+    var ref = new Firebase("https://project-sapphire.firebaseio.com/Friends");
+    ref.set({
+      userIdOne: userId,
+      userIdTwo: friendId
+    });
+  },
+
+  findFriends(userId) {
+    var ref = new Firebase("https://project-sapphire.firebaseio.com/Friends");
   }
 };
 
