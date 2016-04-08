@@ -1,8 +1,7 @@
 var React = require('react-native');
-// var api = require('../Utils/api');
+var api = require('../Utils/api');
 var Signup = require('./Signup');
 var Dashboard = require('./Dashboard');
-
 
 var {
   View,
@@ -25,21 +24,84 @@ class Main extends React.Component{
     };
   }
 
-  goToSignup() {
-    this.props.navigator.push({
-      title: 'Sign Up',
-      component: Signup,
+  handleUsername(event) {
+    this.setState({
+      username: event.nativeEvent.text
     });
   }
 
-  handleChange() {
+  handlePassword(event) {
+    this.setState({
+      password: event.nativeEvent.text
+    });
+  }
+
+  loggingIn() {
+    // if username field is empty, send error
+    if (this.state.username.length === 0 || this.state.password.length === 0) {
+      this.setState({
+        error: 'Please do not leave any fields blank'
+      });
+    } else {
+    // will toggle on Activity Indicator when true;
+    this.setState({
+      isLoading: true
+    });
+    // Get all users
+    api.getUsers()
+    .then((response) => {
+      console.log(response);
+      // if table isn't found
+      if (response.length === 0) {
+        this.setState({
+          error: 'Database not found',
+          isLoading: false 
+        });
+      } else {
+        // Iterate through response of users
+        for (var key in response) {
+          var user = response[key];
+          // if username in table matches input username
+          if (user.username === this.state.username.toLowerCase().trim()) {
+            // if password matches input password
+            if (user.password === this.state.password) {
+              // navigate to Dashboard
+              this.props.navigator.push({
+                title: 'Dashboard',
+                component: Dashboard,
+                passProps: {userInfo: user}
+              });
+              // Afterwards, clear state for Main component
+              this.setState({
+                isLoading: false,
+                error: false,
+                username: '',
+                password: ''
+              });
+            } else {
+              this.setState({
+                error: 'Password is incorrect',
+                isLoading: false
+              });
+            }
+          } else {
+            this.setState({
+              error: 'Username does not exist',
+              isLoading: false
+            });
+          }
+        }
+      }
+    });
+      
+    }
 
   }
 
-  handleSubmit() {
+  goToSignup() {
     this.props.navigator.push({
-      title: 'Dashboard',
-      component: Dashboard,
+      title: 'Sign Up',
+      component: Signup
     });
   }
 
@@ -57,18 +119,18 @@ class Main extends React.Component{
         <TextInput
           style={styles.searchInput}
           value={this.state.username}
-          onChange={this.handleChange.bind(this)} />
+          onChange={this.handleUsername.bind(this)} />
 
         <Text>Password</Text>
         <TextInput
           secureTextEntry={true}
           style={styles.searchInput}
           value={this.state.password}
-          onChange={this.handleChange.bind(this)} />
+          onChange={this.handlePassword.bind(this)} />
 
         <TouchableHighlight
           style={styles.button}
-          onPress={this.handleSubmit.bind(this)}
+          onPress={this.loggingIn.bind(this)}
           underlayColor='white' >
             <Text style={styles.buttonText}> LOGIN </Text>
         </TouchableHighlight>
@@ -79,6 +141,12 @@ class Main extends React.Component{
           underlayColor='white' >
             <Text style={styles.buttonText}> SIGNUP </Text>
         </TouchableHighlight>
+
+        <ActivityIndicatorIOS
+          animating={this.state.isLoading}
+          color='#111'
+          size='large'></ActivityIndicatorIOS>
+        { showErr }
 
       </View>
     )
