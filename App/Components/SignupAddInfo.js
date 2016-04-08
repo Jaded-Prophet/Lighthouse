@@ -21,15 +21,15 @@ var styles = StyleSheet.create ({
   }
 });
 
-class Profile extends React.Component {
+class SignupAddInfo extends React.Component {
 
   render() {
-    console.log('we are in the profile')
     return (
-
+      <View>
+      </View>
     )
   }
 
-};
+}
 
-module.exports = Profile;
+module.exports = SignupAddInfo;
