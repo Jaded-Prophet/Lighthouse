@@ -1,6 +1,6 @@
 var React = require('react-native');
-// var api = require('../Utils/api');
-var Main = require('./Main');
+var api = require('../Utils/api');
+var Dashboard = require('./Dashboard');
 
 var {
   View,
@@ -17,6 +17,7 @@ class Signup extends React.Component{
     super(props);
     this.state = {
       username:  '',
+      phone: '',
       password: '',
       isLoading: false,
       error: false
@@ -24,14 +25,55 @@ class Signup extends React.Component{
   }
 
   createUser() {
-    this.props.navigator.push({
-      title: 'Log In',
-      component: Main
+    // update our indicatorIOS spinner
+    this.setState({
+      // will toggle on Activity Indicator when true;
+      isLoading: true
+    });
+
+    api.addUser(this.state.username, this.state.phone, this.state.password)
+      .then((response) => {
+        if (response === 'Not Found') {
+          this.setState({
+            error: 'Error creating user',
+            isLoading: false 
+          });
+        } else {
+          console.log(response.name);
+          this.props.navigator.push({
+            title: 'Dashboard',
+            component: Dashboard
+          });
+          // clear state for Signup component
+          this.setState({
+            isLoading: false,
+            error: false,
+            username: '',
+            phone: '',
+            password: ''
+          });
+        }
+      });
+
+
+  }
+
+  handleUsername(event) {
+    this.setState({
+      username: event.nativeEvent.text
     });
   }
 
-  handleChange() {
+  handlePhone(event) {
+    this.setState({
+      phone: event.nativeEvent.text
+    });
+  }
 
+  handlePassword(event) {
+    this.setState({
+      password: event.nativeEvent.text
+    });
   }
 
   handleSubmit() {
@@ -52,14 +94,22 @@ class Signup extends React.Component{
         <TextInput
           style={styles.searchInput}
           value={this.state.username}
-          onChange={this.handleChange.bind(this)} />
+          onChange={this.handleUsername.bind(this)} />
 
+
+        <Text>Phone Number</Text>
+        <TextInput
+          keyboardType='phone-pad'
+          style={styles.searchInput}
+          value={this.state.phone}
+          onChange={this.handlePhone.bind(this)} />
 
         <Text>Password</Text>
         <TextInput
+          secureTextEntry={true}
           style={styles.searchInput}
           value={this.state.password}
-          onChange={this.handleChange.bind(this)} />
+          onChange={this.handlePassword.bind(this)} />
 
         <TouchableHighlight
           style={styles.button}
@@ -67,6 +117,12 @@ class Signup extends React.Component{
           underlayColor='white' >
             <Text style={styles.buttonText}> SIGNUP </Text>
         </TouchableHighlight>
+
+        <ActivityIndicatorIOS
+          animating={this.state.isLoading}
+          color='#111'
+          size='large'></ActivityIndicatorIOS>
+        { showErr }
 
       </View>
     )
