@@ -1,13 +1,12 @@
 'use strict';
 
-var React = require('react-native');
-var {
-  AppRegistry,
+
+import React, {
   StyleSheet,
   Text,
   View,
   TabBarIOS
-} = React;
+} from 'react-native';
 
 import Dashboard from './Dashboard';
 import Main from './Main';
@@ -52,6 +51,7 @@ class TabBar extends React.Component {
     );
   }
 }
+
 var styles = StyleSheet.create({
   tabContent: {
     flex: 1,
