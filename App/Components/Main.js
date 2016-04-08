@@ -89,7 +89,7 @@ class Main extends React.Component{
 
     return (
       <View style={styles.mainContainer}>
-        <Text style={styles.title}>Project Sapphire Signup</Text>
+        <Text style={styles.title}>Project Sapphire Login</Text>
 
         <Text>Email</Text>
         <TextInput
