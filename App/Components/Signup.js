@@ -3,6 +3,7 @@ var Firebase = require('firebase');
 var api = require('../Utils/api');
 var Dashboard = require('./Dashboard');
 var UserDetails = require('./UserDetails');
+var Profile = require('./Profile');
 
 var {
   View,
@@ -49,8 +50,8 @@ class Signup extends React.Component{
         console.log("Successfully created user account with uid:", userData.uid);
         // navigate to Dashboard
         that.props.navigator.push({
-          title: 'Dashboard',
-          component: Dashboard
+          title: 'Profile',
+          component: Profile
         });
       }
     });
