@@ -2,7 +2,7 @@ var React = require('react-native');
 var Firebase = require('firebase');
 var Map = require('./Map');
 var api = require('../Utils/api');
-
+import Navbar from './Navbar';
 
 var {
   View,
@@ -92,6 +92,7 @@ class Dashboard extends React.Component{
             <Text style={styles.buttonText}> View Map </Text>
         </TouchableHighlight>
 
+        {Navbar}
       </View>
     )
   }
