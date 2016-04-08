@@ -61,7 +61,7 @@ class Dashboard extends React.Component{
     var ref = new Firebase("https://project-sapphire.firebaseio.com");
     ref.child('Friends').on('value', function(item) {
       item.val();
-    })
+    });
 
 
 
