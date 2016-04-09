@@ -9,7 +9,7 @@ class Profile extends Component{
   render(){
     return (
       <View style={styles.container}>
-        <Text style={styles.hello}>Hello world</Text>
+        <Text style={styles.hello}>On Profile Page</Text>
       </View>
     )
   }
