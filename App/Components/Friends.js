@@ -4,9 +4,11 @@ import React, {
   StyleSheet,
   Component
 } from 'react-native';
+import api from '../Utils/api';
 
 class Friends extends Component{
   render(){
+    console.log('This is the Friends page: ', this.props.userInfo);
     return (
       <View style={styles.container}>
         <Text style={styles.hello}>Hello world</Text>

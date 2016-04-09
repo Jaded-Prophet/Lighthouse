@@ -61,8 +61,9 @@ class Main extends React.Component{
         console.log("Authenticated successfully with payload:", authData);
         // navigate to Dashboard
         that.props.navigator.push({
-          title: 'Dashboard',
+          title: 'Friends',
           component: TabBar,
+          passProps: {userInfo: authData}
         });
       }
     });
