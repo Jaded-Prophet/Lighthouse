@@ -37,7 +37,7 @@ class TabBar extends React.Component {
           onPress={() => this.setTab('tabTwo')}
           systemIcon="favorites">
             <View style={styles.tabContent}>
-            <Profile />
+            <Profile {...this.props} />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>
