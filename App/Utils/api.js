@@ -13,12 +13,6 @@ var api = {
     var image = userData.child('image').set(myData.password.profileImageURL);
   },
 
-  // Get user data DONE
-  getUserData(userId) {
-    var userData = `https://project-sapphire.firebaseio.com/UserData/${userId}.json`;
-    return fetch(userData).then((res) => res.json());
-  },
-
   // Add groups to Groups table DONE
   addGroup(groupName, groupDescription, userId) {
     // Add new group to Groups table
@@ -52,32 +46,28 @@ var api = {
     theirFriends.push(userId);
   },
 
-  // Get all friends in my Friends table -- RETURN THAT DATA
-  findFriends(userId) {
-    var friends = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}/Friends`);
-
-    friends.on("child_added", function(snapshot) {
-      console.log(snapshot.val());
-    });
+  // Get user data DONE
+  getUserData(userId) {
+    var userData = `https://project-sapphire.firebaseio.com/UserData/${userId}.json`;
+    return fetch(userData).then((res) => res.json());
   },
 
-  // Get all friends in my Groups table -- RETURN THAT DATA
-  findGroups(userId) {
-    var groups = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}/Groups`);
-
-    groups.on("child_added", function(snapshot) {
-      console.log(snapshot.val());
-    });
+  getGroupData(groupName) {
+    var groupData = `https://project-sapphire.firebaseio.com/Groups/${groupName}.json`;
+    return fetch(groupData).then((res) => res.json());
   },
 
-  // Leave a group
-  leaveGroup(groupName, userId) {
-    var userGroups = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}/Groups`);
-    var groupMembers = new Firebase(`https://project-sapphire.firebaseio.com/Groups/${groupName}/members`);
+  // Get all friends in my Groups table DONE
+  getUserGroups(userId) {
+    var groups = `https://project-sapphire.firebaseio.com/UserData/${userId}/Groups.json`;
+    return fetch(groups).then((res) => res.json());
+  },
 
+  // Get all friends in my Friends table DONE
+  getUserFriends(userId) {
+    var friends = `https://project-sapphire.firebaseio.com/UserData/${userId}/Friends.json`;
+    return fetch(friends).then((res) => res.json());
   }
-
-
 };
 
 module.exports = api;
