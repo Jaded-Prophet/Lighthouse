@@ -23,20 +23,21 @@ class TabBar extends React.Component {
     this.setState({selectedTab: tabId})
   }
   render(){
+    console.log(this.props.userInfo);
     return (
       <TabBarIOS>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabOne'}
           onPress={() => this.setTab('tabOne')}
           systemIcon="contacts">
-          <Friends />
+          <Friends {...this.props} />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabTwo'}
           onPress={() => this.setTab('tabTwo')}
           systemIcon="favorites">
             <View style={styles.tabContent}>
-            <Profile />
+            <Profile {...this.props} />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>
