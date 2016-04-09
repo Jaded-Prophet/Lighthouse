@@ -42,12 +42,30 @@ class Dashboard extends React.Component{
 
   }
 
+
+
+
   goToRepos() {
     var ref = new Firebase("https://project-sapphire.firebaseio.com");
-    var myId = ref.getAuth().uid;
+    var myData = ref.getAuth();
 
-    api.addFriend(myId, 'testdata');
+    // api.setUserData(myData);
+    // api.addFriend(myData.uid, "friend1 uid");
+    // api.addFriend(myData.uid, "friend2 uid");
+    // api.addFriend(myData.uid, "friend3 uid");
+    // api.findFriends(myData.uid);
+    // api.addGroup('Project Sapphire', 'This is our group', myData.uid);
+    // api.joinGroup('Project Sapphire', 'new user');
+    // api.findGroups(myData.uid);
+    api.getUserData(myData.uid).then(function(data) {
+      console.log(data);
+    })
+
+
   }
+
+
+
 
   goToMap() {
     this.props.navigator.push({

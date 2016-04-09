@@ -13,6 +13,12 @@ var api = {
     var image = userData.child('image').set(myData.password.profileImageURL);
   },
 
+  // Get user data DONE
+  getUserData(userId) {
+    var userData = `https://project-sapphire.firebaseio.com/UserData/${userId}.json`;
+    return fetch(userData).then((res) => res.json());
+  },
+
   // Add groups to Groups table DONE
   addGroup(groupName, groupDescription, userId) {
     // Add new group to Groups table
@@ -63,6 +69,15 @@ var api = {
       console.log(snapshot.val());
     });
   },
+
+  // Leave a group
+  leaveGroup(groupName, userId) {
+    var userGroups = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}/Groups`);
+    var groupMembers = new Firebase(`https://project-sapphire.firebaseio.com/Groups/${groupName}/members`);
+
+  }
+
+
 };
 
 module.exports = api;
