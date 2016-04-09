@@ -3,7 +3,7 @@ var Firebase = require('firebase');
 var api = require('../Utils/api');
 var Signup = require('./Signup');
 var Dashboard = require('./Dashboard');
-var Navbar = require('./Navbar');
+var TabBar = require('./TabBar');
 
 var {
   View,
@@ -62,7 +62,7 @@ class Main extends React.Component{
         // navigate to Dashboard
         that.props.navigator.push({
           title: 'Dashboard',
-          component: Navbar,
+          component: TabBar,
         });
       }
     });

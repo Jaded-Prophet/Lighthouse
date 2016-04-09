@@ -2,7 +2,7 @@ var React = require('react-native');
 var Firebase = require('firebase');
 var Map = require('./Map');
 var api = require('../Utils/api');
-import Navbar from './Navbar';
+import TabBar from './TabBar';
 
 var {
   View,
