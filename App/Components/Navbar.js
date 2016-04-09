@@ -11,6 +11,7 @@ import React, {
 import Dashboard from './Dashboard';
 import Main from './Main';
 import Friends from './Friends';
+import Profile from './Profile';
 
 class TabBar extends React.Component {
   constructor(){
@@ -36,7 +37,7 @@ class TabBar extends React.Component {
           onPress={() => this.setTab('tabTwo')}
           systemIcon="favorites">
             <View style={styles.tabContent}>
-              <Text style={styles.tabText}>Tab Two</Text>
+            <Profile />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>
