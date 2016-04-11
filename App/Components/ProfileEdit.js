@@ -15,6 +15,9 @@ class ProfileEdit extends Component{
 
   constructor(props) {
     super(props)
+    this.state = {
+      updateAlert: ''
+    };
   }
 
   getRowTitle(user, item) {
@@ -26,8 +29,21 @@ class ProfileEdit extends Component{
     var item = item;
     var value = this.state[item];
     var myData = this.props.authInfo;
+    var that = this;
 
     api.updateUserData(myData, item, value);
+    
+    that.setState({
+      updateAlert: 'You have updated your info!'
+    })
+
+    // setTimeout(that.clearUpdate, 1000);
+  }
+
+  clearUpdate() {
+    this.setState({
+      updateAlert: ''
+    })
   }
 
   handleItem(event, item) {
@@ -69,10 +85,9 @@ class ProfileEdit extends Component{
     })
 
     return (
-      <View>
-        <View style={styles.container}>
-          {list}
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.changeText}>{this.state.updateAlert}</Text>
+        {list}
       </View>
     )
   }
@@ -98,6 +113,10 @@ var styles = {
   },
   buttonText: {
     fontSize: 10
+  },
+  changeText: {
+    fontSize: 16,
+    color: 'red'
   },
   rowContainer: {
     padding: 3
