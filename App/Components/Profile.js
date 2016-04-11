@@ -1,4 +1,5 @@
 var ProfileEdit = require('./ProfileEdit');
+var api = require('../Utils/api');
 
 import React, {
   View,
@@ -11,59 +12,97 @@ import React, {
 } from 'react-native';
 
 class Profile extends Component{
-  
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoading: true
+    };
+  }
+
   getRowTitle(user, item) {
     item = item;
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
 
   editProfile() {
+    var that = this;
     this.props.navigator.push({
       title: 'Edit Profile',
       component: ProfileEdit,
-      passProps: {userInfo: this.props.userInfo}
+      passProps: {userData: that.state.userData, authInfo: that.props.userInfo}
     });
   }
 
-  render(){
-    var userInfo = this.props.userInfo.password;
-    // NOTE: replace topic array with new user info
-    var topicArr = ['email', 'profileImageURL', 'name', 'phoneNumber'];
-    
-    var list = topicArr.map((item, index) => {
-      if(!userInfo[item]) {
-        return
-          <View key={index} />
-      } else {
-        return (
-          <View key={index}>
-            <View style={styles.rowContainer}>
-              <Text style={styles.rowTitle}> {this.getRowTitle(userInfo, item)} </Text>
-              <Text style={styles.rowContent}> {userInfo[item]} </Text>
-            </View>
-          </View>
-        )
-      }
-    })
+  componentWillMount() {
+    this.getAsyncData();
+  }
 
-    return (
-      <View>
-        <View style={styles.badgeContainer}>
-          <TouchableHighlight onPress={() => this.editProfile()}>
-            <Image style={styles.editImage} source={require('../Images/edit.png')} />
-          </TouchableHighlight>
-          <Image style={styles.badgeImage} source={{uri: this.props.userInfo.password.profileImageURL}} />
-          <Text style={styles.badgeName}> {this.props.userInfo.password.email}</Text>
+  getAsyncData() {
+    var that = this;
+    api.getUserData(that.props.userInfo.uid)
+      .then(function(res) { 
+        that.setState({
+          userData: res,
+          isLoading: false
+        })
+      })
+      .catch((err) => console.log(err))
+  }
+
+
+  render(){
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.isLoadingContainer}>
+          <Image style={styles.editImage} source={require('../Images/loading.gif')} />
         </View>
-        <View style={styles.container}>
-          {list}
+      )
+    } else {
+      var userData = this.state.userData;
+      console.log('user data is ==========', userData)
+      // NOTE: replace topic array with new user info
+      var topicArr = ['email', 'profileImageURL', 'name', 'phone'];
+      
+      var list = topicArr.map((item, index) => {
+        if(!userData[item]) {
+          return
+            <View key={index} />
+        } else {
+          return (
+            <View key={index}>
+              <View style={styles.rowContainer}>
+                <Text style={styles.rowTitle}> {this.getRowTitle(userData, item)} </Text>
+                <Text style={styles.rowContent}> {userData[item]} </Text>
+              </View>
+            </View>
+          )
+        }
+      })
+      return (
+        <View>
+          <View style={styles.badgeContainer}>
+            <TouchableHighlight onPress={() => this.editProfile()}>
+              <Image style={styles.editImage} source={require('../Images/edit.png')} />
+            </TouchableHighlight>
+            <Image style={styles.badgeImage} source={{uri: userData.profileImageURL}} />
+            <Text style={styles.badgeName}> {userData.email}</Text>
+          </View>
+          <View style={styles.container}>
+            {list}
+          </View>
         </View>
-      </View>
-    )
+      )
+    }
   }
 }
 
 var styles = {
+  isLoadingContainer: {
+    flex: 1,
+    marginTop: 150,
+    alignSelf: 'center'
+  },
   container: {
     flex: 1,
     marginLeft: 20,

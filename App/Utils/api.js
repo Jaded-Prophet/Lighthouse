@@ -9,25 +9,16 @@ var api = {
     var userId  = myData.uid;
     var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
 
-    username = userData.child('email').set(myData.password.email);
-    image = userData.child('image').set(myData.password.profileImageURL);
+    userData.child('email').set(myData.password.email);
+    userData.child('profileImageURL').set(myData.password.profileImageURL);
   },
 
-  updateUserData(myData, email, password, name, phoneNumber) {
+  updateUserData(myData, item, value) {
     var userId  = myData.uid;
     var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
 
-    if(email) {
-      userData.child('email').set(email);    
-    }
-    if(password) {
-      userData.child('password').set(password);
-    }
-    if(name) {
-      userData.child('name').set(name);
-    }
-    if(phoneNumber) {
-      userData.child('phoneNumber').set(phoneNumber);
+    if(item && value) {
+      userData.child(item).set(value);    
     }
   },
 
