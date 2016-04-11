@@ -1,7 +1,7 @@
 var React = require('react-native');
 var Firebase = require('firebase');
 var api = require('../Utils/api');
-var Navbar = require('./Navbar');
+var TabBar = require('./TabBar');
 
 var {
   View,
