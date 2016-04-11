@@ -41,7 +41,6 @@ class UserDetails extends React.Component{
           value={this.state.email}
           onChange={this.handleEmail.bind(this)} />
 
-
         <TouchableHighlight
           style={styles.button}
           onPress={this.createUser.bind(this)}

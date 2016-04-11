@@ -2,6 +2,7 @@ var React = require('react-native');
 var Firebase = require('firebase');
 var api = require('../Utils/api');
 var TabBar = require('./TabBar');
+var Signup = require('./Signup');
 
 var {
   View,
@@ -42,6 +43,10 @@ class SignupAddInfo extends React.Component{
   }
 
   render(){
+
+    console.log(this.props.userData);
+    console.log(this.props.email);
+    console.log(this.props.password);
 
     return (
       <View style={styles.container}>

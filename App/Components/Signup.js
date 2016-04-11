@@ -34,6 +34,7 @@ class Signup extends React.Component{
 
     // Using Firebase to create new user
     var that = this;
+
     var ref = new Firebase("https://project-sapphire.firebaseio.com");
     ref.createUser({
       email    : that.state.email,
@@ -52,7 +53,9 @@ class Signup extends React.Component{
           title: 'Add Info',
           component: SignupAddInfo,
           passProps: {
-            userData: userData
+            userData: userData,
+            email: that.state.email,
+            password: that.state.password
           }
         });
       }
@@ -61,8 +64,8 @@ class Signup extends React.Component{
     this.setState({
       isLoading: false,
       error: false,
-      email: '',
-      password: ''
+      // email: '',
+      // password: ''
     });
   }
 
