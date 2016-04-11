@@ -32,7 +32,6 @@ class Signup extends React.Component{
       isLoading: true
     });
 
-
     // Using Firebase to create new user
     var that = this;
     var ref = new Firebase("https://project-sapphire.firebaseio.com");
@@ -51,7 +50,10 @@ class Signup extends React.Component{
         // navigate to Dashboard
         that.props.navigator.push({
           title: 'Add Info',
-          component: SignupAddInfo
+          component: SignupAddInfo,
+          passProps: {
+            userData: userData
+          }
         });
       }
     });

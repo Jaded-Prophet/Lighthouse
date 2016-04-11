@@ -1,4 +1,7 @@
 var React = require('react-native');
+var Firebase = require('firebase');
+var api = require('../Utils/api');
+var Navbar = require('./Navbar');
 
 var {
   View,
@@ -10,12 +13,58 @@ var {
 } = React;
 
 class SignupAddInfo extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      name:  '',
+      phoneNumber: ''
+    };
+  }
+
+  handleName(event) {
+    this.setState({
+      name: event.nativeEvent.text
+    });
+  }
+
+  handlePhoneNumber(event) {
+    this.setState({
+      phoneNumber: event.nativeEvent.text
+    })
+  }
+
   render(){
-    console.log(this.props);
+    console.log(this.props.userData);
     return (
       <View style={styles.container}>
-        <Text style={styles.signupWelcome}>Welcome</Text>
-      </View>
+
+        <Text style={styles.title}>Provide Additional User Info</Text>
+
+        <Text>Name</Text>
+        <TextInput
+          style={styles.searchInput}
+          value={this.state.name}
+          onChange={this.handleName.bind(this)} />
+
+        <Text>Phone Number</Text>
+        <TextInput
+          style={styles.searchInput}
+          value={this.state.phoneNumber}
+          onChange={this.handlePhoneNumber.bind(this)} />
+
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor='white' >
+              <Text style={styles.buttonText}> LATER </Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor='white' >
+              <Text style={styles.buttonText}> UPDATE </Text>
+          </TouchableHighlight>
+
+        </View>
     )
   }
 }
