@@ -1,3 +1,5 @@
+var api = require('../Utils/api');
+
 import React, {
   View,
   Text,
@@ -13,6 +15,9 @@ class ProfileEdit extends Component{
 
   constructor(props) {
     super(props)
+    this.state = {
+      updateAlert: ''
+    };
   }
 
   getRowTitle(user, item) {
@@ -20,43 +25,56 @@ class ProfileEdit extends Component{
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
 
-  editItem(item, textInput) {
-    console.log('edit button clicked on item: ', item, 'and new item is ', this.state[item])
+  editItem(item) {
+    var item = item;
+    var value = this.state[item];
+    var myData = this.props.authInfo;
+    var that = this;
+
+    api.updateUserData(myData, item, value);
+    
+    that.setState({
+      updateAlert: 'You have updated your info!'
+    })
+
+    // setTimeout(that.clearUpdate, 1000);
+  }
+
+  clearUpdate() {
+    this.setState({
+      updateAlert: ''
+    })
   }
 
   handleItem(event, item) {
     var key = item;
-    console.log('item in handle item is ', item, ' and input is ', event.nativeEvent.text)
     this.setState({
       [key]: event.nativeEvent.text
     });
-    console.log('props in handleItem are', this.props)
-    console.log('state in handleItem are', this.state)
   }
 
   render(){
-    console.log('props are ', this.props.userInfo)
-    var userInfo = this.props.userInfo;
+    var userData = this.props.userData;
     // NOTE: replace topic array with new topic info
-    var topicArr = ['email', 'profileImageURL'];
+    var topicArr = ['email', 'name', 'phone'];
     
     var list = topicArr.map((item, index) => {
-      if(!userInfo[item]) {
+      if(!userData[item]) {
         return
           <View key={index} />
       } else {
         return (
           <View key={index}>
             <View style={styles.rowContainer}>
-            <Text style={styles.rowTitle}> {this.getRowTitle(userInfo, item)} </Text>
+            <Text style={styles.rowTitle}> {this.getRowTitle(userData, item)} </Text>
             <TextInput
               autoCapitalize='none'
               style={styles.searchInput}
-              defaultValue={userInfo[item]}
+              defaultValue={userData[item]}
               onChange={(event)=>this.handleItem(event, item)} />
             <TouchableHighlight 
               style={styles.button}
-              onPress={()=>this.editItem(item, )}
+              onPress={()=>this.editItem(item)}
               underlayColor='white' >
               <Text style={styles.buttonText}> CHANGE </Text>
             </TouchableHighlight>
@@ -67,10 +85,9 @@ class ProfileEdit extends Component{
     })
 
     return (
-      <View>
-        <View style={styles.container}>
-          {list}
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.changeText}>{this.state.updateAlert}</Text>
+        {list}
       </View>
     )
   }
@@ -96,6 +113,10 @@ var styles = {
   },
   buttonText: {
     fontSize: 10
+  },
+  changeText: {
+    fontSize: 16,
+    color: 'red'
   },
   rowContainer: {
     padding: 3
