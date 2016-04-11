@@ -1,10 +1,13 @@
+var ProfileEdit = require('./ProfileEdit');
+
 import React, {
   View,
   Text,
   Image,
   StyleSheet,
   Component,
-  ScrollView
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
 
 class Profile extends Component{
@@ -14,10 +17,16 @@ class Profile extends Component{
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
 
+  editProfile() {
+    console.log('edit button clicked')
+    this.props.navigator.push({
+      title: 'Edit Profile',
+      component: ProfileEdit,
+      passProps: {userInfo: this.props.userInfo.password}
+    });
+  }
 
   render(){
-  console.log('props are', this.props);
-
     var userInfo = this.props.userInfo.password;
     // NOTE: replace topic array with new user info
     var topicArr = ['email', 'profileImageURL'];
@@ -42,7 +51,10 @@ class Profile extends Component{
     return (
       <View>
         <View style={styles.badgeContainer}>
-            <Image style={styles.badgeImage} source={{uri: this.props.userInfo.password.profileImageURL}} />
+          <TouchableHighlight onPress={() => this.editProfile()}>
+            <Image style={styles.editImage} source={require('../Images/edit.png')} />
+          </TouchableHighlight>
+          <Image style={styles.badgeImage} source={{uri: this.props.userInfo.password.profileImageURL}} />
           <Text style={styles.badgeName}> {this.props.userInfo.password.email}</Text>
         </View>
         <View style={styles.container}>
@@ -76,9 +88,15 @@ var styles = {
   badgeImage: {
     height: 126,
     width: 126,
-    borderRadius: 63, 
-    marginTop: 20,
+    borderRadius: 63,
     alignSelf: 'center'
+  },
+  editImage: {
+    height: 30,
+    width: 30,
+    alignSelf: 'flex-end',
+    marginRight: 20,
+    marginTop: 20
   },
   rowContainer: {
     padding: 10
