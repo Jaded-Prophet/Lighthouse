@@ -33,8 +33,16 @@ class SignupAddInfo extends React.Component{
     })
   }
 
+  delayInfo() {
+    console.log('delay');
+  }
+
+  supplementInfo() {
+    console.log('update');
+  }
+
   render(){
-    console.log(this.props.userData);
+
     return (
       <View style={styles.container}>
 
@@ -54,12 +62,14 @@ class SignupAddInfo extends React.Component{
 
           <TouchableHighlight
             style={styles.button}
+            onPress={this.delayInfo.bind(this)}
             underlayColor='white' >
               <Text style={styles.buttonText}> LATER </Text>
           </TouchableHighlight>
 
           <TouchableHighlight
             style={styles.button}
+            onPress={this.supplementInfo.bind(this)}
             underlayColor='white' >
               <Text style={styles.buttonText}> UPDATE </Text>
           </TouchableHighlight>
