@@ -18,7 +18,6 @@ class Profile extends Component{
   }
 
   editProfile() {
-    console.log('edit button clicked')
     this.props.navigator.push({
       title: 'Edit Profile',
       component: ProfileEdit,
@@ -41,7 +40,6 @@ class Profile extends Component{
             <View style={styles.rowContainer}>
               <Text style={styles.rowTitle}> {this.getRowTitle(userInfo, item)} </Text>
               <Text style={styles.rowContent}> {userInfo[item]} </Text>
-              <View style = {styles.separator} />
             </View>
           </View>
         )
@@ -68,7 +66,6 @@ class Profile extends Component{
 var styles = {
   container: {
     flex: 1,
-    width: 300,
     marginLeft: 20,
     marginTop: 10
   },
@@ -107,13 +104,6 @@ var styles = {
   },
   rowContent: {
     fontSize: 19
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#E4E4E4',
-    flex: 1,
-    marginLeft: 15,
-    marginTop: 5
   }
 };
 

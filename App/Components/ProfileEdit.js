@@ -5,17 +5,72 @@ import React, {
   StyleSheet,
   Component,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  TextInput
 } from 'react-native';
 
 class ProfileEdit extends Component{
-  
+
+  constructor(props) {
+    super(props)
+  }
+
+  getRowTitle(user, item) {
+    item = item;
+    return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
+  }
+
+  editItem(item, textInput) {
+    console.log('edit button clicked on item: ', item, 'and new item is ', this.state[item])
+  }
+
+  handleItem(event, item) {
+    var key = item;
+    console.log('item in handle item is ', item, ' and input is ', event.nativeEvent.text)
+    this.setState({
+      [key]: event.nativeEvent.text
+    });
+    console.log('props in handleItem are', this.props)
+    console.log('state in handleItem are', this.state)
+  }
 
   render(){
+    console.log('props are ', this.props.userInfo)
+    var userInfo = this.props.userInfo;
+    // NOTE: replace topic array with new topic info
+    var topicArr = ['email', 'profileImageURL'];
+    
+    var list = topicArr.map((item, index) => {
+      if(!userInfo[item]) {
+        return
+          <View key={index} />
+      } else {
+        return (
+          <View key={index}>
+            <View style={styles.rowContainer}>
+            <Text style={styles.rowTitle}> {this.getRowTitle(userInfo, item)} </Text>
+            <TextInput
+              autoCapitalize='none'
+              style={styles.searchInput}
+              defaultValue={userInfo[item]}
+              onChange={(event)=>this.handleItem(event, item)} />
+            <TouchableHighlight 
+              style={styles.button}
+              onPress={()=>this.editItem(item, )}
+              underlayColor='white' >
+              <Text style={styles.buttonText}> CHANGE </Text>
+            </TouchableHighlight>
+            </View>
+          </View>
+        )
+      }
+    })
 
     return (
       <View>
-        
+        <View style={styles.container}>
+          {list}
+        </View>
       </View>
     )
   }
@@ -24,54 +79,55 @@ class ProfileEdit extends Component{
 var styles = {
   container: {
     flex: 1,
-    width: 300,
     marginLeft: 20,
-    marginTop: 10
+    marginRight: 10,
+    marginTop: 100
   },
-  badgeContainer: {
-    backgroundColor: '#48BBEC',
-    paddingBottom: 10,
-    marginTop: 55,
-    width: 400
-  },
-  badgeName: {
-    alignSelf: 'center',
-    fontSize: 21,
-    marginTop: 10,
-    marginBottom: 5,
-    color: 'white'
-  },
-  badgeImage: {
-    height: 126,
-    width: 126,
-    borderRadius: 63,
-    alignSelf: 'center'
-  },
-  editImage: {
-    height: 30,
-    width: 30,
+  button: {
+    height: 25,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginRight: 15,
     alignSelf: 'flex-end',
-    marginRight: 20,
-    marginTop: 20
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontSize: 10
   },
   rowContainer: {
-    padding: 10
+    padding: 3
   },
   rowTitle: {
     color: '#48BBEC',
     fontSize: 16
   },
-  rowContent: {
-    fontSize: 19
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#E4E4E4',
-    flex: 1,
-    marginLeft: 15,
-    marginTop: 5
+  searchInput: {
+    height: 30,
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 3
   }
 };
 
 module.exports = ProfileEdit;
+
+
+        // <Text>Password</Text>
+        // <TextInput
+        //   secureTextEntry={true}
+        //   style={styles.searchInput}
+        //   value={this.state.password}
+        //   onChange={this.handlePassword.bind(this)} />
+
+        // <TouchableHighlight
+        //   style={styles.button}
+        //   onPress={this.loggingIn.bind(this)}
+        //   underlayColor='white' >
+        //     <Text style={styles.buttonText}> LOGIN </Text>
+        // </TouchableHighlight>
 
