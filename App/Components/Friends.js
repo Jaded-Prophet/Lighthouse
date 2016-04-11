@@ -3,27 +3,49 @@ import React, {
   Text,
   StyleSheet,
   Component,
+  ListView,
   TouchableHighlight
 } from 'react-native';
 import api from '../Utils/api';
+import Separator from './Helpers/Separator';
 
 class Friends extends Component{
-  addFriend(){
-    
+  constructor(props) {
+    super(props);
+    this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+    this.state = {
+      dataSource: this.ds.cloneWithRows(this.props.friends)
+    };
   }
+  addFriend(){
+    console.log('Woohoo!');
+  }
+  // This function renders each row
+  // The data being passed into this is coming from Main.js
+  renderRow(rowData) {
+    console.log('This is rowData: ', rowData);
+    return (
+      <View>
+        <View style={styles.rowContainer}>
+          <Text>{rowData}</Text>
+        </View>
+        <Separator />
+      </View>
+      )
+  }
+
   render(){
     const user = this.props.userInfo;
     const uid = user.uid;
-    var friendsRes = api.getUserFriends(uid)
-      .then((res) => console.log(Object.values(res)))
+    console.log(user);
+    api.getUserFriends(uid)
+      .then((res) => this.renderRow(res))
       .catch((err) => console.log(err));
     return (
       <View style={styles.container}>
-        <TouchableHighlight 
-          style={styles.button}
-          underlayColor='#88D4F5'>
-          <Text> Add Friend </Text>
-        </TouchableHighlight>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow} />
       </View>
     )
   }
@@ -31,7 +53,12 @@ class Friends extends Component{
 
 var styles = {
   container: {
-    marginTop: 70
+    marginTop: 0,
+    flex: 1,
+    flexDirection: 'column'
+  },
+  rowContainer: {
+    padding: 40
   },
   button: {
     width: 200,

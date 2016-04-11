@@ -66,7 +66,7 @@ var api = {
   // Get all friends in my Friends table DONE
   getUserFriends(userId) {
     var friends = `https://project-sapphire.firebaseio.com/UserData/${userId}/Friends.json`;
-    return fetch(friends).then((res) => Object.values(res.json()));
+    return fetch(friends).then((res) => res.json());
   }
 };
 
