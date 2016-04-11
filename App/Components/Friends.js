@@ -4,7 +4,8 @@ import React, {
   StyleSheet,
   Component,
   ListView,
-  TouchableHighlight
+  TouchableHighlight,
+  Image
 } from 'react-native';
 import api from '../Utils/api';
 import Separator from './Helpers/Separator';
@@ -12,9 +13,11 @@ import Separator from './Helpers/Separator';
 class Friends extends Component{
   constructor(props) {
     super(props);
-    this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+    if (props.friends) {
+      this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+    }
     this.state = {
-      dataSource: this.ds.cloneWithRows(this.props.friends)
+      dataSource: props.friends ? this.ds.cloneWithRows(this.props.friends) : ''
     };
   }
   addFriend(){
@@ -23,8 +26,6 @@ class Friends extends Component{
   // This function renders each row
   // The data being passed into this is coming from Main.js
   renderRow(rowData) {
-    console.log('This is rowData: ', rowData);
-    console.log('this is this: ', this);
     return (
       <View>
         <TouchableHighlight 
@@ -47,9 +48,12 @@ class Friends extends Component{
       .catch((err) => console.log(err));
     return (
       <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)} />
+        {this.props.friends ?
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={this.renderRow.bind(this)} />
+            : <View></View>
+        }
       </View>
     )
   }
@@ -74,5 +78,10 @@ var styles = {
     flex: 1
   }
 };
+
+Friends.propTypes = {
+  userInfo: React.PropTypes.object.isRequired,
+  friends: React.PropTypes.object.isRequired
+}
 
 module.exports = Friends;
