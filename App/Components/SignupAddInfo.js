@@ -31,7 +31,7 @@ class SignupAddInfo extends React.Component{
   handlePhoneNumber(event) {
     this.setState({
       phoneNumber: event.nativeEvent.text
-    })
+    });
   }
 
   delayInfo() {
@@ -39,8 +39,32 @@ class SignupAddInfo extends React.Component{
   }
 
   supplementInfo() {
-    console.log('update');
-  }
+
+    var that = this;
+    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    ref.authWithPassword({
+      email: that.props.email,
+      password: that.props.password
+    }, function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+        // Shows error on client if login fails
+        that.setState({
+          error: 'Login Failed!',
+          isLoading: false
+        });
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+        // navigate to Dashboard
+        api.setUserData(authData);
+        that.props.navigator.push({
+          title: 'Friends',
+          component: TabBar,
+          passProps: {userInfo: authData}
+        });
+      }
+    })
+    }
 
   render(){
 
