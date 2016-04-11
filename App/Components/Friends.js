@@ -24,11 +24,15 @@ class Friends extends Component{
   // The data being passed into this is coming from Main.js
   renderRow(rowData) {
     console.log('This is rowData: ', rowData);
+    console.log('this is this: ', this);
     return (
       <View>
-        <View style={styles.rowContainer}>
+        <TouchableHighlight 
+          style={styles.rowContainer}
+          onPress={this.addFriend}
+          underlayColor="#EEE">
           <Text>{rowData}</Text>
-        </View>
+        </TouchableHighlight>
         <Separator />
       </View>
       )
@@ -45,7 +49,7 @@ class Friends extends Component{
       <View style={styles.container}>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderRow} />
+          renderRow={this.renderRow.bind(this)} />
       </View>
     )
   }
