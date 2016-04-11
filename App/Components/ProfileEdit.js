@@ -35,8 +35,8 @@ class ProfileEdit extends Component{
   }
 
   render(){
-    console.log('props are ', this.props.userInfo)
-    var userInfo = this.props.userInfo;
+    console.log('props are ', this.props.userInfo.password)
+    var userInfo = this.props.userInfo.password;
     // NOTE: replace topic array with new topic info
     var topicArr = ['email', 'profileImageURL'];
     

@@ -21,14 +21,14 @@ class Profile extends Component{
     this.props.navigator.push({
       title: 'Edit Profile',
       component: ProfileEdit,
-      passProps: {userInfo: this.props.userInfo.password}
+      passProps: {userInfo: this.props.userInfo}
     });
   }
 
   render(){
     var userInfo = this.props.userInfo.password;
     // NOTE: replace topic array with new user info
-    var topicArr = ['email', 'profileImageURL'];
+    var topicArr = ['email', 'profileImageURL', 'name', 'phoneNumber'];
     
     var list = topicArr.map((item, index) => {
       if(!userInfo[item]) {
