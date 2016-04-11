@@ -66,7 +66,25 @@ var api = {
   // Get all friends in my Friends table DONE
   getUserFriends(userId) {
     var friends = `https://project-sapphire.firebaseio.com/UserData/${userId}/Friends.json`;
-    return fetch(friends).then((res) => res.json());
+    return fetch(friends)
+      .then((res) => res.json())
+      .then((friends) => {
+        // Create an async function since we need to wait for the promises to return data
+        async function getFriendData (callback){
+          var result = [];
+          for (k in friends) {
+            // Await waits for the promise chain to complete, then continues
+            await callback(friends[k]).then((res) => {
+              res.uid = friends[k];
+              result.push(res)
+            });
+          }
+          // result is now populated with the friend's user data, and is returned to the user
+          return result;
+        };
+        // Passing in the this.getUserData since the this binding is lost inside of the async function
+        return getFriendData(this.getUserData);
+      });
   }
 };
 

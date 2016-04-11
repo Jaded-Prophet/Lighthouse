@@ -61,7 +61,8 @@ class Main extends React.Component{
         console.log("Authenticated successfully with payload:", authData);
         // navigate to Dashboard
         api.getUserFriends(authData.uid)
-          .then((res) => 
+          .then(function(res) { 
+            console.log(res);
             that.props.navigator.push({
               title: 'Friends',
               component: TabBar,
@@ -70,7 +71,7 @@ class Main extends React.Component{
                 friends: res
               }
             })
-            )
+          })
           .catch((err) => console.log(err))
       }
     });
