@@ -52,6 +52,8 @@ class SignupAddInfo extends React.Component{
       } else {
         console.log("Authenticated successfully with payload, delayInfo:", authData);
         // navigate to Dashboard
+        api.setUserData(authData, that.state.name, that.state.phoneNumber);
+        
         that.props.navigator.push({
           title: 'Friends',
           component: TabBar,
