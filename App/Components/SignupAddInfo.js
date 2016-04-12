@@ -35,7 +35,30 @@ class SignupAddInfo extends React.Component{
   }
 
   delayInfo() {
-    console.log('delay');
+
+    var that = this;
+    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    ref.authWithPassword({
+      email: that.props.email,
+      password: that.props.password
+    }, function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+        // Shows error on client if login fails
+        that.setState({
+          error: 'Login Failed!',
+          isLoading: false
+        });
+      } else {
+        console.log("Authenticated successfully with payload, delayInfo:", authData);
+        // navigate to Dashboard
+        that.props.navigator.push({
+          title: 'Friends',
+          component: TabBar,
+          passProps: {userInfo: authData}
+        });
+      }
+    })
   }
 
   supplementInfo() {
