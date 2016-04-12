@@ -11,6 +11,7 @@ import Dashboard from './Dashboard';
 import Main from './Main';
 import Friends from './Friends';
 import Profile from './Profile';
+import Map from './Map';
 
 class TabBar extends React.Component {
   constructor(){
@@ -38,6 +39,14 @@ class TabBar extends React.Component {
           systemIcon="favorites">
             <View style={styles.tabContent}>
             <Profile {...this.props} />
+            </View>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          selected={this.state.selectedTab === 'tabThree'}
+          onPress={() => this.setTab('tabThree')}
+          systemIcon="search">
+            <View style={styles.tabContent}>
+            <Map {...this.props} />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>
