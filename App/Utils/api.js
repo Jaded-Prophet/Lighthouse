@@ -5,12 +5,14 @@ var Firebase = require('firebase');
 var api = {
 
   // Add data to user, use after creating new user DONE
-  setUserData(myData) {
+  setUserData(myData, name, phone) {
     var userId  = myData.uid;
     var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
 
     userData.child('email').set(myData.password.email);
     userData.child('profileImageURL').set(myData.password.profileImageURL);
+    userData.child('name').set(name);
+    userData.child('phone').set(phone);
   },
 
   updateUserData(myData, item, value) {
