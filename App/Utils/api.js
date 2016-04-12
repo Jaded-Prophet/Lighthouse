@@ -15,6 +15,13 @@ var api = {
     userData.child('phone').set(phone);
   },
 
+  setUserLocation(myData, location) {
+    var userId  = myData.uid;
+    var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
+
+    userData.child('location').set(location);
+  },
+
   updateUserData(myData, item, value) {
     var userId  = myData.uid;
     var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
