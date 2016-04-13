@@ -7,13 +7,14 @@ import React, {
   TouchableHighlight,
   Image
 } from 'react-native';
+
 import api from '../Utils/api';
 import Separator from './Helpers/Separator';
+import ProfileFriend from './ProfileFriend';
 import AddFriendButton from './AddFriendButton';
 
 class Friends extends Component{
   constructor(props) {
-    console.log('This is you: ', props.userInfo);
     super(props);
     if (props.friends) {
       this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
@@ -23,10 +24,19 @@ class Friends extends Component{
       hasAddFriends: false
     };
   }
-  sessionQuery(){
-    console.log('Firing the Thing!', this.props.userInfo);
-    api.setUserData(this.props.userInfo);
+
+  viewFriend(rowData){
+    var rowData = rowData;
+    var that = this;
+    console.log('View Friend', rowData);
+    console.log('friends are ', this.props.friends)
+    this.props.navigator.push({
+      title: 'View Friend',
+      component: ProfileFriend,
+      passProps: {friendInfo: rowData}
+    });
   }
+
   addFriend(){
     // Steve adds Krista as a friend
     api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b')
@@ -38,10 +48,10 @@ class Friends extends Component{
       <View>
         <TouchableHighlight 
           style={styles.rowContainer}
-          onPress={this.sessionQuery}
+          onPress={() => this.viewFriend(rowData)}
           underlayColor="#EEE">
           <View>
-            <Text>{rowData.email}</Text>
+            <Text style={styles.friendText}>{rowData.name}</Text>
           </View>
         </TouchableHighlight>
         <Separator />
@@ -73,6 +83,7 @@ var styles = {
     flexDirection: 'column'
   },
   rowContainer: {
+    flex: 1,
     padding: 40
   },
   image: {
@@ -89,7 +100,17 @@ var styles = {
     alignSelf: 'stretch',
     justifyContent: 'center',
     flex: 1
+  },
+  friendName: {
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end'
   }
+  // friendImage: {
+  //   height: 60,
+  //   width: 60,
+  //   borderRadius: 30,
+  //   flexWrap: 'wrap'
+  // }
 };
 
 Friends.propTypes = {
