@@ -94,13 +94,16 @@ class Signup extends React.Component{
 
         <Text>Email</Text>
         <TextInput
+          placeholder = 'email'
+          autoCapitalize='none'
           style={styles.searchInput}
           value={this.state.email}
           onChange={this.handleEmail.bind(this)} />
 
-
         <Text>Password</Text>
         <TextInput
+          placeholder = 'password'
+          autoCapitalize = 'none'
           secureTextEntry={true}
           style={styles.searchInput}
           value={this.state.password}

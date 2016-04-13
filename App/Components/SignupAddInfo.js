@@ -104,13 +104,17 @@ class SignupAddInfo extends React.Component{
         <Text style={styles.title}>Provide Additional User Info</Text>
 
         <Text>Name</Text>
-        <TextInput
+          <TextInput
+          placeholder = 'Name'
+          autoCapitalize='none'
           style={styles.searchInput}
           value={this.state.name}
           onChange={this.handleName.bind(this)} />
 
         <Text>Phone Number</Text>
-        <TextInput
+          <TextInput
+          placeholder = '10-digit phone number'
+          autoCapitalize='none'
           style={styles.searchInput}
           value={this.state.phoneNumber}
           onChange={this.handlePhoneNumber.bind(this)} />
