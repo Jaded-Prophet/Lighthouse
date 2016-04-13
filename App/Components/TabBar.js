@@ -24,7 +24,6 @@ class TabBar extends React.Component {
     this.setState({selectedTab: tabId})
   }
   render(){
-    console.log(this.props.userInfo);
     return (
       <TabBarIOS>
         <TabBarIOS.Item
