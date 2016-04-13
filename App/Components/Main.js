@@ -11,7 +11,8 @@ var {
   StyleSheet,
   TextInput,
   TouchableHighlight,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  Image
 } = React;
 
 
@@ -75,13 +76,16 @@ class Main extends React.Component{
           .catch((err) => console.log(err))
       }
     });
-    // Afterwards, clear state for Main component
-    this.setState({
-      isLoading: false,
-      error: false,
-      email: '',
-      password: ''
-    });
+
+    setTimeout(() => {
+      //Afterwards, clear state for Main component
+      this.setState({
+        isLoading: false,
+        error: false,
+        email: '',
+        password: ''
+      });
+    }, 3000)
   }
 
   goToSignup() {
@@ -97,52 +101,65 @@ class Main extends React.Component{
       this.state.error ? <Text> {this.state.error} </Text> : <View></View>
     );
 
-    return (
-      <View style={styles.mainContainer}>
-        <Text style={styles.title}>Project Sapphire Login</Text>
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.isLoadingContainer}>
+          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.mainContainer}>
+          <Text style={styles.title}>Project Sapphire Login</Text>
 
-        <Text>Email</Text>
-        <TextInput
-          autoCapitalize='none'
-          style={styles.searchInput}
-          value={this.state.email}
-          onChange={this.handleEmail.bind(this)} />
+          <Text>Email</Text>
+          <TextInput
+            autoCapitalize='none'
+            style={styles.searchInput}
+            value={this.state.email}
+            onChange={this.handleEmail.bind(this)} />
 
-        <Text>Password</Text>
-        <TextInput
-          autoCapitalize='none'
-          secureTextEntry={true}
-          style={styles.searchInput}
-          value={this.state.password}
-          onChange={this.handlePassword.bind(this)} />
+          <Text>Password</Text>
+          <TextInput
+            autoCapitalize='none'
+            secureTextEntry={true}
+            style={styles.searchInput}
+            value={this.state.password}
+            onChange={this.handlePassword.bind(this)} />
 
-        <TouchableHighlight
-          style={styles.button}
-          onPress={this.loggingIn.bind(this)}
-          underlayColor='white' >
-            <Text style={styles.buttonText}> LOGIN </Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this.loggingIn.bind(this)}
+            underlayColor='white' >
+              <Text style={styles.buttonText}> LOGIN </Text>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          style={styles.button}
-          onPress={this.goToSignup.bind(this)}
-          underlayColor='white' >
-            <Text style={styles.buttonText}> SIGNUP </Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this.goToSignup.bind(this)}
+            underlayColor='white' >
+              <Text style={styles.buttonText}> SIGNUP </Text>
+          </TouchableHighlight>
 
-        <ActivityIndicatorIOS
-          animating={this.state.isLoading}
-          color='#111'
-          size='large'></ActivityIndicatorIOS>
-        { showErr }
+          <ActivityIndicatorIOS
+            animating={this.state.isLoading}
+            color='#111'
+            size='large'></ActivityIndicatorIOS>
+          { showErr }
 
-      </View>
-    )
+        </View>
+      )
+    }
   }
 }
 
 // stylesheet
 var styles = StyleSheet.create({
+  isLoadingContainer: {
+    flex: 1,
+    marginTop: 150,
+    alignSelf: 'center'
+  },
   mainContainer: {
     flex: 1,
     padding: 30,
@@ -180,6 +197,12 @@ var styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 30
+  },
+  loadingImage: {
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
+    marginTop: 100
   }
 });
 
