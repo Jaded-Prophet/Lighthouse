@@ -25,6 +25,13 @@ class ProfileEdit extends Component{
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
 
+  captureItemChange(event, item) {
+    var key = item;
+    this.setState({
+      [key]: event.nativeEvent.text
+    });
+  }
+
   editItem(item) {
     var item = item;
     var value = this.state[item];
@@ -37,32 +44,19 @@ class ProfileEdit extends Component{
       updateAlert: 'You have updated your info!'
     })
 
-    // setTimeout(that.clearUpdate, 1000);
-  }
+    this.props.handleProfileRender(item, value);
 
-  clearUpdate() {
-    this.setState({
-      updateAlert: ''
-    })
-  }
+    setTimeout(function() {
+      that.setState({ updateAlert: '' })
+    }, 1000);
 
-  handleItem(event, item) {
-    var key = item;
-    this.setState({
-      [key]: event.nativeEvent.text
-    });
   }
 
   render(){
     var userData = this.props.userData;
-    // NOTE: replace topic array with new topic info
     var topicArr = ['email', 'name', 'phone'];
     
     var list = topicArr.map((item, index) => {
-      if(!userData[item]) {
-        return
-          <View key={index} />
-      } else {
         return (
           <View key={index}>
             <View style={styles.rowContainer}>
@@ -71,7 +65,7 @@ class ProfileEdit extends Component{
               autoCapitalize='none'
               style={styles.searchInput}
               defaultValue={userData[item]}
-              onChange={(event)=>this.handleItem(event, item)} />
+              onChange={(event)=>this.captureItemChange(event, item)} />
             <TouchableHighlight 
               style={styles.button}
               onPress={()=>this.editItem(item)}
@@ -81,7 +75,6 @@ class ProfileEdit extends Component{
             </View>
           </View>
         )
-      }
     })
 
     return (

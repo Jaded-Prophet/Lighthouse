@@ -25,12 +25,20 @@ class Profile extends Component{
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
 
+  handleProfileRender(item, value) {
+    var userData = this.state.userData
+    userData[item] = value;
+    this.setState({
+      userData: userData
+    })
+  }
+
   editProfile() {
     var that = this;
     this.props.navigator.push({
       title: 'Edit Profile',
       component: ProfileEdit,
-      passProps: {userData: that.state.userData, authInfo: that.props.userInfo}
+      passProps: {userData: that.state.userData, authInfo: that.props.userInfo, handleProfileRender: this.handleProfileRender.bind(this)}
     });
   }
 
@@ -60,9 +68,7 @@ class Profile extends Component{
       )
     } else {
       var userData = this.state.userData;
-      console.log('user data is ==========', userData)
-      // NOTE: replace topic array with new user info
-      var topicArr = ['email', 'profileImageURL', 'name', 'phone'];
+      var topicArr = ['name', 'email', 'phone'];
       
       var list = topicArr.map((item, index) => {
         if(!userData[item]) {
