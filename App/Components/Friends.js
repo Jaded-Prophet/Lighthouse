@@ -88,6 +88,7 @@ class Friends extends Component{
           // ListView creates a list of friends if the user has friends
           // If not, render an empty view
           <ListView
+            enableEmptySections={true}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)} />
             : <View></View>
