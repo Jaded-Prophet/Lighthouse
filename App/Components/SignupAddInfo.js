@@ -4,7 +4,6 @@ var api = require('../Utils/api');
 var TabBar = require('./TabBar');
 var Signup = require('./Signup');
 var KeyboardSpacer = require('react-native-keyboard-spacer');
-var TextField = require('react-native-md-textinput');
 
 var {
   View,
