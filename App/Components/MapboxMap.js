@@ -83,6 +83,9 @@ var MapboxMap = React.createClass({
   onTap(location) {
     console.log('tapped', location);
   },
+  componentDidMount(){
+    this.setUserTrackingMode(mapRef, this.userTrackingMode.follow)
+  },
   render: function() {
     StatusBar.setHidden(true);
     return (
@@ -188,7 +191,8 @@ var styles = StyleSheet.create({
     backgroundColor: '#DDD'
   },
   container: {
-    flex: 1
+    flex: 1,
+    width: 300
   },
   main: {
     flex: 1,

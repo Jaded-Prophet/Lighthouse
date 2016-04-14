@@ -11,7 +11,7 @@ import Dashboard from './Dashboard';
 import Main from './Main';
 import Friends from './Friends';
 import Profile from './Profile';
-import Map from './Map';
+import MapboxMap from './MapboxMap';
 
 class TabBar extends React.Component {
   constructor(){
@@ -45,7 +45,7 @@ class TabBar extends React.Component {
           onPress={() => this.setTab('tabThree')}
           systemIcon="search">
             <View style={styles.tabContent}>
-            <Map {...this.props} />
+            <MapboxMap {...this.props} />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>
