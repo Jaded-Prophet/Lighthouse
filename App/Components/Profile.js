@@ -63,7 +63,7 @@ class Profile extends Component{
     if (this.state.isLoading) {
       return (
         <View style={styles.isLoadingContainer}>
-          <Image style={styles.editImage} source={require('../Images/loading.gif')} />
+          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
         </View>
       )
     } else {
@@ -139,6 +139,12 @@ var styles = {
     alignSelf: 'flex-end',
     marginRight: 20,
     marginTop: 20
+  },
+  loadingImage: {
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
+    marginTop: 100
   },
   rowContainer: {
     padding: 10

@@ -1,3 +1,9 @@
+var Connections = require('./Connections');
+var Separator = require('./Helpers/Separator');
+var api = require('../Utils/api');
+var ProfileFriend = require('./ProfileFriend');
+var AddFriendButton = require('./AddFriendButton');
+
 import React, {
   View,
   Text,
@@ -5,13 +11,10 @@ import React, {
   Component,
   ListView,
   TouchableHighlight,
-  Image
+  Image,
+  AlertIOS
 } from 'react-native';
 
-import api from '../Utils/api';
-import Separator from './Helpers/Separator';
-import ProfileFriend from './ProfileFriend';
-import AddFriendButton from './AddFriendButton';
 
 class Friends extends Component{
   constructor(props) {
@@ -25,16 +28,34 @@ class Friends extends Component{
     };
   }
 
-  viewFriend(rowData){
+  startConnection(rowData) {
+    console.log('start connection pressed');
     var rowData = rowData;
-    var that = this;
-    console.log('View Friend', rowData);
-    console.log('friends are ', this.props.friends)
+    this.props.navigator.push({
+      title: 'Connection',
+      component: Connections,
+      passProps: {friendData: rowData}
+    });
+  }
+
+  viewFriend(rowData){
+    console.log('view friend pressed');
+    var rowData = rowData;
     this.props.navigator.push({
       title: 'View Friend',
       component: ProfileFriend,
-      passProps: {friendInfo: rowData}
+      passProps: {friendData: rowData}
     });
+  }
+
+  handleRoute(rowData){
+    console.log('handle route pressed');
+    var rowData = rowData;
+    AlertIOS.alert('Friend Time!', 'Do you want to start a connection?', [
+      {text: 'No, View Profile', onPress: () => { this.viewFriend(rowData) }, style: 'default'},
+      {text: 'Yes, Start Connection', onPress: () => { this.startConnection(rowData) }, style: 'cancel'},
+      ]
+    );
   }
 
   addFriend(){
@@ -48,7 +69,7 @@ class Friends extends Component{
       <View>
         <TouchableHighlight 
           style={styles.rowContainer}
-          onPress={() => this.viewFriend(rowData)}
+          onPress={() => this.handleRoute(rowData)}
           underlayColor="#EEE">
           <View>
             <Text style={styles.friendText}>{rowData.name}</Text>

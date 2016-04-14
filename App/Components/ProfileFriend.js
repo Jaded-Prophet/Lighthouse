@@ -1,3 +1,4 @@
+var Connections = require('./Connections');
 var api = require('../Utils/api');
 
 import React, {
@@ -19,8 +20,13 @@ class ProfileFriend extends Component{
     };
   }
 
-  goToConnect() {
-    console.log('form connection clicked');
+  startConnection() {
+    var that = this;
+    this.props.navigator.push({
+      title: 'Connection',
+      component: Connections,
+      passProps: {friendData: that.props.friendData}
+    });
   }
 
   getRowTitle(user, item) {
@@ -35,7 +41,7 @@ class ProfileFriend extends Component{
   getAsyncData() {
     var that = this;
     //change to friend data uid
-    api.getUserData(that.props.friendInfo.uid)
+    api.getUserData(that.props.friendData.uid)
       .then(function(res) { 
         that.setState({
           friendData: res,
@@ -49,7 +55,7 @@ class ProfileFriend extends Component{
     if (this.state.isLoading) {
       return (
         <View style={styles.isLoadingContainer}>
-          <Image style={styles.editImage} source={require('../Images/loading.gif')} />
+          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
         </View>
       )
     } else {
@@ -80,7 +86,7 @@ class ProfileFriend extends Component{
           <View style={styles.container}>
             <TouchableHighlight
               style={styles.button}
-              onPress={this.goToConnect.bind(this)}
+              onPress={this.startConnection.bind(this)}
               underlayColor='white' >
               <Text style={styles.buttonText}> CONNECT </Text>
             </TouchableHighlight>
@@ -129,6 +135,12 @@ var styles = {
     alignSelf: 'flex-end',
     marginRight: 20,
     marginTop: 20
+  },
+  loadingImage: {
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
+    marginTop: 100
   },
   rowContainer: {
     padding: 10
