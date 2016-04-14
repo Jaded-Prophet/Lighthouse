@@ -22,9 +22,14 @@ class Friends extends Component{
     if (props.friends) {
       this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
     }
+    if (props.groups) {
+      this.groupDs = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+    }
     this.state = {
       dataSource: props.friends ? this.ds.cloneWithRows(this.props.friends) : '',
-      hasAddFriends: false
+      hasAddFriends: false,
+      groupDataSource: props.groups ? this.groupDs.cloneWithRows(this.props.groups) : '',
+      hasAddGroups: false
     };
   }
 
@@ -64,7 +69,7 @@ class Friends extends Component{
   }
   // This function renders each row
   // The data being passed into this is coming from Main.js
-  renderRow(rowData) {
+  renderFriendRow(rowData) {
     return (
       <View>
         <TouchableHighlight 
@@ -79,6 +84,24 @@ class Friends extends Component{
       </View>
       )
   }
+
+  renderGroupRow(rowData) {
+    return (
+      <View>
+        <TouchableHighlight 
+          style={styles.rowContainer}
+          onPress={() => this.handleRoute(rowData)}
+          underlayColor="#EEE">
+          <View>
+            <Text style={styles.friendText}>{rowData.groupName}</Text>
+            <Text style={styles.friendText}>{rowData.description}</Text>
+          </View>
+        </TouchableHighlight>
+        <Separator />
+      </View>
+      )
+  }
+
   render(){
     const user = this.props.userInfo;
     const uid = user.uid;
@@ -90,7 +113,15 @@ class Friends extends Component{
           <ListView
             enableEmptySections={true}
             dataSource={this.state.dataSource}
-            renderRow={this.renderRow.bind(this)} />
+            renderRow={this.renderFriendRow.bind(this)} />
+            : <View></View>
+        }
+        {this.props.groups ?
+          // ListView creates a list of groups if the user has groups
+          // If not, render an empty view
+          <ListView
+            dataSource={this.state.groupDataSource}
+            renderRow={this.renderGroupRow.bind(this)} />
             : <View></View>
         }
       </View>

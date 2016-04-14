@@ -62,16 +62,20 @@ class Main extends React.Component{
         console.log("Authenticated successfully with payload:", authData);
         // navigate to Dashboard
         api.getUserFriends(authData.uid)
-          .then(function(res) { 
-            console.log(res);
-            that.props.navigator.push({
-              title: 'Friends',
-              component: TabBar,
-              passProps: {
-                userInfo: authData,
-                friends: res
-              }
-            })
+          .then(function(friendsData) {
+              api.getUserGroups(authData.uid)
+                .then(function(groupsData) {
+                  console.log(groupsData);
+                  that.props.navigator.push({
+                    title: 'Friends',
+                    component: TabBar,
+                    passProps: {
+                      userInfo: authData,
+                      friends: friendsData,
+                      groups: groupsData
+                    }
+                  });
+                });
           })
           .catch((err) => console.log(err))
       }
@@ -85,7 +89,7 @@ class Main extends React.Component{
         email: '',
         password: ''
       });
-    }, 3000)
+    }, 3000);
   }
 
   goToSignup() {
