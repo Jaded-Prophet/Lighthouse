@@ -3,6 +3,7 @@ var Separator = require('./Helpers/Separator');
 var api = require('../Utils/api');
 var ProfileFriend = require('./ProfileFriend');
 var AddFriendButton = require('./AddFriendButton');
+var FriendsAdd = require('./FriendsAdd');
 
 import React, {
   View,
@@ -58,9 +59,15 @@ class Friends extends Component{
     );
   }
 
-  addFriend(){
+  addFriends(){
+    var that = this;
+    this.props.navigator.push({
+      title: 'Add Friends',
+      component: FriendsAdd,
+      passProps: {userInfo: that.props.userInfo}
+    });
     // Steve adds Krista as a friend
-    api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b');
+    //api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b');
   }
   // This function renders each row
   // The data being passed into this is coming from Main.js
@@ -109,6 +116,9 @@ class Friends extends Component{
     const uid = user.uid;
     return (
       <View style={styles.container}>
+        <TouchableHighlight onPress={() => this.addFriends()}>
+          <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
+        </TouchableHighlight>
         {this.props.allData ?
           // ListView creates a list of friends if the user has friends
           // If not, render an empty view
@@ -116,7 +126,7 @@ class Friends extends Component{
             enableEmptySections={true}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)} />
-            : <View></View>
+            : <View>Why don't you add some friends?</View>
         }
       </View>
     )
@@ -158,7 +168,14 @@ var styles = {
     borderRadius: 5,
     alignSelf: 'flex-start',
     flexWrap: 'wrap'
-  }
+  },
+  addFriendsImage: {
+    height: 30,
+    width: 30,
+    alignSelf: 'flex-end',
+    marginRight: 20,
+    marginTop: 80
+  },
 };
 
 Friends.propTypes = {

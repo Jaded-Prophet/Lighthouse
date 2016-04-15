@@ -92,7 +92,7 @@ class Profile extends Component{
               <Image style={styles.editImage} source={require('../Images/edit.png')} />
             </TouchableHighlight>
             <Image style={styles.badgeImage} source={{uri: userData.profileImageURL}} />
-            <Text style={styles.badgeName}> {userData.email}</Text>
+            <Text style={styles.badgeName}> {userData.name}</Text>
           </View>
           <View style={styles.container}>
             {list}
