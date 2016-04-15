@@ -19,17 +19,12 @@ import React, {
 class Friends extends Component{
   constructor(props) {
     super(props);
-    if (props.friends) {
+    if (props.allData) {
       this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
     }
-    if (props.groups) {
-      this.groupDs = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
-    }
     this.state = {
-      dataSource: props.friends ? this.ds.cloneWithRows(this.props.friends) : '',
+      dataSource: props.allData ? this.ds.cloneWithRows(this.props.allData) : '',
       hasAddFriends: false,
-      groupDataSource: props.groups ? this.groupDs.cloneWithRows(this.props.groups) : '',
-      hasAddGroups: false
     };
   }
 
@@ -65,63 +60,62 @@ class Friends extends Component{
 
   addFriend(){
     // Steve adds Krista as a friend
-    api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b')
+    api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b');
   }
   // This function renders each row
   // The data being passed into this is coming from Main.js
-  renderFriendRow(rowData) {
-    return (
-      <View>
-        <TouchableHighlight 
-          style={styles.rowContainer}
-          onPress={() => this.handleRoute(rowData)}
-          underlayColor="#EEE">
-          <View>
-            <Text style={styles.friendText}>{rowData.name}</Text>
-          </View>
-        </TouchableHighlight>
-        <Separator />
-      </View>
+  renderRow(rowData) {
+    if (rowData.groupName) {
+      return (
+        <View>
+          <TouchableHighlight 
+            style={styles.rowContainer}
+            onPress={() => this.handleRoute(rowData)}
+            underlayColor="#EEE">
+            <View>
+              <Image
+                style={styles.image}
+                source={require('../Images/group.png')} />
+              <Text>{rowData.groupName}</Text>
+              <Text>{rowData.description}</Text>
+            </View>
+          </TouchableHighlight>
+          <Separator />
+        </View>
       )
+    } else {
+      return (
+        <View>
+          <TouchableHighlight 
+            style={styles.rowContainer}
+            onPress={() => this.handleRoute(rowData)}
+            underlayColor="#EEE">
+            <View>
+            <Image
+              style={styles.image}
+              source={{uri: rowData.profileImageURL}} />
+              <Text>{rowData.name}</Text>
+            </View>
+          </TouchableHighlight>
+          <Separator />
+        </View>
+      )
+    }
   }
 
-  renderGroupRow(rowData) {
-    return (
-      <View>
-        <TouchableHighlight 
-          style={styles.rowContainer}
-          onPress={() => this.handleRoute(rowData)}
-          underlayColor="#EEE">
-          <View>
-            <Text style={styles.friendText}>{rowData.groupName}</Text>
-            <Text style={styles.friendText}>{rowData.description}</Text>
-          </View>
-        </TouchableHighlight>
-        <Separator />
-      </View>
-      )
-  }
 
   render(){
     const user = this.props.userInfo;
     const uid = user.uid;
     return (
       <View style={styles.container}>
-        {this.props.friends ?
+        {this.props.allData ?
           // ListView creates a list of friends if the user has friends
           // If not, render an empty view
           <ListView
             enableEmptySections={true}
             dataSource={this.state.dataSource}
-            renderRow={this.renderFriendRow.bind(this)} />
-            : <View></View>
-        }
-        {this.props.groups ?
-          // ListView creates a list of groups if the user has groups
-          // If not, render an empty view
-          <ListView
-            dataSource={this.state.groupDataSource}
-            renderRow={this.renderGroupRow.bind(this)} />
+            renderRow={this.renderRow.bind(this)} />
             : <View></View>
         }
       </View>
@@ -154,16 +148,17 @@ var styles = {
     justifyContent: 'center',
     flex: 1
   },
-  friendName: {
+  name: {
     flexWrap: 'wrap',
     justifyContent: 'flex-end'
+  },
+  image: {
+    height: 60,
+    width: 60,
+    borderRadius: 5,
+    alignSelf: 'flex-start',
+    flexWrap: 'wrap'
   }
-  // friendImage: {
-  //   height: 60,
-  //   width: 60,
-  //   borderRadius: 30,
-  //   flexWrap: 'wrap'
-  // }
 };
 
 Friends.propTypes = {
