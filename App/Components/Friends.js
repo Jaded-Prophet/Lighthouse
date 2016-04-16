@@ -83,8 +83,8 @@ class Friends extends Component{
               <Image
                 style={styles.image}
                 source={require('../Images/group.png')} />
-              <Text style={styles.name}>{rowData.groupName}</Text>
-              <Text style={styles.name}>{rowData.description}</Text>
+              <Text>{rowData.groupName}</Text>
+              <Text>{rowData.description}</Text>
             </View>
           </TouchableHighlight>
           <Separator />
@@ -101,7 +101,7 @@ class Friends extends Component{
             <Image
               style={styles.image}
               source={{uri: rowData.profileImageURL}} />
-              <Text style={styles.name}>{rowData.name}</Text>
+              <Text>{rowData.name}</Text>
             </View>
           </TouchableHighlight>
           <Separator />
@@ -136,28 +136,45 @@ class Friends extends Component{
 var styles = {
   container: {
     marginTop: 0,
+    flex: 1,
+    flexDirection: 'column'
   },
   rowContainer: {
-    padding: 30,
-    height: 110,
+    flex: 1,
+    padding: 40
+  },
+  image: {
+    height: 25,
+    width: 25,
+    borderRadius: 65,
+    marginTop: 10
+  },
+  button: {
+    width: 200,
+    height: 100,
+    backgroundColor: '#EEE',
     flexDirection: 'row',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    flex: 1
+  },
+  name: {
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end'
   },
   image: {
     height: 60,
     width: 60,
     borderRadius: 5,
-    position: 'absolute'
-  },
-  name: {
-    paddingLeft: 100
+    alignSelf: 'flex-start',
+    flexWrap: 'wrap'
   },
   addFriendsImage: {
     height: 30,
     width: 30,
     alignSelf: 'flex-end',
     marginRight: 20,
-    marginTop: 80,
-    flex: 1
+    marginTop: 80
   },
 };
 
