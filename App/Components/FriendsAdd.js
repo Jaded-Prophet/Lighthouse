@@ -22,27 +22,44 @@ class FriendsAdd extends Component{
 
   captureItemChange(event) {
     this.setState({
-      friend: event.nativeEvent.text
+      friendEmail: event.nativeEvent.text
     });
   }
 
   searchForFriend() {
-    var friend = this.state.friend;
-    console.log('friend searched for is ', friend)
-    // var myData = this.props.userInfo;
-    // var that = this;
+    var that = this;
+    var friendEmail = that.state.friendEmail;
+    var allFriends = that.props.allFriends;
+    var foundFriend = false;
 
-    // api search for user
-    // api.updateUserData(myData, item, value);
-    
-    // Add alert if friend isn't found?
-    // that.setState({
-    //   updateAlert: 'That friend was not found'
-    // })
+    for (var i = 0; i < allFriends.length; i++) {
+      if (allFriends[i].email === friendEmail) {
+        that.setState({
+          updateAlert: 'You are already friends with that person!'
+        })
+        foundFriend = true;
+      }
+    }
 
-    // setTimeout(function() {
-    //   that.setState({ updateAlert: '' })
-    // }, 1000);
+    if (foundFriend === false) {
+      api.findUserByEmail(friendEmail)
+        .then(function(res) {
+          console.log('found res: ', res)
+          that.setState({
+            newFriend: res, 
+            isLoading: false
+          })
+        })
+        .catch(function(err) {
+          that.setState({
+            updateAlert: 'That user was not found.'
+          })
+        })
+    }
+
+    setTimeout(function() {
+      that.setState({ updateAlert: '' })
+    }, 3000);
 
   }
 
@@ -51,7 +68,7 @@ class FriendsAdd extends Component{
     
     return (
       <View style={styles.container}>
-        <Text style={styles.changeText}>{this.state.updateAlert}</Text>
+        <Text style={styles.alertText}>{this.state.updateAlert}</Text>
         <View style={styles.rowContainer}>
             <Text style={styles.rowTitle}> Search by Email Address </Text>
             <TextInput
@@ -91,10 +108,11 @@ var styles = {
   buttonText: {
     fontSize: 10
   },
-  // changeText: {
-  //   fontSize: 16,
-  //   color: 'red'
-  // },
+  alertText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'red'
+  },
   rowContainer: {
     padding: 3
   },
