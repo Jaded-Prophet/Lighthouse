@@ -7,17 +7,16 @@ import React, {
   StatusBar,
 } from 'react-native';
 import Mapbox from 'react-native-mapbox-gl';
+import io from 'socket.io-client/socket.io';
+window.navigator.userAgent = "react-native";
+
 var mapRef = 'mapRef';
 
 var MapboxMap = React.createClass({
   mixins: [Mapbox.Mixin],
   getInitialState() {
     return {
-      center: {
-        latitude: 40.72052634,
-        longitude: -73.97686958312988
-      },
-      zoom: 11,
+      zoom: 17,
       annotations: [{
         coordinates: [40.72052634, -73.97686958312988],
         'type': 'point',
@@ -59,7 +58,8 @@ var MapboxMap = React.createClass({
         'strokeColor': '#fffff',
         'fillColor': 'blue',
         'id': 'zap'
-      }]
+      }],
+      socket: io('localhost:3001', {jsonp: false})
      };
   },
   onRegionChange(location) {
@@ -70,6 +70,7 @@ var MapboxMap = React.createClass({
   },
   onUpdateUserLocation(location) {
     console.log(location);
+    this.socket.emit('change location', location);
   },
   onOpenAnnotation(annotation) {
     console.log(annotation);
@@ -83,13 +84,41 @@ var MapboxMap = React.createClass({
   onTap(location) {
     console.log('tapped', location);
   },
+  queryServer(){
+    fetch('http://localhost:4568/connect', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: 'Inje',
+        location: 'some coordinates'
+      })
+    })
+    .then((res) => {
+      console.log('The server says: ', res);
+      return res;
+    })
+    .catch((err) => console.log('There was an error: ', err));
+  },
   componentDidMount(){
-    this.setUserTrackingMode(mapRef, this.userTrackingMode.follow)
+    this.setUserTrackingMode(mapRef, this.userTrackingMode.follow);
+    this.socket = io.connect('http://localhost:4568', {jsonp: false});
+    this.socket.on('chat message', (msg) => {
+      console.log('Woohoo it worked! ', msg);
+    });
+    this.socket.on('change location', (loc) => {
+      console.log('This is the loc: ', loc);
+    });
   },
   render: function() {
     StatusBar.setHidden(true);
     return (
       <View style={styles.main}>
+        <Text onPress={this.queryServer}>
+        Test the server
+        </Text>
         <Text onPress={() => this.setDirectionAnimated(mapRef, 0)}>
           Set direction to 0
         </Text>
