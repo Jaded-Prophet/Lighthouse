@@ -10,6 +10,8 @@ if (!navigator.geolocation) {
 }
 sapphireMap.map.on('locationfound', function(e) {
     sapphireMap.map.fitBounds(e.bounds);
+    sapphireMap.userLoc = [e.latlng.lng, e.latlng.lat];
+    sapphireMap.userLocated = true;
 
     myLayer.setGeoJSON({
         type: 'Feature',
