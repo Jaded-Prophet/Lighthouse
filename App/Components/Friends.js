@@ -10,7 +10,7 @@ import React, {
   Text,
   StyleSheet,
   Component,
-  ListView,
+  ScrollView,
   TouchableHighlight,
   Image,
   AlertIOS
@@ -20,14 +20,46 @@ import React, {
 class Friends extends Component{
   
   constructor(props) {
-    super(props);
-    if (props.allData) {
-      this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
-    }
+    super(props)
     this.state = {
-      dataSource: props.allData ? this.ds.cloneWithRows(this.props.allData) : '',
-      hasAddFriends: false,
+      isLoading: true,
+      updateAlert: '',
+      hasFriends: false
     };
+  }
+
+  handleFriendsRender(newFriend) {
+    console.log('new friend is ===', newFriend)
+    var friendData = this.state.friendData;
+    friendData.push(newFriend);
+
+    this.setState({
+      friendData: friendData
+    })
+  }
+
+  componentWillMount() {
+    this.getAsyncData();
+  }
+
+  getAsyncData() {
+    var that = this;
+    api.getUserFriends(that.props.userInfo.uid)
+      .then(function(res) {
+        console.log('result from api call is ', res)
+        that.setState({
+          friendData: res,
+          isLoading: false,
+          hasFriends: true
+        })
+      })
+      .catch(function(err) {
+        that.setState({
+          updateAlert: 'Add some friends to get started!',
+          hasFriends: false,
+          isLoading: false
+        })
+      })
   }
 
   startConnection(rowData) {
@@ -55,6 +87,7 @@ class Friends extends Component{
     var rowData = rowData;
     AlertIOS.alert('Friend Time!', 'Do you want to start a connection?', [
       {text: 'No, View Profile', onPress: () => { this.viewFriend(rowData) }, style: 'default'},
+      {text: 'No, Cancel', onPress: () => { console.log('back to page') }, style: 'default'},
       {text: 'Yes, Start Connection', onPress: () => { this.startConnection(rowData) }, style: 'cancel'},
       ]
     );
@@ -65,78 +98,82 @@ class Friends extends Component{
     this.props.navigator.push({
       title: 'Add Friends',
       component: FriendsAdd,
-      passProps: {userInfo: that.props.userInfo, allFriends: that.props.allData}
+      passProps: {userInfo: that.props.userInfo, allFriends: that.state.friendData, handleFriendsRender: this.handleFriendsRender.bind(this)}
     });
-    // Steve adds Krista as a friend
-    //api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b');
   }
-  // This function renders each row
-  // The data being passed into this is coming from Main.js
-  renderRow(rowData) {
-    if (rowData.groupName) {
+
+  render(){
+
+    if (this.state.isLoading) {
       return (
-        <View>
-          <TouchableHighlight 
-            style={styles.rowContainer}
-            onPress={() => this.handleRoute(rowData)}
-            underlayColor="#EEE">
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../Images/group.png')} />
-              <Text style={styles.name}>{rowData.groupName}</Text>
-              <Text style={styles.name}>{rowData.description}</Text>
-            </View>
-          </TouchableHighlight>
-          <Separator />
+        <View style={styles.isLoadingContainer}>
+          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
         </View>
       )
     } else {
-      return (
-        <View>
-          <TouchableHighlight 
-            style={styles.rowContainer}
-            onPress={() => this.handleRoute(rowData)}
-            underlayColor="#EEE">
-            <View>
-            <Image
-              style={styles.image}
-              source={{uri: rowData.profileImageURL}} />
-              <Text style={styles.name}>{rowData.name}</Text>
+      var user = this.props.userInfo;
+      var friends = this.state.friendData;
+
+      if (this.state.hasFriends) {
+        console.log('inside of render has friends function')
+        var friendsView = friends.map((item, index) => {
+          return (
+            <View key={index}>
+              <TouchableHighlight 
+                style={styles.rowContainer}
+                onPress={() => this.handleRoute(item)}
+                underlayColor="#EEE">
+                <View>
+                <Image
+                  style={styles.image}
+                  source={{uri: item.profileImageURL}} />
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
+              </TouchableHighlight>
+              <Separator />
             </View>
+          )
+        })
+      } else {
+        var friendsView = ( <View></View> )
+      };
+
+      return (
+        <View style={styles.container}>
+          <Text style={styles.alertText}>{this.state.updateAlert}</Text>
+          <TouchableHighlight onPress={() => this.addFriends()}>
+            <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
           </TouchableHighlight>
-          <Separator />
+          <ScrollView
+            showsVerticalScrollIndicator={true}
+          >
+          {friendsView}
+          </ScrollView>
         </View>
       )
     }
-  }
-
-
-  render(){
-    const user = this.props.userInfo;
-    const uid = user.uid;
-    return (
-      <View style={styles.container}>
-        <TouchableHighlight onPress={() => this.addFriends()}>
-          <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
-        </TouchableHighlight>
-        {this.props.allData ?
-          // ListView creates a list of friends if the user has friends
-          // If not, render an empty view
-          <ListView
-            enableEmptySections={true}
-            dataSource={this.state.dataSource}
-            renderRow={this.renderRow.bind(this)} />
-            : <View></View>
-        }
-      </View>
-    )
   }
 }
 
 var styles = {
   container: {
     marginTop: 0,
+  },
+  isLoadingContainer: {
+    flex: 1,
+    marginTop: 150,
+    alignSelf: 'center'
+  },
+  loadingImage: {
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
+    marginTop: 100
+  },
+  alertText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'red'
   },
   rowContainer: {
     padding: 30,
