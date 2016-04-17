@@ -35,10 +35,12 @@ class FriendsAdd extends Component{
 
     api.addFriend(userId, friendId)
 
-    this.setState({
+    that.setState({
       updateAlert: 'You have added a new friend!',
       foundFriend: false
     })
+
+    that.props.handleFriendsRender(this.state.newFriend[0]);
 
     setTimeout(function() {
       that.setState({ updateAlert: '' })
@@ -48,8 +50,6 @@ class FriendsAdd extends Component{
     console.log('my user id is ', this.props.userInfo.uid)
     console.log('friend info is ', this.state.newFriend[0].uid)
     
-
-    // will also need to send state back up to previous page with a handler function to re=render page
   }
 
   searchForFriend() {
@@ -84,7 +84,8 @@ class FriendsAdd extends Component{
         .catch(function(err) {
           that.setState({
             updateAlert: 'That user was not found.',
-            isLoading: false
+            isLoading: false,
+            foundFriend: false
           })
         })
     }
