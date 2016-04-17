@@ -125,6 +125,9 @@ var MapboxMap = React.createClass({
         id: 'Friend'
       }]);
       this.setVisibleCoordinateBoundsAnimated(mapRef, locFlip[0], locFlip[1], this.state.currentLoc.latitude, this.state.currentLoc.longitude, 100, 0, 0, 0);
+      fetch(`https://api.mapbox.com/v4/directions/mapbox.driving/${this.state.currentLoc.longitude},${this.state.currentLoc.latitude};${loc[0]},${loc[1]}.json?access_token=${loc[2]}`,
+        {method: 'get'})
+        .then((res) => {console.log(res)});
     });
   },
   render: function() {
