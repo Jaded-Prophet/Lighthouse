@@ -80,7 +80,7 @@ class ProfileFriend extends Component{
       return (
         <View>
           <View style={styles.badgeContainer}>
-            <Image style={styles.badgeImage} source={{uri: friendData.image}} />
+            <Image style={styles.badgeImage} source={{uri: friendData.profileImageURL}} />
             <Text style={styles.badgeName}> {friendData.name}</Text>
           </View>
           <View style={styles.container}>
