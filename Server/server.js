@@ -52,6 +52,10 @@ io.on('connection', function(socket) {
     console.log('This is the location: ', loc);
     io.emit('change location', loc);
   });
+  socket.on('found location', (loc) => {
+    console.log('This is another location: ', loc);
+    io.emit('found location', loc);
+  });
   socket.on('disconnect', () => {
     console.log('A user has disconnected');
   });

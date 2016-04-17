@@ -12,6 +12,7 @@ sapphireMap.map.on('locationfound', function(e) {
     sapphireMap.map.fitBounds(e.bounds);
     sapphireMap.userLoc = [e.latlng.lng, e.latlng.lat];
     sapphireMap.userLocated = true;
+    socket.emit('found location', sapphireMap.userLoc);
 
     myLayer.setGeoJSON({
         type: 'Feature',

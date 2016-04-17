@@ -111,6 +111,18 @@ var MapboxMap = React.createClass({
     this.socket.on('change location', (loc) => {
       console.log('This is the loc: ', loc);
     });
+    this.socket.on('found location', (loc) => {
+      console.log('This is the loc from website: ', loc);
+      // loc comes in as [longitude, latitude] which is what the webapp version wants,
+      // but the react native version wants the [latitude, longitude], so we flip them.
+      var locFlip = [loc[1], loc[0]];
+      this.addAnnotations(mapRef, [{
+        coordinates: locFlip,
+        type: 'point',
+        title: 'This is your friend',
+        id: 'Friend'
+      }]);
+    });
   },
   render: function() {
     StatusBar.setHidden(true);

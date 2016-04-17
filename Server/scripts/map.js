@@ -21,6 +21,7 @@ socket.on('change location', function(loc){
   if (sapphireMap.userLocated && sapphireMap.foundFriend && !sapphireMap.directionsMade) {
     console.log('We\'re in');
     fetch(`https://api.mapbox.com/v4/directions/mapbox.driving/${sapphireMap.userLoc[0]},${sapphireMap.userLoc[1]};${long},${lat}.json?access_token=${sapphireMap.accessToken}`)
+      .then((res) => {res.json()})
       .then((directions) => {console.log(directions)});
     sapphireMap.directionsMade = true;
   }
