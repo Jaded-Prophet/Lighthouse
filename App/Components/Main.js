@@ -66,7 +66,6 @@ class Main extends React.Component{
               api.getUserGroups(authData.uid)
                 .then(function(groupsData) {
                   var allData = friendsData.concat(groupsData);
-                  console.log(allData);
                   that.props.navigator.push({
                     title: 'Friends',
                     component: TabBar,
