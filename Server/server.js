@@ -21,6 +21,18 @@ app.get('/socket.io-client/socket.io.js', function(req, res) {
   res.sendFile(__dirname + '/socket.io-client/socket.io.js');
 });
 
+app.get('/scripts/userLocation.js', function(req, res) {
+  res.sendFile(__dirname + '/scripts/userLocation.js');
+});
+
+app.get('/scripts/userMarker.js', function(req, res) {
+  res.sendFile(__dirname + '/scripts/userMarker.js');
+});
+
+app.get('/scripts/map.js', function(req, res) {
+  res.sendFile(__dirname + '/scripts/map.js');
+});
+
 app.get('/map', function(req, res) {
   res.sendFile(__dirname + '/map.html');
 });

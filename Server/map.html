@@ -8,29 +8,32 @@
   <style>
     body { margin:0; padding:0; }
     .map { position:absolute; top:0; bottom:0; width:100%; }
+    .ui-button {
+      background:#3887BE;
+      color:#FFF;
+      display:block;
+      position:absolute;
+      top:50%;left:50%;
+      width:160px;
+      margin:-20px 0 0 -80px;
+      z-index:100;
+      text-align:center;
+      padding:10px;
+      border:1px solid rgba(0,0,0,0.4);
+      border-radius:3px;
+      }
+      .ui-button:hover {
+        background:#3074a4;
+        color:#fff;
+        }
   </style>
 </head>
 <body>
 <script src="/socket.io-client/socket.io.js"></script>
 <div id='map-one' class='map'> </div>
-<script>
-  var socket = io.connect('http://localhost:4568');
-  L.mapbox.accessToken = 'pk.eyJ1IjoiaW5qZXllbyIsImEiOiJHYUJMWGV3In0.-9Wcu6yJNQmem2IXWaRuIg';
-  var map = L.mapbox.map('map-one', 'mapbox.streets');
-  map.setView([38.8929,-77.0252], 14);
-  // Make marker for traveling person
-  var marker = L.marker([-73, 40], {
-    icon: L.mapbox.marker.icon({
-      'marker-color': '#f86767'
-    })
-  });
-  marker.addTo(map);
-  // When person changes location, update marker location
-  socket.on('change location', function(loc){
-    var coordinate = [loc.latitude, loc.longitude];
-    map.setView(coordinate);
-    marker.setLatLng(L.latLng(loc.latitude, loc.longitude));
-  });
-</script>
+<a href='#' id='geolocate' class='ui-button'>Find me</a>
+<script src="/scripts/map.js"></script>
+<script src="/scripts/userLocation.js"></script>
+<script src="/scripts/userMarker.js"></script>
 </body>
 </html>
