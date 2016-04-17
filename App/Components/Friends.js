@@ -18,6 +18,7 @@ import React, {
 
 
 class Friends extends Component{
+  
   constructor(props) {
     super(props);
     if (props.allData) {
@@ -64,7 +65,7 @@ class Friends extends Component{
     this.props.navigator.push({
       title: 'Add Friends',
       component: FriendsAdd,
-      passProps: {userInfo: that.props.userInfo}
+      passProps: {userInfo: that.props.userInfo, allFriends: that.props.allData}
     });
     // Steve adds Krista as a friend
     //api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b');
@@ -143,14 +144,17 @@ var styles = {
     flexDirection: 'row',
   },
   image: {
-    height: 60,
-    width: 60,
-    borderRadius: 5,
+    height: 50,
+    width: 50,
+    borderRadius: 25,
     position: 'absolute'
   },
   name: {
-    paddingLeft: 100
-  },
+    paddingLeft: 80,
+    marginTop: 15,
+    fontSize: 20,
+    backgroundColor: 'rgba(0,0,0,0)'
+  },  
   addFriendsImage: {
     height: 30,
     width: 30,
