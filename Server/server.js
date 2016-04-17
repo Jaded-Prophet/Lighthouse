@@ -21,6 +21,10 @@ app.get('/socket.io-client/socket.io.js', function(req, res) {
   res.sendFile(__dirname + '/socket.io-client/socket.io.js');
 });
 
+app.get('/map', function(req, res) {
+  res.sendFile(__dirname + '/map.html');
+});
+
 app.post('/connect',
   function(req, res) {
     console.log(req.body);
