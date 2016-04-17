@@ -16,7 +16,9 @@ class FriendsAdd extends Component{
   constructor(props) {
     super(props)
     this.state = {
-      updateAlert: ''
+      updateAlert: '',
+      isLoading: false,
+      foundFriend: false
     };
   }
 
@@ -32,10 +34,15 @@ class FriendsAdd extends Component{
     var allFriends = that.props.allFriends;
     var foundFriend = false;
 
+    this.setState({
+      isLoading: true
+    })
+
     for (var i = 0; i < allFriends.length; i++) {
       if (allFriends[i].email === friendEmail) {
         that.setState({
-          updateAlert: 'You are already friends with that person!'
+          updateAlert: 'You are already friends with that person!',
+          isLoading: false
         })
         foundFriend = true;
       }
@@ -44,15 +51,17 @@ class FriendsAdd extends Component{
     if (foundFriend === false) {
       api.findUserByEmail(friendEmail)
         .then(function(res) {
-          console.log('found res: ', res)
+          console.log('res is ', res)
           that.setState({
             newFriend: res, 
-            isLoading: false
+            isLoading: false,
+            foundFriend: true
           })
         })
         .catch(function(err) {
           that.setState({
-            updateAlert: 'That user was not found.'
+            updateAlert: 'That user was not found.',
+            isLoading: false
           })
         })
     }
@@ -64,6 +73,23 @@ class FriendsAdd extends Component{
   }
 
   render(){
+
+    if (this.state.foundFriend) {
+      var friend = (
+        <View>
+          <Text>{this.state.newFriend[0].uid.email}</Text>
+        </View>
+      )
+    }
+
+    if (this.state.isLoading) {
+      var loadingFriend = (
+        <View style={styles.isLoadingContainer}>
+          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
+        </View>
+      )
+    }
+
     var userData = this.props.userData;
     
     return (
@@ -82,6 +108,8 @@ class FriendsAdd extends Component{
               <Text style={styles.buttonText}> SEARCH </Text>
             </TouchableHighlight>
             </View>
+        {loadingFriend}
+        {friend}
       </View>
     )
   }
@@ -93,6 +121,15 @@ var styles = {
     marginLeft: 20,
     marginRight: 10,
     marginTop: 100
+  },
+  isLoadingContainer: {
+    flex: 1,
+    alignSelf: 'center'
+  },
+  loadingImage: {
+    height: 100,
+    width: 100,
+    alignSelf: 'center'
   },
   button: {
     height: 25,
