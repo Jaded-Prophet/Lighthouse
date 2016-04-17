@@ -3,6 +3,7 @@ var Firebase = require('firebase');
 var api = require('../Utils/api');
 var TabBar = require('./TabBar');
 var Signup = require('./Signup');
+var KeyboardSpacer = require('react-native-keyboard-spacer');
 
 var {
   View,
@@ -18,7 +19,8 @@ class SignupAddInfo extends React.Component{
     super(props);
     this.state = {
       name:  '',
-      phoneNumber: ''
+      phoneNumber: '',
+      updateAlert: ''
     };
   }
 
@@ -32,6 +34,30 @@ class SignupAddInfo extends React.Component{
     this.setState({
       phoneNumber: event.nativeEvent.text
     });
+  }
+
+  personalInformation() {
+    if(this.state.phoneNumber.length !== 10){
+      this.setState({
+      updateAlert: 'Your phone number must be 10-digits long, please try again'
+      });
+    } else {
+      var isNumeric = true;
+      for(var i = 0; i < this.state.phoneNumber.length; i++){
+        if(isNaN(parseInt(this.state.phoneNumber.charAt(i)))) {
+          this.setState({
+            updateAlert: 'Looks like you are entering a non-numeric character, numbers only please'
+          })
+          isNumeric = false;
+        }
+      }
+      if(isNumeric === true){
+        this.setState({
+        updateAlert: 'Looks Good!'
+        });
+        this.supplementInfo();
+      }
+    }
   }
 
   delayInfo() {
@@ -52,6 +78,8 @@ class SignupAddInfo extends React.Component{
       } else {
         console.log("Authenticated successfully with payload, delayInfo:", authData);
         // navigate to Dashboard
+        api.setUserData(authData, that.state.name, that.state.phoneNumber);
+        
         that.props.navigator.push({
           title: 'Friends',
           component: TabBar,
@@ -88,27 +116,30 @@ class SignupAddInfo extends React.Component{
         });
       }
     })
-    }
+  }
 
   render(){
 
-    console.log(this.props.userData);
-    console.log(this.props.email);
-    console.log(this.props.password);
-
     return (
+
       <View style={styles.container}>
+
+        <Text style={styles.changeText}>{this.state.updateAlert}</Text>
 
         <Text style={styles.title}>Provide Additional User Info</Text>
 
         <Text>Name</Text>
-        <TextInput
+          <TextInput
+          placeholder = 'Name'
+          autoCapitalize='none'
           style={styles.searchInput}
           value={this.state.name}
           onChange={this.handleName.bind(this)} />
 
         <Text>Phone Number</Text>
-        <TextInput
+          <TextInput
+          placeholder='10-digit phone number'
+          keyboardType='numeric'
           style={styles.searchInput}
           value={this.state.phoneNumber}
           onChange={this.handlePhoneNumber.bind(this)} />
@@ -122,11 +153,12 @@ class SignupAddInfo extends React.Component{
 
           <TouchableHighlight
             style={styles.button}
-            onPress={this.supplementInfo.bind(this)}
+            onPress={this.personalInformation.bind(this)}
             underlayColor='white' >
               <Text style={styles.buttonText}> UPDATE </Text>
           </TouchableHighlight>
 
+          <KeyboardSpacer/>
         </View>
     )
   }
@@ -171,6 +203,10 @@ var styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 30
+  },
+  changeText: {
+    fontSize: 16,
+    color: 'red'
   },
   signupWelcom: {
     fontSize: 50

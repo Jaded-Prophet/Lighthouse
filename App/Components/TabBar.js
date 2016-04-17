@@ -13,6 +13,8 @@ import Friends from './Friends';
 import Profile from './Profile';
 import Map from './Map';
 
+import MapboxMap from './MapboxMap';
+
 class TabBar extends React.Component {
   constructor(){
     super();
@@ -45,7 +47,15 @@ class TabBar extends React.Component {
           onPress={() => this.setTab('tabThree')}
           systemIcon="search">
             <View style={styles.tabContent}>
-            <Map {...this.props} />
+            <MapboxMap {...this.props} />
+            </View>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          selected={this.state.selectedTab === 'tabFour'}
+          onPress={() => this.setTab('tabFour')}
+          systemIcon="featured">
+            <View style={styles.tabContent}>
+            <MapboxMap {...this.props} />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>

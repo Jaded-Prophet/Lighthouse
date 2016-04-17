@@ -54,7 +54,7 @@ class ProfileEdit extends Component{
 
   render(){
     var userData = this.props.userData;
-    var topicArr = ['email', 'name', 'phone'];
+    var topicArr = ['name', 'phone'];
     
     var list = topicArr.map((item, index) => {
         return (

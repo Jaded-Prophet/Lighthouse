@@ -3,6 +3,7 @@ var Separator = require('./Helpers/Separator');
 var api = require('../Utils/api');
 var ProfileFriend = require('./ProfileFriend');
 var AddFriendButton = require('./AddFriendButton');
+var FriendsAdd = require('./FriendsAdd');
 
 import React, {
   View,
@@ -17,14 +18,15 @@ import React, {
 
 
 class Friends extends Component{
+  
   constructor(props) {
     super(props);
-    if (props.friends) {
+    if (props.allData) {
       this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
     }
     this.state = {
-      dataSource: props.friends ? this.ds.cloneWithRows(this.props.friends) : '',
-      hasAddFriends: false
+      dataSource: props.allData ? this.ds.cloneWithRows(this.props.allData) : '',
+      hasAddFriends: false,
     };
   }
 
@@ -58,36 +60,71 @@ class Friends extends Component{
     );
   }
 
-  addFriend(){
+  addFriends(){
+    var that = this;
+    this.props.navigator.push({
+      title: 'Add Friends',
+      component: FriendsAdd,
+      passProps: {userInfo: that.props.userInfo, allFriends: that.props.allData}
+    });
     // Steve adds Krista as a friend
-    api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b')
+    //api.addFriend('5b2bd887-5e13-448b-83ea-64ee27b6a636', '1752e14c-5111-49a7-88d8-88f18c594b6b');
   }
   // This function renders each row
   // The data being passed into this is coming from Main.js
   renderRow(rowData) {
-    return (
-      <View>
-        <TouchableHighlight 
-          style={styles.rowContainer}
-          onPress={() => this.handleRoute(rowData)}
-          underlayColor="#EEE">
-          <View>
-            <Text style={styles.friendText}>{rowData.name}</Text>
-          </View>
-        </TouchableHighlight>
-        <Separator />
-      </View>
+    if (rowData.groupName) {
+      return (
+        <View>
+          <TouchableHighlight 
+            style={styles.rowContainer}
+            onPress={() => this.handleRoute(rowData)}
+            underlayColor="#EEE">
+            <View>
+              <Image
+                style={styles.image}
+                source={require('../Images/group.png')} />
+              <Text style={styles.name}>{rowData.groupName}</Text>
+              <Text style={styles.name}>{rowData.description}</Text>
+            </View>
+          </TouchableHighlight>
+          <Separator />
+        </View>
       )
+    } else {
+      return (
+        <View>
+          <TouchableHighlight 
+            style={styles.rowContainer}
+            onPress={() => this.handleRoute(rowData)}
+            underlayColor="#EEE">
+            <View>
+            <Image
+              style={styles.image}
+              source={{uri: rowData.profileImageURL}} />
+              <Text style={styles.name}>{rowData.name}</Text>
+            </View>
+          </TouchableHighlight>
+          <Separator />
+        </View>
+      )
+    }
   }
+
+
   render(){
     const user = this.props.userInfo;
     const uid = user.uid;
     return (
       <View style={styles.container}>
-        {this.props.friends ?
+        <TouchableHighlight onPress={() => this.addFriends()}>
+          <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
+        </TouchableHighlight>
+        {this.props.allData ?
           // ListView creates a list of friends if the user has friends
           // If not, render an empty view
           <ListView
+            enableEmptySections={true}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)} />
             : <View></View>
@@ -100,38 +137,32 @@ class Friends extends Component{
 var styles = {
   container: {
     marginTop: 0,
-    flex: 1,
-    flexDirection: 'column'
   },
   rowContainer: {
-    flex: 1,
-    padding: 40
+    padding: 30,
+    height: 110,
+    flexDirection: 'row',
   },
   image: {
-    height: 25,
-    width: 25,
-    borderRadius: 65,
-    marginTop: 10
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    position: 'absolute'
   },
-  button: {
-    width: 200,
-    height: 100,
-    backgroundColor: '#EEE',
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    justifyContent: 'center',
+  name: {
+    paddingLeft: 80,
+    marginTop: 15,
+    fontSize: 20,
+    backgroundColor: 'rgba(0,0,0,0)'
+  },  
+  addFriendsImage: {
+    height: 30,
+    width: 30,
+    alignSelf: 'flex-end',
+    marginRight: 20,
+    marginTop: 80,
     flex: 1
   },
-  friendName: {
-    flexWrap: 'wrap',
-    justifyContent: 'flex-end'
-  }
-  // friendImage: {
-  //   height: 60,
-  //   width: 60,
-  //   borderRadius: 30,
-  //   flexWrap: 'wrap'
-  // }
 };
 
 Friends.propTypes = {
