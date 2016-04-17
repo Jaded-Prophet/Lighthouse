@@ -15,14 +15,22 @@
 <div id='map-one' class='map'> </div>
 <script>
   var socket = io.connect('http://localhost:4568');
-  socket.on('change location', function(loc){
-    var coordinate = [loc.latitude, loc.longitude];
-    map.setView(coordinate, 18);
-  });
-
   L.mapbox.accessToken = 'pk.eyJ1IjoiaW5qZXllbyIsImEiOiJHYUJMWGV3In0.-9Wcu6yJNQmem2IXWaRuIg';
   var map = L.mapbox.map('map-one', 'mapbox.streets');
   map.setView([38.8929,-77.0252], 14);
+  // Make marker for traveling person
+  var marker = L.marker([-73, 40], {
+    icon: L.mapbox.marker.icon({
+      'marker-color': '#f86767'
+    })
+  });
+  marker.addTo(map);
+  // When person changes location, update marker location
+  socket.on('change location', function(loc){
+    var coordinate = [loc.latitude, loc.longitude];
+    map.setView(coordinate);
+    marker.setLatLng(L.latLng(loc.latitude, loc.longitude));
+  });
 </script>
 </body>
 </html>
