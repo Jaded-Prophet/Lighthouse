@@ -17,6 +17,7 @@ var MapboxMap = React.createClass({
   getInitialState() {
     return {
       zoom: 17,
+      currentLoc: undefined,
       annotations: [{
         coordinates: [40.72052634, -73.97686958312988],
         'type': 'point',
@@ -71,6 +72,7 @@ var MapboxMap = React.createClass({
   onUpdateUserLocation(location) {
     console.log(location);
     this.socket.emit('change location', location);
+    this.setState({currentLoc: location});
   },
   onOpenAnnotation(annotation) {
     console.log(annotation);
@@ -122,6 +124,7 @@ var MapboxMap = React.createClass({
         title: 'This is your friend',
         id: 'Friend'
       }]);
+      this.setVisibleCoordinateBoundsAnimated(mapRef, locFlip[0], locFlip[1], this.state.currentLoc.latitude, this.state.currentLoc.longitude, 100, 0, 0, 0);
     });
   },
   render: function() {
