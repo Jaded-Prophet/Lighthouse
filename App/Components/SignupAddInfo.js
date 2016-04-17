@@ -52,9 +52,33 @@ class SignupAddInfo extends React.Component{
         }
       }
       if(isNumeric === true){
+        var numFormat = '(';
+        var numChar;
+
+          for(var i = 0; i < this.state.phoneNumber.length; i++){
+            if(i === 2){
+              numChar = ') ';
+              numFormat = numFormat + this.state.phoneNumber[i] + numChar;
+            }
+            if(i === 5){
+              numChar = '-';
+              numFormat = numFormat + this.state.phoneNumber[i] + numChar; 
+            }
+            else {
+              if(i !== 2){
+                numFormat = numFormat + this.state.phoneNumber[i];            
+              }
+            }
+          }
+
         this.setState({
-        updateAlert: 'Looks Good!'
+          updateAlert: 'Looks Good!'
         });
+
+        this.setState({
+          phoneNumber: numFormat
+        })
+
         this.supplementInfo();
       }
     }
