@@ -33,6 +33,10 @@ app.get('/scripts/map.js', function(req, res) {
   res.sendFile(__dirname + '/scripts/map.js');
 });
 
+app.get('/scripts/directions.js', function(req, res) {
+  res.sendFile(__dirname + '/scripts/directions.js');
+});
+
 app.get('/map', function(req, res) {
   res.sendFile(__dirname + '/map.html');
 });
