@@ -28,6 +28,17 @@ class FriendsAdd extends Component{
     });
   }
 
+  sendFriendRequest() {
+    console.log('clicked add Friend')
+    console.log('my user id is ', this.props.userInfo.uid)
+    console.log('friend info is ', this.state.newFriend[0])
+    
+    // add friend to firebase
+    // addFriend(userId, friendId) 
+
+    // will also need to send state back up to previous page with a handler function to re=render page
+  }
+
   searchForFriend() {
     var that = this;
     var friendEmail = that.state.friendEmail;
@@ -75,9 +86,19 @@ class FriendsAdd extends Component{
   render(){
 
     if (this.state.foundFriend) {
-      var friend = (
+      var friend = this.state.newFriend[0].uid
+      var friendDisplay = (
         <View>
-          <Text>{this.state.newFriend[0].uid.email}</Text>
+          <Image
+            style={styles.image}
+            source={{uri: friend.profileImageURL}} />
+          <Text style={styles.name}> {friend.name} </Text>
+          <TouchableHighlight
+            style={styles.addFriendButton}
+            onPress={this.sendFriendRequest.bind(this)}
+            underlayColor='white' >
+            <Text style={styles.addFriendButtonText}> ADD FRIEND </Text>
+          </TouchableHighlight>
         </View>
       )
     }
@@ -109,7 +130,7 @@ class FriendsAdd extends Component{
             </TouchableHighlight>
             </View>
         {loadingFriend}
-        {friend}
+        {friendDisplay}
       </View>
     )
   }
@@ -156,6 +177,33 @@ var styles = {
   rowTitle: {
     color: '#48BBEC',
     fontSize: 16
+  },
+  image: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    position: 'absolute'
+  },
+  name: {
+    paddingLeft: 80,
+    marginTop: 20,
+    backgroundColor: 'rgba(0,0,0,0)'
+  },  
+  addFriendButton: {
+    height: 45,
+    width: 250,
+    flexDirection: 'row',
+    backgroundColor: '#f1cc1f',
+    borderColor: '#f1cc1f',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 10,
+    alignSelf: 'center',
+    justifyContent: 'center'
+  },
+  addFriendButtonText: {
+    fontSize: 30
   },
   searchInput: {
     height: 30,
