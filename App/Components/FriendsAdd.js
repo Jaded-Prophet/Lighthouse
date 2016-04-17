@@ -29,12 +29,25 @@ class FriendsAdd extends Component{
   }
 
   sendFriendRequest() {
+    var userId = this.props.userInfo.uid;
+    var friendId = this.state.newFriend[0].uid;
+    var that = this;
+
+    api.addFriend(userId, friendId)
+
+    this.setState({
+      updateAlert: 'You have added a new friend!',
+      foundFriend: false
+    })
+
+    setTimeout(function() {
+      that.setState({ updateAlert: '' })
+    }, 3000);
+
     console.log('clicked add Friend')
     console.log('my user id is ', this.props.userInfo.uid)
-    console.log('friend info is ', this.state.newFriend[0])
+    console.log('friend info is ', this.state.newFriend[0].uid)
     
-    // add friend to firebase
-    // addFriend(userId, friendId) 
 
     // will also need to send state back up to previous page with a handler function to re=render page
   }
@@ -62,7 +75,6 @@ class FriendsAdd extends Component{
     if (foundFriend === false) {
       api.findUserByEmail(friendEmail)
         .then(function(res) {
-          console.log('res is ', res)
           that.setState({
             newFriend: res, 
             isLoading: false,
@@ -86,7 +98,7 @@ class FriendsAdd extends Component{
   render(){
 
     if (this.state.foundFriend) {
-      var friend = this.state.newFriend[0].uid
+      var friend = this.state.newFriend[0].info
       var friendDisplay = (
         <View>
           <Image
@@ -94,10 +106,10 @@ class FriendsAdd extends Component{
             source={{uri: friend.profileImageURL}} />
           <Text style={styles.name}> {friend.name} </Text>
           <TouchableHighlight
-            style={styles.addFriendButton}
+            style={styles.button}
             onPress={this.sendFriendRequest.bind(this)}
             underlayColor='white' >
-            <Text style={styles.addFriendButtonText}> ADD FRIEND </Text>
+            <Text style={styles.buttonText}> ADD FRIEND </Text>
           </TouchableHighlight>
         </View>
       )
@@ -186,25 +198,10 @@ var styles = {
   },
   name: {
     paddingLeft: 80,
-    marginTop: 20,
+    marginTop: 15,
+    fontSize: 20,
     backgroundColor: 'rgba(0,0,0,0)'
   },  
-  addFriendButton: {
-    height: 45,
-    width: 250,
-    flexDirection: 'row',
-    backgroundColor: '#f1cc1f',
-    borderColor: '#f1cc1f',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 10,
-    marginTop: 10,
-    alignSelf: 'center',
-    justifyContent: 'center'
-  },
-  addFriendButtonText: {
-    fontSize: 30
-  },
   searchInput: {
     height: 30,
     borderWidth: 1,
