@@ -153,6 +153,7 @@ class Friends extends Component{
 
 var styles = {
   container: {
+    flex: 1,
     marginTop: 0
   },
   isLoadingContainer: {
