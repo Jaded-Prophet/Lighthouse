@@ -131,7 +131,9 @@ var styles = {
     height: 126,
     width: 126,
     borderRadius: 63,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    borderWidth: 10,
+    borderColor: '#9dc7c9'
   },
   editImage: {
     height: 30,
@@ -150,10 +152,11 @@ var styles = {
     padding: 10
   },
   rowTitle: {
-    color: '#6ccbe7',
+    color: '#498183',
     fontSize: 16
   },
   rowContent: {
+    color: '#022c3d',
     fontSize: 19
   }
 };
