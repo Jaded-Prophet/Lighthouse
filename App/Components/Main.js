@@ -67,7 +67,7 @@ class Main extends React.Component{
           passProps: {
             userInfo: authData
           }
-        })
+        });
       }
     });
 
@@ -104,10 +104,12 @@ class Main extends React.Component{
     } else {
       return (
         <View style={styles.mainContainer}>
-          <Text style={styles.title}>Project Sapphire Login</Text>
+          <Text style={styles.title}>Lighthouse</Text>
+          <Text style={styles.subtitle}>Log In</Text>
 
           <Text>Email</Text>
           <TextInput
+            placeholder='email'
             autoCapitalize='none'
             style={styles.searchInput}
             value={this.state.email}
@@ -115,6 +117,7 @@ class Main extends React.Component{
 
           <Text>Password</Text>
           <TextInput
+            placeholder='password'
             autoCapitalize='none'
             secureTextEntry={true}
             style={styles.searchInput}
@@ -125,14 +128,14 @@ class Main extends React.Component{
             style={styles.button}
             onPress={this.loggingIn.bind(this)}
             underlayColor='white' >
-              <Text style={styles.buttonText}> LOGIN </Text>
+              <Text style={styles.buttonText}>LOG IN</Text>
           </TouchableHighlight>
 
           <TouchableHighlight
             style={styles.button}
             onPress={this.goToSignup.bind(this)}
             underlayColor='white' >
-              <Text style={styles.buttonText}> SIGNUP </Text>
+              <Text style={styles.buttonText}>SIGN UP</Text>
           </TouchableHighlight>
 
           <ActivityIndicatorIOS
@@ -163,12 +166,19 @@ var styles = StyleSheet.create({
     backgroundColor:'#48BBEC'
   },
   title: {
-    marginBottom: 25,
+    marginBottom: 15,
     fontSize: 30,
     textAlign: 'center',
     color: '#fff'
   },
+  subtitle: {
+    marginBottom: 25,
+    fontSize: 25,
+    textAlign: 'center',
+    color: '#fff'
+  },
   searchInput: {
+    paddingLeft: 5,
     height: 50,
     borderWidth: 1,
     borderRadius: 8,
@@ -190,7 +200,8 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 30
+    fontSize: 30,
+    letterSpacing: 3
   },
   loadingImage: {
     height: 100,
