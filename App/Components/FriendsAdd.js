@@ -1,4 +1,5 @@
 var api = require('../Utils/api');
+var Separator = require('./Helpers/Separator');
 
 import React, {
   View,
@@ -45,11 +46,6 @@ class FriendsAdd extends Component{
     setTimeout(function() {
       that.setState({ updateAlert: '' })
     }, 3000);
-
-    console.log('clicked add Friend')
-    console.log('my user id is ', this.props.userInfo.uid)
-    console.log('friend info is ', this.state.newFriend[0].uid)
-    
   }
 
   searchForFriend() {
@@ -102,21 +98,45 @@ class FriendsAdd extends Component{
   render(){
 
     if (this.state.foundFriend) {
-      var friend = this.state.newFriend[0].info
-      var friendDisplay = (
-        <View>
-          <Image
-            style={styles.image}
-            source={{uri: friend.profileImageURL}} />
-          <Text style={styles.name}> {friend.name} </Text>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={this.sendFriendRequest.bind(this)}
-            underlayColor='white' >
-            <Text style={styles.buttonText}> ADD FRIEND </Text>
-          </TouchableHighlight>
-        </View>
-      )
+
+      var friends = this.state.newFriend;
+      var allFriends = this.props.allFriends;
+      var friendList = [];
+
+      for (var i=0; i < friends.length; i++) {
+        var currentFriend = false;
+        for (var j=0; j < allFriends.length; j++) {
+          if (friends[i].info.email === allFriends[j].email) {
+            currentFriend = true;
+          }
+        }
+
+        if (currentFriend === false) {
+          friendList.push(friends[i])
+        }
+      }
+
+
+      var friendDisplay = friendList.map((item, index) => {
+        return (
+
+          <View key={index}>
+            <View style={styles.listContainer}>
+            <Image
+              style={styles.image}
+              source={{uri: item.info.profileImageURL}} />
+            <Text style={styles.name}> {item.info.name} </Text>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={this.sendFriendRequest.bind(this)}
+              underlayColor='white' >
+              <Text style={styles.buttonText}> ADD FRIEND </Text>
+            </TouchableHighlight>
+            </View>
+            <Separator />
+          </View>
+        )
+      })
     }
 
     if (this.state.isLoading) {
@@ -159,6 +179,9 @@ var styles = {
     marginRight: 10,
     marginTop: 100
   },
+  listContainer: {
+    padding: 20
+  },
   isLoadingContainer: {
     flex: 1,
     alignSelf: 'center'
@@ -180,6 +203,7 @@ var styles = {
     justifyContent: 'center'
   },
   buttonText: {
+    padding: 10,
     fontSize: 10
   },
   alertText: {
