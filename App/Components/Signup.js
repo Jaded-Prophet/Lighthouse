@@ -95,7 +95,7 @@ class Signup extends React.Component{
 
         <Text style={styles.pageText}>Email</Text>
         <TextInput
-          placeholder='email'
+          placeholder='Email'
           autoCapitalize='none'
           style={styles.searchInput}
           value={this.state.email}
@@ -103,7 +103,7 @@ class Signup extends React.Component{
 
         <Text style={styles.pageText}>Password</Text>
         <TextInput
-          placeholder='password'
+          placeholder='Password'
           autoCapitalize='none'
           secureTextEntry={true}
           style={styles.searchInput}

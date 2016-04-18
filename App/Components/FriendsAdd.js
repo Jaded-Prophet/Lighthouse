@@ -212,14 +212,13 @@ var styles = {
   },
   alertText: {
     marginTop: 20,
-    fontSize: 16,
-    color: 'red'
+    color: '#feb732'
   },
   rowContainer: {
     padding: 3
   },
   rowTitle: {
-    color: '#48BBEC',
+    color: '#498183',
     fontSize: 16
   },
   image: {

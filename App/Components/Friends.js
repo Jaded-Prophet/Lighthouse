@@ -169,7 +169,7 @@ var styles = {
   alertText: {
     marginTop: 20,
     fontSize: 16,
-    color: 'red'
+    color: '#feb732'
   },
   friendAlert: {
     marginLeft: 20,

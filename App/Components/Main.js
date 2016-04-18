@@ -21,7 +21,6 @@ class Main extends React.Component{
     this.state = {
       email:  '',
       password: '',
-      isLoading: false,
       error: false
     };
   }
@@ -39,10 +38,6 @@ class Main extends React.Component{
   }
 
   loggingIn() {
-    // Turn on spinner
-    this.setState({
-      isLoading: true
-    });
     // Using Firebase to authenticate
     var that = this;
     var ref = new Firebase("https://project-sapphire.firebaseio.com");
@@ -54,14 +49,13 @@ class Main extends React.Component{
         console.log("Login Failed!", error);
         // Shows error on client if login fails
         that.setState({
-          error: 'Login Failed!',
-          isLoading: false
+          error: 'Login failed'
         });
+
       } else {
         console.log("Authenticated successfully with payload:", authData);
         // navigate to Dashboard
         that.props.navigator.push({
-          title: 'Friends',
           component: TabBar,
           passProps: {
             userInfo: authData
@@ -73,13 +67,13 @@ class Main extends React.Component{
     setTimeout(() => {
       //Afterwards, clear state for Main component
       this.setState({
-        isLoading: false,
         error: false,
         email: '',
         password: ''
       });
-    }, 3000);
+    }, 4000);
   }
+
 
   goToSignup() {
     this.props.navigator.push({
@@ -91,24 +85,17 @@ class Main extends React.Component{
   render() {
     // Show an error if API request fails
     var showErr = (
-      this.state.error ? <Text> {this.state.error} </Text> : <View></View>
+      this.state.error ? <Text style={styles.alertText}> {this.state.error} </Text> : <View></View>
     );
 
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.isLoadingContainer}>
-          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
-        </View>
-      )
-    } else {
-      return (
+    return (
         <View style={styles.mainContainer}>
           <Image style={styles.logo} source={require('../Images/lighthouse.png')} />
           <Text style={styles.title}>Lighthouse</Text>
 
           <Text style={styles.pageText}>Email</Text>
           <TextInput
-            placeholder='email'
+            placeholder='Email'
             autoCapitalize='none'
             style={styles.searchInput}
             value={this.state.email}
@@ -116,12 +103,13 @@ class Main extends React.Component{
 
           <Text style={styles.pageText}>Password</Text>
           <TextInput
-            placeholder='password'
+            placeholder='Password'
             autoCapitalize='none'
             secureTextEntry={true}
             style={styles.searchInput}
             value={this.state.password}
             onChange={this.handlePassword.bind(this)} />
+          { showErr }
 
           <TouchableHighlight
             style={styles.button}
@@ -137,15 +125,8 @@ class Main extends React.Component{
               <Text style={styles.linkText}>Sign up now!</Text>
           </TouchableHighlight>
 
-          <ActivityIndicatorIOS
-            animating={this.state.isLoading}
-            color='#111'
-            size='large'></ActivityIndicatorIOS>
-          { showErr }
-
         </View>
       )
-    }
   }
 }
 
@@ -166,6 +147,10 @@ var styles = StyleSheet.create({
   },
   pageText: {
     color: '#fff'
+  },
+  alertText: {
+    color: '#feb732',
+    fontSize: 15
   },
   linkText: {
     color: '#feb732',

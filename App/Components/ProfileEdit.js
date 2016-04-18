@@ -89,59 +89,45 @@ class ProfileEdit extends Component{
 var styles = {
   container: {
     flex: 1,
-    marginLeft: 20,
-    marginRight: 10,
-    marginTop: 100
+    padding: 30,
+    paddingTop: 100,
+    flexDirection: 'column',
+    backgroundColor:'#498183'
   },
   button: {
     height: 25,
     flexDirection: 'row',
-    backgroundColor: 'white',
-    borderColor: 'white',
-    borderWidth: 1,
     borderRadius: 8,
     marginRight: 15,
     alignSelf: 'flex-end',
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 10
+    fontSize: 10,
+    color: '#feb732'
   },
   changeText: {
     fontSize: 16,
-    color: 'red'
+    color: '#feb732'
   },
   rowContainer: {
     padding: 3
   },
   rowTitle: {
-    color: '#48BBEC',
+    color: '#fff',
     fontSize: 16
   },
   searchInput: {
-    height: 30,
-    borderWidth: 1,
+    paddingLeft: 5,
+    height: 50,
     borderRadius: 8,
-    marginBottom: 5,
-    marginTop: 5,
-    padding: 3
+    marginBottom: 10,
+    marginTop: 10,
+    backgroundColor: '#9dc7c9',
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   }
 };
 
 module.exports = ProfileEdit;
-
-
-        // <Text>Password</Text>
-        // <TextInput
-        //   secureTextEntry={true}
-        //   style={styles.searchInput}
-        //   value={this.state.password}
-        //   onChange={this.handlePassword.bind(this)} />
-
-        // <TouchableHighlight
-        //   style={styles.button}
-        //   onPress={this.loggingIn.bind(this)}
-        //   underlayColor='white' >
-        //     <Text style={styles.buttonText}> LOGIN </Text>
-        // </TouchableHighlight>
 

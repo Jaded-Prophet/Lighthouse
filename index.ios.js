@@ -23,7 +23,7 @@ class projectSapphire extends Component {
       style={styles.container}
       initialRoute={{
         component: Main,
-        title: 'Project Sapphire',
+        title: 'Log In'
       }}
     />
     );

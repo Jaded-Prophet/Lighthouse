@@ -150,9 +150,9 @@ class SignupAddInfo extends React.Component{
 
         <Text style={styles.changeText}>{this.state.updateAlert}</Text>
 
-        <Text style={styles.title}>Provide Additional User Info</Text>
+        <Text style={styles.title}>Add Info</Text>
 
-        <Text>Name</Text>
+        <Text style={styles.pageText}>Name</Text>
           <TextInput
           placeholder = 'Name'
           autoCapitalize='none'
@@ -160,7 +160,7 @@ class SignupAddInfo extends React.Component{
           value={this.state.name}
           onChange={this.handleName.bind(this)} />
 
-        <Text>Phone Number</Text>
+        <Text style={styles.pageText}>Phone Number</Text>
           <TextInput
           placeholder='10-digit phone number'
           keyboardType='numeric'
@@ -170,10 +170,9 @@ class SignupAddInfo extends React.Component{
           onChange={this.handlePhoneNumber.bind(this)} />
 
           <TouchableHighlight
-            style={styles.button}
             onPress={this.delayInfo.bind(this)}
             underlayColor='white' >
-              <Text style={styles.buttonText}> LATER </Text>
+              <Text style={styles.changeText}> SKIP </Text>
           </TouchableHighlight>
 
           <TouchableHighlight
@@ -197,7 +196,10 @@ var styles = StyleSheet.create({
     marginTop: 65,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor:'#48BBEC'
+    backgroundColor:'#498183'
+  },
+  pageText: {
+    color: '#fff'
   },
   title: {
     marginBottom: 25,
@@ -208,32 +210,37 @@ var styles = StyleSheet.create({
   searchInput: {
     paddingLeft: 5,
     height: 50,
-    borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     marginTop: 10,
+    backgroundColor: '#9dc7c9',
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
   button: {
     height: 45,
+    width: 200,
     flexDirection: 'row',
     backgroundColor: 'white',
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
-    marginTop: 10,
-    alignSelf: 'stretch',
+    marginTop: 15,
+    alignSelf: 'center',
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 30,
-    letterSpacing: 3
+    color: '#022c3d',
+    padding: 10,
+    fontSize: 20
   },
   changeText: {
+    marginTop: 40,
+    marginBottom: 10,
     fontSize: 16,
-    color: 'red'
+    color: '#feb732',
+    textAlign: 'center'
   }
 });
 
