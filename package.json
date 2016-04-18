@@ -5,13 +5,15 @@
   "scripts": {
     "test": "node node_modules/react-native/local-cli/cli.js start",
     "start": "react-native-start",
-    "deploy": "react-native bundle --entry-file ./index.ios.js --platform ios --bundle-output ios/main.jsbundle && fastlane beta"   
+    "deploy": "react-native bundle --entry-file ./index.ios.js --platform ios --bundle-output ios/main.jsbundle && fastlane beta"
   },
   "dependencies": {
     "firebase": "^2.4.2",
     "react": "^0.14.8",
     "react-native": "^0.23.0",
     "react-native-keyboard-spacer": "^0.1.6",
-    "react-timer-mixin": "^0.13.3"
+    "react-timer-mixin": "^0.13.3",
+    "socket.io": "^1.4.5",
+    "socket.io-client": "^1.4.5"
   }
 }
