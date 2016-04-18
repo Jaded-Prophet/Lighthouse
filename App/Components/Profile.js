@@ -115,7 +115,7 @@ var styles = {
     marginTop: 10
   },
   badgeContainer: {
-    backgroundColor: '#48BBEC',
+    backgroundColor: '#498183',
     paddingBottom: 10,
     marginTop: 55,
     width: 400
@@ -131,7 +131,9 @@ var styles = {
     height: 126,
     width: 126,
     borderRadius: 63,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    borderWidth: 10,
+    borderColor: '#9dc7c9'
   },
   editImage: {
     height: 30,
@@ -150,10 +152,11 @@ var styles = {
     padding: 10
   },
   rowTitle: {
-    color: '#48BBEC',
+    color: '#498183',
     fontSize: 16
   },
   rowContent: {
+    color: '#022c3d',
     fontSize: 19
   }
 };

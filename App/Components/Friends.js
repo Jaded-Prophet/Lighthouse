@@ -153,7 +153,7 @@ class Friends extends Component{
 
 var styles = {
   container: {
-    marginTop: 0,
+    marginTop: 0
   },
   isLoadingContainer: {
     flex: 1,
@@ -169,7 +169,7 @@ var styles = {
   alertText: {
     marginTop: 20,
     fontSize: 16,
-    color: 'red'
+    color: '#feb732'
   },
   friendAlert: {
     marginLeft: 20,

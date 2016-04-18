@@ -7,7 +7,6 @@ import React, {
   TabBarIOS
 } from 'react-native';
 
-import Dashboard from './Dashboard';
 import Main from './Main';
 import Friends from './Friends';
 import Profile from './Profile';
@@ -25,7 +24,9 @@ class TabBar extends React.Component {
   }
   render(){
     return (
-      <TabBarIOS>
+      <TabBarIOS
+        tintColor='#498183'
+      >
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabOne'}
           onPress={() => this.setTab('tabOne')}
@@ -62,7 +63,8 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
   tabText: {
-    margin:50,
+    color: 'white',
+    margin: 50,
     fontSize: 45
   }
 });
