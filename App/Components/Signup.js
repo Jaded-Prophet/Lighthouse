@@ -90,11 +90,12 @@ class Signup extends React.Component{
 
     return (
       <View style={styles.mainContainer}>
-        <Text style={styles.title}>Project Sapphire Signup</Text>
+        <Text style={styles.title}>Lighthouse</Text>
+        <Text style={styles.subtitle}>Sign Up</Text>
 
         <Text>Email</Text>
         <TextInput
-          placeholder = 'email'
+          placeholder='email'
           autoCapitalize='none'
           style={styles.searchInput}
           value={this.state.email}
@@ -102,8 +103,8 @@ class Signup extends React.Component{
 
         <Text>Password</Text>
         <TextInput
-          placeholder = 'password'
-          autoCapitalize = 'none'
+          placeholder='password'
+          autoCapitalize='none'
           secureTextEntry={true}
           style={styles.searchInput}
           value={this.state.password}
@@ -113,7 +114,7 @@ class Signup extends React.Component{
           style={styles.button}
           onPress={this.createUser.bind(this)}
           underlayColor='white' >
-            <Text style={styles.buttonText}> SIGNUP </Text>
+            <Text style={styles.buttonText}> SIGN UP </Text>
         </TouchableHighlight>
 
         <ActivityIndicatorIOS
@@ -138,12 +139,19 @@ var styles = StyleSheet.create({
     backgroundColor:'#48BBEC'
   },
   title: {
-    marginBottom: 25,
+    marginBottom: 15,
     fontSize: 30,
     textAlign: 'center',
     color: '#fff'
   },
+  subtitle: {
+    marginBottom: 25,
+    fontSize: 25,
+    textAlign: 'center',
+    color: '#fff'
+  },
   searchInput: {
+    paddingLeft: 5,
     height: 50,
     borderWidth: 1,
     borderRadius: 8,
@@ -165,7 +173,8 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 30
+    fontSize: 30,
+    letterSpacing: 3
   }
 });
 
