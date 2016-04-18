@@ -93,7 +93,7 @@ class Signup extends React.Component{
         <Text style={styles.title}>Lighthouse</Text>
         <Text style={styles.subtitle}>Sign Up</Text>
 
-        <Text>Email</Text>
+        <Text style={styles.pageText}>Email</Text>
         <TextInput
           placeholder='email'
           autoCapitalize='none'
@@ -101,7 +101,7 @@ class Signup extends React.Component{
           value={this.state.email}
           onChange={this.handleEmail.bind(this)} />
 
-        <Text>Password</Text>
+        <Text style={styles.pageText}>Password</Text>
         <TextInput
           placeholder='password'
           autoCapitalize='none'
@@ -137,6 +137,9 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor:'#48BBEC'
+  },
+  pageText: {
+    color: '#fff'
   },
   title: {
     marginBottom: 15,

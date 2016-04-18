@@ -104,10 +104,10 @@ class Main extends React.Component{
     } else {
       return (
         <View style={styles.mainContainer}>
+          <Image style={styles.logo} source={require('../Images/lighthouse.png')} />
           <Text style={styles.title}>Lighthouse</Text>
-          <Text style={styles.subtitle}>Log In</Text>
 
-          <Text>Email</Text>
+          <Text style={styles.pageText}>Email</Text>
           <TextInput
             placeholder='email'
             autoCapitalize='none'
@@ -115,7 +115,7 @@ class Main extends React.Component{
             value={this.state.email}
             onChange={this.handleEmail.bind(this)} />
 
-          <Text>Password</Text>
+          <Text style={styles.pageText}>Password</Text>
           <TextInput
             placeholder='password'
             autoCapitalize='none'
@@ -131,10 +131,11 @@ class Main extends React.Component{
               <Text style={styles.buttonText}>LOG IN</Text>
           </TouchableHighlight>
 
+          <Text style={styles.signupText}>Don't have an account?</Text>
           <TouchableHighlight
             onPress={this.goToSignup.bind(this)}
             underlayColor='white' >
-              <Text style={styles.signupText}>Don't have an account?{"\n"}Sign up now!</Text>
+              <Text style={styles.linkText}>Sign up now!</Text>
           </TouchableHighlight>
 
           <ActivityIndicatorIOS
@@ -158,51 +159,56 @@ var styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    padding: 30,
-    marginTop: 65,
+    padding: 20,
+    marginTop: 40,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor:'#48BBEC'
+    backgroundColor:'#498183'
   },
-  title: {
-    marginBottom: 15,
-    fontSize: 30,
-    textAlign: 'center',
+  pageText: {
     color: '#fff'
   },
-  subtitle: {
-    marginBottom: 25,
-    fontSize: 25,
+  linkText: {
+    color: '#feb732',
+    fontSize: 15,
+    textAlign: 'center'
+  },
+  title: {
+    marginBottom: 10,
+    fontSize: 30,
     textAlign: 'center',
     color: '#fff'
   },
   searchInput: {
     paddingLeft: 5,
     height: 50,
-    borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 5,
+    backgroundColor: '#9dc7c9',
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
   button: {
     height: 45,
+    width: 200,
     flexDirection: 'row',
     backgroundColor: 'white',
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
-    marginTop: 10,
-    alignSelf: 'stretch',
+    marginTop: 15,
+    alignSelf: 'center',
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 30,
-    letterSpacing: 3
+    color: '#022c3d',
+    padding: 10,
+    fontSize: 20
   },
   signupText: {
+    color: '#fff',
     marginTop: 25,
     fontSize: 15,
     textAlign: 'center'
@@ -212,6 +218,11 @@ var styles = StyleSheet.create({
     width: 100,
     alignSelf: 'center',
     marginTop: 100
+  },
+  logo: {
+    height: 250,
+    width: 250,
+    alignSelf: 'center'
   }
 });
 
