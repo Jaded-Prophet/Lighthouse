@@ -25,7 +25,9 @@ class TabBar extends React.Component {
   }
   render(){
     return (
-      <TabBarIOS>
+      <TabBarIOS
+        tintColor='#498183'
+      >
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabOne'}
           onPress={() => this.setTab('tabOne')}
@@ -59,9 +61,10 @@ class TabBar extends React.Component {
 var styles = StyleSheet.create({
   tabContent: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   tabText: {
+    color: 'white',
     margin: 50,
     fontSize: 45
   }
