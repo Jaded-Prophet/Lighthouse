@@ -23,6 +23,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		92B37EC81CC1894F004DB8F0 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B37EC71CC1894F004DB8F0 /* Mapbox.framework */; };
 		92B37EC91CC1894F004DB8F0 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92B37EC71CC1894F004DB8F0 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		92B37ECC1CC189ED004DB8F0 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B37EBC1CC18803004DB8F0 /* libRCTMapboxGL.a */; };
@@ -31,6 +32,9 @@
 		92F57B981CBF01910004A3DC /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92F57B961CBF01910004A3DC /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		92F57B9A1CBF02480004A3DC /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F57B891CBF00D50004A3DC /* libRCTMapboxGL.a */; };
 >>>>>>> 05973dc84d99751c53bfb72cf6272cd63590f374
+=======
+		96F837A71CC45C15007ECAEF /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96F837A61CC45C15007ECAEF /* Media.xcassets */; };
+>>>>>>> 14788da89f7a12a5085349ebdb94462bacfc360a
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +188,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< f91a5309a970889646641082538f90956307c275
 =======
 		92B37EB21CC18803004DB8F0 /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
@@ -195,6 +200,9 @@
 		92F57B921CBF01420004A3DC /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = "../node_modules/react-native-mapbox-gl/ios/Mapbox.framework"; sourceTree = "<group>"; };
 		92F57B961CBF01910004A3DC /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 >>>>>>> 05973dc84d99751c53bfb72cf6272cd63590f374
+=======
+		96F837A61CC45C15007ECAEF /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+>>>>>>> 14788da89f7a12a5085349ebdb94462bacfc360a
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 				92B37EC71CC1894F004DB8F0 /* Mapbox.framework */,
 				92B37EC51CC1890B004DB8F0 /* Mapbox.framework */,
 				92B37EB21CC18803004DB8F0 /* RCTMapboxGL.xcodeproj */,
@@ -375,6 +384,9 @@
 				92F57B921CBF01420004A3DC /* Mapbox.framework */,
 				92F57B7F1CBF00D50004A3DC /* RCTMapboxGL.xcodeproj */,
 >>>>>>> 05973dc84d99751c53bfb72cf6272cd63590f374
+=======
+				96F837A61CC45C15007ECAEF /* Media.xcassets */,
+>>>>>>> 14788da89f7a12a5085349ebdb94462bacfc360a
 				13B07FAE1A68108700A75B9A /* projectSapphire */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* projectSapphireTests */,
@@ -663,6 +675,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				96F837A71CC45C15007ECAEF /* Media.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -823,6 +836,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD
 <<<<<<< ce05f7b3f99eeecb675e06fe39c4242bd7e4a05d
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -831,6 +845,9 @@
 =======
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tor Sinclair (2F73VP49BS)";
 >>>>>>> (feature) register certificates and deploy local with physical iphones
+=======
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tor Sinclair (2F73VP49BS)";
+>>>>>>> 14788da89f7a12a5085349ebdb94462bacfc360a
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
