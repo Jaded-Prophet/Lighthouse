@@ -142,6 +142,8 @@ class Friends extends Component{
           </TouchableHighlight>
           <ScrollView
             showsVerticalScrollIndicator={true}
+            automaticallyAdjustContentInsets={false}
+            alwaysBounceVertical={false}
           >
           {friendsView}
           </ScrollView>
@@ -199,7 +201,7 @@ var styles = {
     width: 30,
     alignSelf: 'flex-end',
     marginRight: 20,
-    marginTop: 80,
+    marginTop: 40,
     flex: 1
   },
 };
