@@ -112,11 +112,13 @@ var styles = {
   container: {
     flex: 1,
     marginLeft: 20,
-    marginTop: 10
+    marginTop: 10,
+    padding: 20
   },
   badgeContainer: {
     backgroundColor: '#498183',
     paddingBottom: 10,
+    padding: 20,
     marginTop: 55,
     width: 400
   },

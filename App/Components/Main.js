@@ -140,7 +140,7 @@ var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     padding: 20,
-    marginTop: 40,
+    marginTop: 30,
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor:'#498183'
@@ -159,7 +159,7 @@ var styles = StyleSheet.create({
   },
   title: {
     marginBottom: 10,
-    fontSize: 30,
+    fontSize: 25,
     textAlign: 'center',
     color: '#fff'
   },
@@ -193,7 +193,6 @@ var styles = StyleSheet.create({
   },
   signupText: {
     color: '#fff',
-    marginTop: 25,
     fontSize: 15,
     textAlign: 'center'
   },
@@ -204,8 +203,8 @@ var styles = StyleSheet.create({
     marginTop: 100
   },
   logo: {
-    height: 250,
-    width: 250,
+    height: 150,
+    width: 150,
     alignSelf: 'center'
   }
 });
