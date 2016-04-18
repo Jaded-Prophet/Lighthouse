@@ -166,6 +166,7 @@ class SignupAddInfo extends React.Component{
           keyboardType='numeric'
           style={styles.searchInput}
           value={this.state.phoneNumber}
+          maxLength={10}
           onChange={this.handlePhoneNumber.bind(this)} />
 
           <TouchableHighlight
@@ -205,6 +206,7 @@ var styles = StyleSheet.create({
     color: '#fff'
   },
   searchInput: {
+    paddingLeft: 5,
     height: 50,
     borderWidth: 1,
     borderRadius: 8,
@@ -226,14 +228,12 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 30
+    fontSize: 30,
+    letterSpacing: 3
   },
   changeText: {
     fontSize: 16,
     color: 'red'
-  },
-  signupWelcom: {
-    fontSize: 50
   }
 });
 
