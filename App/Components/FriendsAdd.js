@@ -165,8 +165,12 @@ class FriendsAdd extends Component{
               <Text style={styles.buttonText}> SEARCH </Text>
             </TouchableHighlight>
             </View>
-        {loadingFriend}
+        <ScrollView
+          showsVerticalScrollIndicator={true}
+
+        >
         {friendDisplay}
+        </ScrollView>
       </View>
     )
   }
