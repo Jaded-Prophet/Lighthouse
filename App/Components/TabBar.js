@@ -29,13 +29,15 @@ class TabBar extends React.Component {
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabOne'}
           onPress={() => this.setTab('tabOne')}
-          systemIcon="contacts">
+          title="Friends"
+          icon={require("../Images/friends.png")}>
           <Friends {...this.props} />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabTwo'}
           onPress={() => this.setTab('tabTwo')}
-          systemIcon="favorites">
+          title="Profile"
+          icon={require("../Images/profile.png")}>
             <View style={styles.tabContent}>
             <Profile {...this.props} />
             </View>
@@ -43,7 +45,8 @@ class TabBar extends React.Component {
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabThree'}
           onPress={() => this.setTab('tabThree')}
-          systemIcon="search">
+          title="Connection"
+          icon={require("../Images/map.png")}>
             <View style={styles.tabContent}>
             <Map {...this.props} />
             </View>
