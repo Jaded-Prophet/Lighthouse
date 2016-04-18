@@ -132,10 +132,9 @@ class Main extends React.Component{
           </TouchableHighlight>
 
           <TouchableHighlight
-            style={styles.button}
             onPress={this.goToSignup.bind(this)}
             underlayColor='white' >
-              <Text style={styles.buttonText}>SIGN UP</Text>
+              <Text style={styles.signupText}>Don't have an account?{"\n"}Sign up now!</Text>
           </TouchableHighlight>
 
           <ActivityIndicatorIOS
@@ -202,6 +201,11 @@ var styles = StyleSheet.create({
   buttonText: {
     fontSize: 30,
     letterSpacing: 3
+  },
+  signupText: {
+    marginTop: 25,
+    fontSize: 15,
+    textAlign: 'center'
   },
   loadingImage: {
     height: 100,
