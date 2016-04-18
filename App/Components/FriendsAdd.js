@@ -40,7 +40,7 @@ class FriendsAdd extends Component{
       foundFriend: false
     })
 
-    that.props.handleFriendsRender(this.state.newFriend[0]);
+    that.props.handleFriendsRender(that.state.newFriend[0]);
 
     setTimeout(function() {
       that.setState({ updateAlert: '' })
@@ -62,17 +62,20 @@ class FriendsAdd extends Component{
       isLoading: true
     })
 
-    for (var i = 0; i < allFriends.length; i++) {
-      if (allFriends[i].email === friendEmail) {
-        that.setState({
-          updateAlert: 'You are already friends with that person!',
-          isLoading: false
-        })
-        foundFriend = true;
+    if (allFriends.length > 0) {
+      for (var i = 0; i < allFriends.length; i++) {
+        if (allFriends[i].email === friendEmail) {
+          that.setState({
+            updateAlert: 'You are already friends with that person!',
+            isLoading: false
+          })
+          foundFriend = true;
+        }
       }
     }
 
     if (foundFriend === false) {
+      console.log('friend email is ', that.state.friendEmail)
       api.findUserByEmail(friendEmail)
         .then(function(res) {
           that.setState({

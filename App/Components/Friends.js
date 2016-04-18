@@ -24,14 +24,13 @@ class Friends extends Component{
     this.state = {
       isLoading: true,
       updateAlert: '',
-      hasFriends: false
+      friendData: []
     };
   }
 
   handleFriendsRender(newFriend) {
-    console.log('new friend is ===', newFriend)
     var friendData = this.state.friendData;
-    friendData.push(newFriend);
+    friendData.push(newFriend.info);
 
     this.setState({
       friendData: friendData
@@ -46,24 +45,20 @@ class Friends extends Component{
     var that = this;
     api.getUserFriends(that.props.userInfo.uid)
       .then(function(res) {
-        console.log('result from api call is ', res)
         that.setState({
           friendData: res,
-          isLoading: false,
-          hasFriends: true
+          isLoading: false
         })
       })
       .catch(function(err) {
         that.setState({
           updateAlert: 'Add some friends to get started!',
-          hasFriends: false,
           isLoading: false
         })
       })
   }
 
   startConnection(rowData) {
-    console.log('start connection pressed');
     var rowData = rowData;
     this.props.navigator.push({
       title: 'Connection',
@@ -73,7 +68,6 @@ class Friends extends Component{
   }
 
   viewFriend(rowData){
-    console.log('view friend pressed');
     var rowData = rowData;
     this.props.navigator.push({
       title: 'View Friend',
@@ -83,7 +77,6 @@ class Friends extends Component{
   }
 
   handleRoute(rowData){
-    console.log('handle route pressed');
     var rowData = rowData;
     AlertIOS.alert('Friend Time!', 'Do you want to start a connection?', [
       {text: 'No, View Profile', onPress: () => { this.viewFriend(rowData) }, style: 'default'},
@@ -95,10 +88,10 @@ class Friends extends Component{
 
   addFriends(){
     var that = this;
-    this.props.navigator.push({
+    that.props.navigator.push({
       title: 'Add Friends',
       component: FriendsAdd,
-      passProps: {userInfo: that.props.userInfo, allFriends: that.state.friendData, handleFriendsRender: this.handleFriendsRender.bind(this)}
+      passProps: {userInfo: that.props.userInfo, allFriends: that.state.friendData, handleFriendsRender: that.handleFriendsRender.bind(that)}
     });
   }
 
@@ -114,8 +107,7 @@ class Friends extends Component{
       var user = this.props.userInfo;
       var friends = this.state.friendData;
 
-      if (this.state.hasFriends) {
-        console.log('inside of render has friends function')
+      if (friends.length > 0) {
         var friendsView = friends.map((item, index) => {
           return (
             <View key={index}>
@@ -135,7 +127,11 @@ class Friends extends Component{
           )
         })
       } else {
-        var friendsView = ( <View></View> )
+        var friendsView = ( 
+            <View>
+              <Text style={styles.friendAlert}>Get started - add some friends!</Text>
+            </View> 
+          )
       };
 
       return (
@@ -171,6 +167,12 @@ var styles = {
     marginTop: 100
   },
   alertText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'red'
+  },
+  friendAlert: {
+    marginLeft: 20,
     marginTop: 20,
     fontSize: 16,
     color: 'red'
