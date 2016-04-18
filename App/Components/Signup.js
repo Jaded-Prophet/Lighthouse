@@ -11,7 +11,8 @@ var {
   StyleSheet,
   TextInput,
   TouchableHighlight,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  Image
 } = React;
 
 class Signup extends React.Component{
@@ -43,7 +44,7 @@ class Signup extends React.Component{
       if (error) {
         console.log("Error creating user:", error);
         that.setState({
-          error: 'Error creating user',
+          error: 'Error creating user. Try again?',
           isLoading: false 
         });
       } else {
@@ -85,13 +86,13 @@ class Signup extends React.Component{
   render() {
     // Show an error if API request fails
     var showErr = (
-      this.state.error ? <Text> {this.state.error} </Text> : <View></View>
+      this.state.error ? <Text style={styles.updateAlert}> {this.state.error} </Text> : <View></View>
     );
 
     return (
       <View style={styles.mainContainer}>
-        <Text style={styles.title}>Lighthouse</Text>
-        <Text style={styles.subtitle}>Sign Up</Text>
+        <Image style={styles.logo} source={require('../Images/lighthouse.png')} />
+        <Text style={styles.title}>Sign Up</Text>
 
         <Text style={styles.pageText}>Email</Text>
         <TextInput
@@ -132,11 +133,15 @@ class Signup extends React.Component{
 var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    padding: 30,
-    marginTop: 65,
+    padding: 20,
+    marginTop: 40,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor:'#48BBEC'
+    backgroundColor:'#498183'
+  },
+  updateAlert: {
+    color: '#feb732',
+    textAlign: 'center'
   },
   pageText: {
     color: '#fff'
@@ -156,28 +161,35 @@ var styles = StyleSheet.create({
   searchInput: {
     paddingLeft: 5,
     height: 50,
-    borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 5,
+    backgroundColor: '#9dc7c9',
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
   button: {
     height: 45,
+    width: 200,
     flexDirection: 'row',
     backgroundColor: 'white',
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
-    marginTop: 10,
-    alignSelf: 'stretch',
+    marginTop: 15,
+    alignSelf: 'center',
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 30,
-    letterSpacing: 3
+    color: '#022c3d',
+    padding: 10,
+    fontSize: 20
+  },
+  logo: {
+    height: 250,
+    width: 250,
+    alignSelf: 'center'
   }
 });
 
