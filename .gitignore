@@ -3,3 +3,15 @@ node_modules
 
 ## builds ##
 ios/build
+
+# xcode noise
+*.pbxuser
+*.mode1v3
+*~
+
+# old skool
+.svn
+
+# osx noise
+ios/.DS_Store
+profile
