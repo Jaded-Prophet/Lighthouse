@@ -5,6 +5,7 @@ import React, {
   TouchableHighlight,
   StyleSheet,
   StatusBar,
+  Dimensions,
 } from 'react-native';
 import Mapbox from 'react-native-mapbox-gl';
 import io from 'socket.io-client/socket.io';
@@ -17,6 +18,7 @@ var MapboxMap = React.createClass({
   getInitialState() {
     return {
       zoom: 17,
+      boundSet: false,
       currentLoc: undefined,
       annotations: [{
         coordinates: [40.72052634, -73.97686958312988],
@@ -85,24 +87,6 @@ var MapboxMap = React.createClass({
   onTap(location) {
     console.log('tapped', location);
   },
-  queryServer(){
-    fetch('http://localhost:4568/connect', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user: 'Inje',
-        location: 'some coordinates'
-      })
-    })
-    .then((res) => {
-      console.log('The server says: ', res);
-      return res;
-    })
-    .catch((err) => console.log('There was an error: ', err));
-  },
   componentDidMount(){
     this.setUserTrackingMode(mapRef, this.userTrackingMode.follow);
     this.socket = io.connect('http://107.170.3.84:4568', {jsonp: false});
@@ -111,99 +95,44 @@ var MapboxMap = React.createClass({
     });
     this.socket.on('change location', (loc) => {
       console.log('This is the loc: ', loc);
+      var myLat = this.state.currentLoc.latitude;
+      var myLong = this.state.currentLoc.longitude;
+      var lat = loc.latitude;
+      var long = loc.longitude;
+      if (loc.latitude !== this.state.currentLoc.latitude) {
+      this.updateAnnotation(mapRef, {
+          coordinates: [lat, long],
+          'type': 'point',
+          title: 'New Title!',
+          subtitle: 'New Subtitle',
+          annotationImage: {
+            url: 'http://findicons.com/files/icons/367/ifunny/128/dog.png',
+            height: 25,
+            width: 25
+          },
+          id: 'marker2'
+        })
+        if (!this.state.boundSet) {
+          this.setVisibleCoordinateBoundsAnimated(mapRef, lat, long, myLat, myLong, 50, 50, 50, 50);
+          this.state.boundSet = true;
+        }
+      }
     });
     this.socket.on('found location', (loc) => {
       console.log('This is the loc from website: ', loc);
       // loc comes in as [longitude, latitude] which is what the webapp version wants,
       // but the react native version wants the [latitude, longitude], so we flip them.
       var locFlip = [loc[1], loc[0]];
-      this.addAnnotations(mapRef, [{
-        coordinates: locFlip,
-        type: 'point',
-        title: 'This is your friend',
-        id: 'Friend'
-      }]);
       this.setVisibleCoordinateBoundsAnimated(mapRef, locFlip[0], locFlip[1], this.state.currentLoc.latitude, this.state.currentLoc.longitude, 100, 0, 0, 0);
-      fetch(`https://api.mapbox.com/v4/directions/mapbox.driving/${this.state.currentLoc.longitude},${this.state.currentLoc.latitude};${loc[0]},${loc[1]}.json?access_token=${loc[2]}`,
-        {method: 'get'})
-        .then((res) => {console.log(res)});
+      // fetch(`https://api.mapbox.com/v4/directions/mapbox.driving/${this.state.currentLoc.longitude},${this.state.currentLoc.latitude};${loc[0]},${loc[1]}.json?access_token=${loc[2]}`,
+      //   {method: 'get'})
+      //   .then((res) => {console.log(res)});
     });
   },
   render: function() {
     StatusBar.setHidden(true);
     return (
       <View style={styles.main}>
-        <Text onPress={this.queryServer}>
-        Test the server
-        </Text>
-        <Text onPress={() => this.setDirectionAnimated(mapRef, 0)}>
-          Set direction to 0
-        </Text>
-        <Text onPress={() => this.setZoomLevelAnimated(mapRef, 6)}>
-          Zoom out to zoom level 6
-        </Text>
-        <Text onPress={() => this.setCenterCoordinateAnimated(mapRef, 48.8589, 2.3447)}>
-          Go to Paris at current zoom level {parseInt(this.state.currentZoom)}
-        </Text>
-        <Text onPress={() => this.setCenterCoordinateZoomLevelAnimated(mapRef, 35.68829, 139.77492, 14)}>
-          Go to Tokyo at fixed zoom level 14
-        </Text>
-        <Text onPress={() => this.addAnnotations(mapRef, [{
-          coordinates: [40.73312,-73.989],
-          type: 'point',
-          title: 'This is a new marker',
-          id: 'foo'
-        }, {
-          'coordinates': [[40.749857912194386, -73.96820068359375], [40.741924698522055,-73.9735221862793], [40.735681504432264,-73.97523880004883], [40.7315190495212,-73.97438049316406], [40.729177554196376,-73.97180557250975], [40.72345355209305,-73.97438049316406], [40.719290332250544,-73.97455215454102], [40.71369559554873,-73.97729873657227], [40.71200407096382,-73.97850036621094], [40.71031250340588,-73.98691177368163], [40.71031250340588,-73.99154663085938]],
-          'type': 'polygon',
-          'fillAlpha': 1,
-          'fillColor': '#000',
-          'strokeAlpha': 1,
-          'id': 'new-black-polygon'
-        }])}>
-          Add new marker
-        </Text>
-        <Text onPress={() => this.updateAnnotation(mapRef, {
-          coordinates: [40.714541341726175,-74.00579452514648],
-          'type': 'point',
-          title: 'New Title!',
-          subtitle: 'New Subtitle',
-          annotationImage: {
-            url: 'https://cldup.com/7NLZklp8zS.png',
-            height: 25,
-            width: 25
-          },
-          id: 'marker2'
-        })}>
-          Update marker2
-        </Text>
-        <Text onPress={() => this.selectAnnotationAnimated(mapRef, 'marker1')}>
-          Open marker1 popup
-        </Text>
-        <Text onPress={() => this.removeAnnotation(mapRef, 'marker2')}>
-          Remove marker2 annotation
-        </Text>
-        <Text onPress={() => this.removeAllAnnotations(mapRef)}>
-          Remove all annotations
-        </Text>
-        <Text onPress={() => this.setVisibleCoordinateBoundsAnimated(mapRef, 40.712, -74.227, 40.774, -74.125, 100, 0, 0, 0)}>
-          Set visible bounds to 40.7, -74.2, 40.7, -74.1
-        </Text>
-        <Text onPress={() => this.setUserTrackingMode(mapRef, this.userTrackingMode.follow)}>
-          Set userTrackingMode to follow
-        </Text>
-        <Text onPress={() => this.getCenterCoordinateZoomLevel(mapRef, (err, location)=> {
-            if (err) console.log(err);
-            console.log(location);
-          })}>
-          Get location
-        </Text>
-        <Text onPress={() => this.getDirection(mapRef, (err, direction)=> {
-            if (err) console.log(err);
-            console.log(direction);
-          })}>
-          Get direction
-        </Text>
         <Mapbox
           style={styles.container}
           direction={0}
@@ -229,7 +158,7 @@ var MapboxMap = React.createClass({
     );
   }
 });
-
+var width = Dimensions.get('window').width;
 var styles = StyleSheet.create({
   button: {
     width: 150,
@@ -238,7 +167,10 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: 300
+    flexDirection: 'column',
+    marginTop: -10,
+    alignSelf: 'stretch',
+    width: width
   },
   main: {
     flex: 1,
