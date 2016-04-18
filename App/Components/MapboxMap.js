@@ -70,7 +70,6 @@ var MapboxMap = React.createClass({
     console.log(location);
   },
   onUpdateUserLocation(location) {
-    console.log(location);
     this.socket.emit('change location', location);
     this.setState({currentLoc: location});
   },
