@@ -26,3 +26,4 @@ socket.on('change location', function(loc){
     sapphireMap.directionsMade = true;
   }
 });
+
