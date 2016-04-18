@@ -158,7 +158,6 @@ var MapboxMap = React.createClass({
     );
   }
 });
-
 var width = Dimensions.get('window').width;
 var styles = StyleSheet.create({
   button: {
