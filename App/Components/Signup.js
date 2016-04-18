@@ -1,7 +1,6 @@
 var React = require('react-native');
 var Firebase = require('firebase');
 var api = require('../Utils/api');
-var Dashboard = require('./Dashboard');
 var UserDetails = require('./UserDetails');
 var SignupAddInfo = require('./SignupAddInfo');
 

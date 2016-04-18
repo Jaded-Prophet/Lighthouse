@@ -7,7 +7,6 @@ import React, {
   TabBarIOS
 } from 'react-native';
 
-import Dashboard from './Dashboard';
 import Main from './Main';
 import Friends from './Friends';
 import Profile from './Profile';
@@ -59,10 +58,10 @@ class TabBar extends React.Component {
 var styles = StyleSheet.create({
   tabContent: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   tabText: {
-    margin:50,
+    margin: 50,
     fontSize: 45
   }
 });
