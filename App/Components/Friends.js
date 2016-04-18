@@ -142,8 +142,6 @@ class Friends extends Component{
           </TouchableHighlight>
           <ScrollView
             showsVerticalScrollIndicator={true}
-            automaticallyAdjustContentInsets={false}
-            alwaysBounceVertical={false}
           >
           {friendsView}
           </ScrollView>
