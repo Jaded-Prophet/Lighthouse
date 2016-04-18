@@ -1,0 +1,4 @@
+app_identifier "com.sapphiremaps.deploy" # The bundle identifier of your app
+apple_id "tor@romanesco.se" # Your Apple email address
+
+team_id "E234E79E6T"  # Developer Portal Team ID

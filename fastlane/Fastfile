@@ -1,0 +1,17 @@
+fastlane_version "1.46.1"
+
+platform :ios do
+                
+        lane :beta do
+            increment_build_number(
+              xcodeproj: './ios/projectSapphire.xcodeproj'
+            )
+
+            sh("xctool -project ../ios/projectSapphire.xcodeproj -scheme projectSapphire clean archive -archivePath ../build/projectSapphire")
+
+            sh("xcodebuild -exportArchive -exportFormat ipa -archivePath ../build/projectSapphire.xcarchive -exportPath ../build/projectSapphire.ipa -exportProvisioningProfile 'iOS Team Provisioning Profile: *'")        
+
+            sh("cp ../build/projectSapphire.ipa $BITRISE_DEPLOY_DIR")
+        end
+
+end
