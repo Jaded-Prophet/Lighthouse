@@ -54,7 +54,7 @@ class FriendsAdd extends Component{
     var allFriends = that.props.allFriends;
     var foundFriend = false;
 
-    this.setState({
+    that.setState({
       isLoading: true
     })
 
@@ -90,9 +90,8 @@ class FriendsAdd extends Component{
     }
 
     setTimeout(function() {
-      that.setState({ updateAlert: '' })
+      that.setState({ updateAlert: ''})
     }, 3000);
-
   }
 
   render(){
@@ -102,6 +101,7 @@ class FriendsAdd extends Component{
       var friends = this.state.newFriend;
       var allFriends = this.props.allFriends;
       var friendList = [];
+      var that = this;
 
       for (var i=0; i < friends.length; i++) {
         var currentFriend = false;
@@ -116,8 +116,8 @@ class FriendsAdd extends Component{
         }
       }
 
-
       var friendDisplay = friendList.map((item, index) => {
+        
         return (
 
           <View key={index}>
@@ -167,8 +167,8 @@ class FriendsAdd extends Component{
             </View>
         <ScrollView
           showsVerticalScrollIndicator={true}
-
         >
+        {loadingFriend}
         {friendDisplay}
         </ScrollView>
       </View>
