@@ -110,7 +110,7 @@ var styles = {
     marginTop: 10
   },
   badgeContainer: {
-    backgroundColor: '#48BBEC',
+    backgroundColor: '#498183',
     paddingBottom: 10,
     marginTop: 55,
     width: 400
@@ -146,7 +146,7 @@ var styles = {
     padding: 10
   },
   rowTitle: {
-    color: '#48BBEC',
+    color: '#6ccbe7',
     fontSize: 16
   },
   rowContent: {
@@ -154,19 +154,19 @@ var styles = {
   },
   button: {
     height: 45,
-    width: 250,
+    width: 200,
     flexDirection: 'row',
-    backgroundColor: '#f1cc1f',
-    borderColor: '#f1cc1f',
-    borderWidth: 1,
+    backgroundColor: '#feb732',
     borderRadius: 8,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 15,
     alignSelf: 'center',
     justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 30
+    color: '#fff',
+    padding: 10,
+    fontSize: 20
   }
 };
 
