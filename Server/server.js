@@ -15,6 +15,10 @@ app.use(bodyParser());
 // Once you're in the server, navigate into the projectSapphire/Server folder in the root, then run
 // `nodemon server.js` to run your server.
 
+// Everything in the scripts folder in this directory is for the webapp version. This is not the main feature we developed
+// but it was made since we needed a way to have two different user locations. It's best to ignore the web app
+// verion but if you're really interested, the javascript files that speak to the server are there for you.
+
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
@@ -42,12 +46,6 @@ app.get('/scripts/directions.js', function(req, res) {
 app.get('/map', function(req, res) {
   res.sendFile(__dirname + '/map.html');
 });
-
-app.post('/connect',
-  function(req, res) {
-    console.log(req.body);
-    res.status(200).send('I think it worked');
-  });
 
 // Here we write the code for socket.io
 io.on('connection', function(socket) {
