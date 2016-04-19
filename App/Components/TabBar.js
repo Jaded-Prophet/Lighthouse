@@ -23,6 +23,8 @@ class TabBar extends React.Component {
   setTab(tabId){
     this.setState({selectedTab: tabId})
   }
+  // These tabbar items route you to another component. The third tab should ideally not be there, and clicking on a friend
+  // on the friend's list should route you to a 1 on 1(or 1 to many if you're ambitious) map session with another person.
   render(){
     return (
       <TabBarIOS
@@ -69,6 +71,5 @@ var styles = StyleSheet.create({
     fontSize: 45
   }
 });
-
 
 module.exports = TabBar;
