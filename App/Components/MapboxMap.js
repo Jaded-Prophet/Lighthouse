@@ -1,3 +1,4 @@
+// Here we import everything we need using the ES6 deconstructor.
 import React, {
   View,
   Component,
@@ -8,18 +9,34 @@ import React, {
   Dimensions,
 } from 'react-native';
 import Mapbox from 'react-native-mapbox-gl';
+// Socket.io talks to a Digital Ocean server at 107.170.3.84:4568
+// to access this server, use this command on your computer `ssh root@107.170.3.84`
 import io from 'socket.io-client/socket.io';
+// This line below allows socket.io to work with react-native.
 window.navigator.userAgent = "react-native";
 
 var mapRef = 'mapRef';
 
 var MapboxMap = React.createClass({
+  // This mixin is required since it mixes the code from the imported Mapbox with the React class.
+  // It allows certain methods such as styleURL={this.mapStyles.emerald} in the Mapbox render
+  // to work, since this.mapStyles.emerald is not defined by the state and by React.createClass.
+  // This component is written in ES5 since mixins are not supported by ES6 class instantiation.
+  // Because of this, creating MapboxMap with `class MapboxMap extends Component{...}` will not work.
   mixins: [Mapbox.Mixin],
   getInitialState() {
     return {
+      // Setting the map zoom value to 17. The higher the value, the more the view zooms in.
       zoom: 17,
+      // boundSet is a boolean flag that equals true if another user connects. This allows the 
+      // this.setVisibleCoordinateBoundsAnimated(...) to work inside of the  this.socket.on('change location', ...);
       boundSet: false,
+      // This is the current user's location. This changes when the user first enters this component
+      // on the app. The current loc should change from undefined to an object containing the current
+      // latitude and longitude of the user.
       currentLoc: undefined,
+      socket: io('http://107.170.3.84:4568', {jsonp: false}),
+      // These key/value pairs below are made by mapbox, and are useful as a reference.
       annotations: [{
         coordinates: [40.72052634, -73.97686958312988],
         'type': 'point',
@@ -61,8 +78,7 @@ var MapboxMap = React.createClass({
         'strokeColor': '#fffff',
         'fillColor': 'blue',
         'id': 'zap'
-      }],
-      socket: io('http://107.170.3.84:4568', {jsonp: false})
+      }]
      };
   },
   onRegionChange(location) {
@@ -71,7 +87,9 @@ var MapboxMap = React.createClass({
   onRegionWillChange(location) {
     console.log(location);
   },
+  // Every time the user's location changes...
   onUpdateUserLocation(location) {
+    // We will emit a socket event 'change location' to the digital ocean server at 107.170.3.84:4568
     this.socket.emit('change location', location);
     this.setState({currentLoc: location});
   },
@@ -88,17 +106,25 @@ var MapboxMap = React.createClass({
     console.log('tapped', location);
   },
   componentDidMount(){
+    // As soon as this component mounts, we will beging to follow the current user
     this.setUserTrackingMode(mapRef, this.userTrackingMode.follow);
+    // Connect to the digital ocean server. The server will recognize when the user connects by console logging 'User connected'
+    // on the server.
     this.socket = io.connect('http://107.170.3.84:4568', {jsonp: false});
-    this.socket.on('chat message', (msg) => {
-      console.log('Woohoo it worked! ', msg);
-    });
     this.socket.on('change location', (loc) => {
       console.log('This is the loc: ', loc);
+      /* 
+      This is where it could use some refactor.
+      This socket is listening for every change location event, even your own.
+      */
+      // The user's coordinates
       var myLat = this.state.currentLoc.latitude;
       var myLong = this.state.currentLoc.longitude;
+      // Possibly another user's coordinates
       var lat = loc.latitude;
       var long = loc.longitude;
+      // The if statement below says that if the latitude of the incoming location is not your own,
+      // then update an annotation's(a map marker's) location to that latitude and longitude.
       if (loc.latitude !== this.state.currentLoc.latitude) {
       this.updateAnnotation(mapRef, {
           coordinates: [lat, long],
@@ -112,6 +138,9 @@ var MapboxMap = React.createClass({
           },
           id: 'marker2'
         })
+        // Here we check if the view bounds are set. This is optional but for better UX, it allows the user to move
+        // their view and to zoom in without it constantly setting the view bounds every time a 'change loc'
+        // event is emitted.
         if (!this.state.boundSet) {
           this.setVisibleCoordinateBoundsAnimated(mapRef, lat, long, myLat, myLong, 50, 50, 50, 50);
           this.state.boundSet = true;
@@ -124,9 +153,6 @@ var MapboxMap = React.createClass({
       // but the react native version wants the [latitude, longitude], so we flip them.
       var locFlip = [loc[1], loc[0]];
       this.setVisibleCoordinateBoundsAnimated(mapRef, locFlip[0], locFlip[1], this.state.currentLoc.latitude, this.state.currentLoc.longitude, 100, 0, 0, 0);
-      // fetch(`https://api.mapbox.com/v4/directions/mapbox.driving/${this.state.currentLoc.longitude},${this.state.currentLoc.latitude};${loc[0]},${loc[1]}.json?access_token=${loc[2]}`,
-      //   {method: 'get'})
-      //   .then((res) => {console.log(res)});
     });
   },
   render: function() {
@@ -158,6 +184,7 @@ var MapboxMap = React.createClass({
     );
   }
 });
+// Use Dimensions to get the width of the screen since flex only does full height, but not full width.
 var width = Dimensions.get('window').width;
 var styles = StyleSheet.create({
   button: {
@@ -178,6 +205,5 @@ var styles = StyleSheet.create({
     marginTop: 50
   }
 });
-
 
 module.exports = MapboxMap;
