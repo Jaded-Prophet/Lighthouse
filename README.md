@@ -12,13 +12,14 @@ Welcome to Project Sapphire
 
 ## Table of Contents
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
 1. [Team](Inje Yeo, Krista Moroder, Steven Tran, Tor Sinclair)
-1. [Contributing](#contributing)
+2. [Usage](#Usage)
+3. [Requirements](#requirements)
+4. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
+    2. [Database](#database)
+    3. [Deployment](#deployment)
+5. [Roadmap](#roadmap)
 
 ## Usage
 
@@ -29,7 +30,7 @@ Welcome to Project Sapphire
 ### Installing Dependencies
 
 From within the root directory:
-npm install
+  npm install
 
 ### Database
 For our database, we used Firebase, which not only stores each individual user’s data and group data, but also manages our authentication as well.
@@ -89,8 +90,24 @@ We have created several Firebase helper functions within Components/Utils/api.js
   // Search for existing groups by partial group name.
   findGroupByName(nameInput)
   
-### Roadmap
+### Deployment
 
-## Contributing
+Deployment on Bitrise (bitrise.io)
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+Before deploying on Bitrise, a continuous integration platform, certificates have to be set up through Apple Developer Account (iOS). 
+
+1. Apple Developer Account: set up certificates and register users and respective UDID of app. Enter into the Certificates, Identifiers & Profiles section and create the necessary certificates, app ids, register devices and complete the necessary provisioning profiles that links the devices.
+2. Bitrise.io for deployment. Bitrise is a continuous integration platform that allows users to deploy apps quickly and also to work with 3rd party integrations. 
+3. Set up an account with Bitrise (14 days free PRO account) and link your github repository to a new app.
+4. Bitrise have a well documented how-to with examples from users. The deployment site will identify the type of deployment you are setting up and will initialize the necessary scripts. After registering the certificates and adding testers/users to the app its a matter of running the build. Prior to running the build, the certificates signing on Bitrise must be complete, having imported the certificates produced on Apple Developer Account.
+5. If you have configured the users correctly with email notifications Bitrise will email the testers with installation files for app. 
+6. You may need to adjust the Bitrise.yml configuration file. Ensure all users are registered with Bitrise and have accepted the invitation from you, the developer.
+
+## Roadmap
+
+1. Create private map connections between friends.
+2. Create groups (already set up in database and with helper functions).
+3. Use Twilio to send a user an alert when the friend is within a geofence.
+4. Give user the ability to upload their own photo from camera roll. 
+5. Use user photos for avatars on the map.
+
