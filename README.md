@@ -22,8 +22,10 @@ Welcome to Project Sapphire
 5. [Roadmap](#roadmap)
 
 ## Usage
+Refer to the wiki (link above) for more information about usage.
 
 ## Requirements
+Refer to the wiki (link above) for more information about requirements and set up.
 
 ## Development
 
