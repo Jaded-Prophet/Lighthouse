@@ -5,6 +5,7 @@ var ProfileFriend = require('./ProfileFriend');
 var AddFriendButton = require('./AddFriendButton');
 var FriendsAdd = require('./FriendsAdd');
 
+
 import React, {
   View,
   Text,
