@@ -55,73 +55,6 @@ class CreateListing extends Component{
 
   submitListing(that) {
   
-  // sendFriendRequest() {
-  //   var userId = this.props.userInfo.uid;
-  //   var friendId = this.state.newFriend[0].uid;
-  //   var that = this;
-
-  //   api.addFriend(userId, friendId)
-
-  //   that.setState({
-  //     updateAlert: 'You have added a new friend!',
-  //     foundFriend: false
-  //   })
-
-  //   that.props.handleFriendsRender(that.state.newFriend[0]);
-
-  //   setTimeout(function() {
-  //     that.setState({ updateAlert: '' })
-  //   }, 3000);
-  // }
-
-  // searchForFriend() {
-  //   var that = this;
-  //   var friendEmail = that.state.friendEmail;
-  //   var allFriends = that.props.allFriends;
-  //   var foundFriend = false;
-
-  //   that.setState({
-  //     isLoading: true
-  //   })
-
-  //   if (allFriends.length > 0) {
-  //     for (var i = 0; i < allFriends.length; i++) {
-  //       if (allFriends[i].email === friendEmail) {
-  //         that.setState({
-  //           updateAlert: 'You are already friends with that person!',
-  //           isLoading: false
-  //         })
-  //         foundFriend = true;
-  //       }
-  //     }
-  //   }
-
-  //   if (foundFriend === false) {
-  //     console.log('friend email is ', that.state.friendEmail)
-  //     api.findUserByEmail(friendEmail)
-  //       .then(function(res) {
-  //         that.setState({
-  //           newFriend: res, 
-  //           isLoading: false,
-  //           foundFriend: true
-  //         })
-  //       })
-  //       .catch(function(err) {
-  //         that.setState({
-  //           updateAlert: 'That user was not found.',
-  //           isLoading: false,
-  //           foundFriend: false
-  //         })
-  //       })
-  //   }
-
-  //   setTimeout(function() {
-  //     that.setState({ updateAlert: ''})
-  //   }, 3000);
-  // }
-
-  submitListing(that) {
-    
     console.log(that.props);
     var data = {
       createdBy: that.props.userInfo.uid,
@@ -135,7 +68,6 @@ class CreateListing extends Component{
 
       console.log(data.latitude);
       console.log(data.longitude);
-      
       api.addListing(data);
 
     }, (err) => {
@@ -144,15 +76,12 @@ class CreateListing extends Component{
       data.longitude = -122.409002;
       //DO API CALL HERE
       api.addListing(data);
-       
+
     });
       // latitude:
       // longitutde:
-    }
+    
     //DO API CALL HERE
-    api.addListing(data);
-    // console.log(this.state.category);
-    // console.log(CATEGORIES[this.state.category][this.state.itemIndex]);
   }
   
   render() {

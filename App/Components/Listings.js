@@ -28,7 +28,7 @@ class Listings extends Component{
     this.state = {
       isLoading: true,
       updateAlert: '',
-      listingData: null
+      listingData: {}
     };
   }
 
@@ -46,27 +46,20 @@ class Listings extends Component{
   }
 
   getAsyncData() {
-    api.getUserFriends(this.props.userInfo.uid)
-      .then((res) => {
-        this.setState({
-          friendData: res,
+
     var that = this;
     //GET LISTINGS HERE
     api.getListings(that.props.userInfo.uid)
       .then(function(res) {
         console.log(res);
-        // var list = [];
-        // for(var listing in res) {
-        //   list.push(listing);
-        // }
+
         that.setState({
           listingData: res,
           isLoading: false
         })
       })
       .catch(function(err) {
-        this.setState({
-          updateAlert: 'Add some friends to get started!'
+
         that.setState({
           updateAlert: 'The hamsters running the server are too tired. Try again later.',
           isLoading: false
@@ -97,15 +90,13 @@ class Listings extends Component{
     AlertIOS.alert('Friend Time!', 'Do you want to start a connection?', [
       {text: 'No, Cancel', onPress: () => { console.log('back to page') }, style: 'default'},
       {text: 'Yes, Start Connection', onPress: () => { this.startConnection(rowData) }, style: 'cancel'},
+      {text: 'No, View User\'s Profile', onPress: () => { this.viewFriend(rowData) }, style: 'default'}
+
       ]
     );
   }
 
   addFriends(){
-    this.props.navigator.push({
-      title: 'Add Friends',
-      component: FriendsAdd,
-      passProps: {userInfo: this.props.userInfo, allFriends: this.state.friendData, handleFriendsRender: this.handleFriendsRender.bind(this)}
     var that = this;
     that.props.navigator.push({
       title: 'Create New Listing',
@@ -126,9 +117,7 @@ class Listings extends Component{
       var user = this.props.userInfo;
       var listings = this.state.listingData;
       console.log(listings);
-      if (listings.length > 0) {
-        var listingsView = friends.map((item, index) => {
-      if (Object.keys(listings).length > 0) {
+      if (listings !== null && Object.keys(listings).length > 0) {
         var listingsView = _.map(listings, (item, index) => {
           return (
             <View key={index}>
@@ -145,10 +134,6 @@ class Listings extends Component{
           )
         })
       } else {
-        var friendsView = (
-            <View>
-              <Text style={styles.friendAlert}>Get started - add some friends!</Text>
-            </View>
         var listingsView = ( 
             <View>
               <Text style={styles.friendAlert}>No Listings close by. Try a wider search area?</Text>
