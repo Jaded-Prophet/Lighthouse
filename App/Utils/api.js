@@ -164,7 +164,17 @@ var api = {
         return results;
       })
 
+  }, 
+  
+  getListings(miles) {
+    var listings = 'https://project-sapphire.firebaseio.com/Listings.json';
+      //TODO fetch listings within X miles
+
   }
+
 };
 
 module.exports = api;
+
+
+

@@ -105,7 +105,7 @@ class SignupAddInfo extends React.Component{
         api.setUserData(authData, that.state.name, that.state.phoneNumber);
         
         that.props.navigator.push({
-          title: 'Friends',
+          title: 'Listings',
           component: TabBar,
           passProps: {userInfo: authData}
         });
@@ -134,7 +134,7 @@ class SignupAddInfo extends React.Component{
         api.setUserData(authData, that.state.name, that.state.phoneNumber);
 
         that.props.navigator.push({
-          title: 'Friends',
+          title: 'Listings',
           component: TabBar,
           passProps: {userInfo: authData}
         });
