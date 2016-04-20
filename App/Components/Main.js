@@ -3,6 +3,8 @@ var Firebase = require('firebase');
 var api = require('../Utils/api');
 var Signup = require('./Signup');
 var TabBar = require('./TabBar');
+var firebaseUrl = require('../Utils/config')
+
 
 var {
   View,
@@ -40,7 +42,7 @@ class Main extends React.Component{
   loggingIn() {
     // Using Firebase to authenticate
     var that = this;
-    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    var ref = new Firebase(firebaseUrl);
     ref.authWithPassword({
       email: that.state.email,
       password: that.state.password

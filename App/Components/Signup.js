@@ -3,6 +3,7 @@ var Firebase = require('firebase');
 var api = require('../Utils/api');
 var UserDetails = require('./UserDetails');
 var SignupAddInfo = require('./SignupAddInfo');
+var firebaseUrl = require('../Utils/config')
 
 var {
   View,
@@ -27,6 +28,7 @@ class Signup extends React.Component{
   }
 
   createUser() {
+    console.log('????');
     // Turn on spinner
     this.setState({
       isLoading: true
@@ -35,7 +37,7 @@ class Signup extends React.Component{
     // Using Firebase to create new user
     var that = this;
 
-    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    var ref = new Firebase(firebaseUrl);
     ref.createUser({
       email    : that.state.email,
       password : that.state.password
@@ -44,10 +46,11 @@ class Signup extends React.Component{
         console.log("Error creating user:", error);
         that.setState({
           error: 'Error creating user. Try again?',
-          isLoading: false 
+          isLoading: false
         });
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
+        console.log(ref);
         // navigate to Dashboard
         that.props.navigator.push({
           title: 'Add Info',

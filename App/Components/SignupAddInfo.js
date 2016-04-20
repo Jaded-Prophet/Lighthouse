@@ -4,6 +4,8 @@ var api = require('../Utils/api');
 var TabBar = require('./TabBar');
 var Signup = require('./Signup');
 var KeyboardSpacer = require('react-native-keyboard-spacer');
+var firebaseUrl = require('../Utils/config');
+
 
 var {
   View,
@@ -62,11 +64,11 @@ class SignupAddInfo extends React.Component{
             }
             if(i === 5){
               numChar = '-';
-              numFormat = numFormat + this.state.phoneNumber[i] + numChar; 
+              numFormat = numFormat + this.state.phoneNumber[i] + numChar;
             }
             else {
               if(i !== 2){
-                numFormat = numFormat + this.state.phoneNumber[i];            
+                numFormat = numFormat + this.state.phoneNumber[i];
               }
             }
           }
@@ -87,7 +89,7 @@ class SignupAddInfo extends React.Component{
   delayInfo() {
 
     var that = this;
-    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    var ref = new Firebase(firebaseUrl);
     ref.authWithPassword({
       email: that.props.email,
       password: that.props.password
@@ -103,7 +105,7 @@ class SignupAddInfo extends React.Component{
         console.log("Authenticated successfully with payload, delayInfo:", authData);
         // navigate to Dashboard
         api.setUserData(authData, that.state.name, that.state.phoneNumber);
-        
+
         that.props.navigator.push({
           title: 'Listings',
           component: TabBar,
@@ -116,7 +118,7 @@ class SignupAddInfo extends React.Component{
   supplementInfo() {
 
     var that = this;
-    var ref = new Firebase("https://project-sapphire.firebaseio.com");
+    var ref = new Firebase(firebaseUrl);
     ref.authWithPassword({
       email: that.props.email,
       password: that.props.password
