@@ -3,7 +3,7 @@ var Separator = require('./Helpers/Separator');
 var api = require('../Utils/api');
 var ProfileFriend = require('./ProfileFriend');
 var AddFriendButton = require('./AddFriendButton');
-var FriendsAdd = require('./FriendsAdd');
+var CreateListing = require('./FriendsAdd');
 
 
 import React, {
@@ -98,6 +98,8 @@ class Listings extends Component{
       title: 'Add Friends',
       component: FriendsAdd,
       passProps: {userInfo: this.props.userInfo, allFriends: this.state.friendData, handleFriendsRender: this.handleFriendsRender.bind(this)}
+      component: CreateListing,
+      passProps: {userInfo: that.props.userInfo, allFriends: that.state.friendData, handleFriendsRender: that.handleFriendsRender.bind(that)}
     });
   }
 
@@ -133,28 +135,26 @@ class Listings extends Component{
           )
         })
       } else {
-<<<<<<< 8dc4ed2c3088e48352a9050d1a561ca9e0a93883
         var friendsView = (
             <View>
               <Text style={styles.friendAlert}>Get started - add some friends!</Text>
             </View>
-=======
         var listingsView = ( 
             <View>
 
               <Text style={styles.friendAlert}>No Listings close by. Try a wider search area?</Text>
             </View> 
->>>>>>> listing tweaks
           )
       };
-      //          <TouchableHighlight onPress={() => this.addFriends()}>
-       //     <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
-        //  </TouchableHighlight>
+
 
       //this.addFriends -> open chat, close to further connections, remove from active listings
       return (
         <View style={styles.container}>
           <Text style={styles.alertText}>{'\n'}{this.state.updateAlert}</Text>
+          <TouchableHighlight onPress={() => this.addFriends()}>
+            <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
+          </TouchableHighlight>
           <ScrollView
             showsVerticalScrollIndicator={true}
           >
