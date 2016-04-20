@@ -19,7 +19,7 @@ import React, {
 
 
 class Listings extends Component{
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -43,16 +43,15 @@ class Listings extends Component{
   }
 
   getAsyncData() {
-    var that = this;
-    api.getUserFriends(that.props.userInfo.uid)
-      .then(function(res) {
-        that.setState({
+    api.getUserFriends(this.props.userInfo.uid)
+      .then((res) => {
+        this.setState({
           friendData: res,
           isLoading: false
         })
       })
       .catch(function(err) {
-        that.setState({
+        this.setState({
           updateAlert: 'Add some friends to get started!',
           isLoading: false
         })
@@ -88,11 +87,10 @@ class Listings extends Component{
   }
 
   addFriends(){
-    var that = this;
-    that.props.navigator.push({
+    this.props.navigator.push({
       title: 'Add Friends',
       component: FriendsAdd,
-      passProps: {userInfo: that.props.userInfo, allFriends: that.state.friendData, handleFriendsRender: that.handleFriendsRender.bind(that)}
+      passProps: {userInfo: this.props.userInfo, allFriends: this.state.friendData, handleFriendsRender: this.handleFriendsRender.bind(this)}
     });
   }
 
@@ -112,7 +110,7 @@ class Listings extends Component{
         var friendsView = friends.map((item, index) => {
           return (
             <View key={index}>
-              <TouchableHighlight 
+              <TouchableHighlight
                 style={styles.rowContainer}
                 onPress={() => this.handleRoute(item)}
                 underlayColor="#EEE">
@@ -128,10 +126,10 @@ class Listings extends Component{
           )
         })
       } else {
-        var friendsView = ( 
+        var friendsView = (
             <View>
               <Text style={styles.friendAlert}>Get started - add some friends!</Text>
-            </View> 
+            </View>
           )
       };
 
@@ -195,7 +193,7 @@ var styles = {
     marginTop: 15,
     fontSize: 20,
     backgroundColor: 'rgba(0,0,0,0)'
-  },  
+  },
   addFriendsImage: {
     height: 30,
     width: 30,
