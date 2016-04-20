@@ -51,12 +51,10 @@ class CreateListing extends Component{
     });
   }
 
-<<<<<<< 94391d82f8781a3eac0437bf5c07140100b6011e
   
 
   submitListing(that) {
   
-=======
   // sendFriendRequest() {
   //   var userId = this.props.userInfo.uid;
   //   var friendId = this.state.newFriend[0].uid;
@@ -124,13 +122,13 @@ class CreateListing extends Component{
 
   submitListing(that) {
     
->>>>>>> successfully adding listing to db
     console.log(that.props);
+    var myPos = util.getPosition();
+    console.log(myPos);
     var data = {
       createdBy: that.props.userInfo.uid,
       category: that.state.category,
       activity: CATEGORIES[that.state.category].items[that.state.itemIndex]
-<<<<<<< 94391d82f8781a3eac0437bf5c07140100b6011e
     };
     navigator.geolocation.getCurrentPosition((position) => {
       console.log('loading.js user current location is', position);
@@ -152,13 +150,13 @@ class CreateListing extends Component{
     });
 
 
-=======
+      // latitude:
+      // longitutde:
     }
     //DO API CALL HERE
     api.addListing(data);
     // console.log(this.state.category);
     // console.log(CATEGORIES[this.state.category][this.state.itemIndex]);
->>>>>>> successfully adding listing to db
   }
   
   render() {
