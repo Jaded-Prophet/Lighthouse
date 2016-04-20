@@ -25,13 +25,13 @@ class Listings extends Component{
     this.state = {
       isLoading: true,
       updateAlert: '',
-      friendData: []
+      listingData: []
     };
   }
 
-  handleFriendsRender(newFriend) {
-    var friendData = this.state.friendData;
-    friendData.push(newFriend.info);
+  handleFriendsRender(newListing) {
+    var listingData = this.state.listingData;
+    listingData.push(newListing.info);
 
     this.setState({
       friendData: friendData
@@ -47,12 +47,20 @@ class Listings extends Component{
       .then((res) => {
         this.setState({
           friendData: res,
+    var that = this;
+    //GET LISTINGS HERE
+    api.getUserFriends(that.props.userInfo.uid)
+      .then(function(res) {
+        that.setState({
+          listingData: res,
           isLoading: false
         })
       })
       .catch(function(err) {
         this.setState({
-          updateAlert: 'Add some friends to get started!',
+          updateAlert: 'Add some friends to get started!'
+        that.setState({
+          updateAlert: 'The hamsters running the server are too tired. Try again later.',
           isLoading: false
         })
       })
@@ -79,7 +87,6 @@ class Listings extends Component{
   handleRoute(rowData){
     var rowData = rowData;
     AlertIOS.alert('Friend Time!', 'Do you want to start a connection?', [
-      {text: 'No, View Profile', onPress: () => { this.viewFriend(rowData) }, style: 'default'},
       {text: 'No, Cancel', onPress: () => { console.log('back to page') }, style: 'default'},
       {text: 'Yes, Start Connection', onPress: () => { this.startConnection(rowData) }, style: 'cancel'},
       ]
@@ -104,10 +111,10 @@ class Listings extends Component{
       )
     } else {
       var user = this.props.userInfo;
-      var friends = this.state.friendData;
+      var listings = this.state.listingData;
 
-      if (friends.length > 0) {
-        var friendsView = friends.map((item, index) => {
+      if (listings.length > 0) {
+        var listingsView = friends.map((item, index) => {
           return (
             <View key={index}>
               <TouchableHighlight
@@ -126,23 +133,32 @@ class Listings extends Component{
           )
         })
       } else {
+<<<<<<< 8dc4ed2c3088e48352a9050d1a561ca9e0a93883
         var friendsView = (
             <View>
               <Text style={styles.friendAlert}>Get started - add some friends!</Text>
             </View>
+=======
+        var listingsView = ( 
+            <View>
+
+              <Text style={styles.friendAlert}>No Listings close by. Try a wider search area?</Text>
+            </View> 
+>>>>>>> listing tweaks
           )
       };
+      //          <TouchableHighlight onPress={() => this.addFriends()}>
+       //     <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
+        //  </TouchableHighlight>
 
+      //this.addFriends -> open chat, close to further connections, remove from active listings
       return (
         <View style={styles.container}>
-          <Text style={styles.alertText}>{this.state.updateAlert}</Text>
-          <TouchableHighlight onPress={() => this.addFriends()}>
-            <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
-          </TouchableHighlight>
+          <Text style={styles.alertText}>{'\n'}{this.state.updateAlert}</Text>
           <ScrollView
             showsVerticalScrollIndicator={true}
           >
-          {friendsView}
+          {listingsView}
           </ScrollView>
         </View>
       )
