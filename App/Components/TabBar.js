@@ -8,7 +8,7 @@ import React, {
 } from 'react-native';
 
 import Main from './Main';
-import Friends from './Friends';
+import Listings from './Listings';
 import Profile from './Profile';
 import Map from './Map';
 import MapboxMap from './MapboxMap';
@@ -33,9 +33,9 @@ class TabBar extends React.Component {
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabOne'}
           onPress={() => this.setTab('tabOne')}
-          title="Friends"
+          title="Listings"
           icon={require("../Images/friends.png")}>
-          <Friends {...this.props} />
+          <Listings {...this.props} />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabTwo'}
