@@ -174,6 +174,8 @@ var api = {
     newListing.child('title').set('Non-Sexual Casual Encounter');
     newListing.child('category').set(data.category);
     newListing.child('activity').set(data.activity);
+    newListing.child('latitude').set(data.latitude);
+    newListing.child('longitude').set(data.longitude);
 
   },
 

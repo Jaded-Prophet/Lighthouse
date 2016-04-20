@@ -123,8 +123,6 @@ class CreateListing extends Component{
   submitListing(that) {
     
     console.log(that.props);
-    var myPos = util.getPosition();
-    console.log(myPos);
     var data = {
       createdBy: that.props.userInfo.uid,
       category: that.state.category,
@@ -148,8 +146,6 @@ class CreateListing extends Component{
       api.addListing(data);
        
     });
-
-
       // latitude:
       // longitutde:
     }
