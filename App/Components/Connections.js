@@ -6,7 +6,7 @@ import React, {
 } from 'react-native';
 
 class Connections extends React.Component{
-  
+
   constructor(props) {
     super(props);
   }

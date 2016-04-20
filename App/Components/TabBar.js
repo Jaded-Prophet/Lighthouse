@@ -12,6 +12,7 @@ import Listings from './Listings';
 import Profile from './Profile';
 import Map from './Map';
 import MapboxMap from './MapboxMap';
+import Chat from './Chat';
 
 class TabBar extends React.Component {
   constructor(){
@@ -53,6 +54,15 @@ class TabBar extends React.Component {
           icon={require("../Images/map.png")}>
             <View style={styles.tabContent}>
             <MapboxMap {...this.props} />
+            </View>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          selected={this.state.selectedTab === 'tabFour'}
+          onPress={() => this.setTab('tabFour')}
+          title="Chat"
+          icon={require("../Images/flux.png")}>
+            <View style={styles.tabContent}>
+            <Chat {...this.props} />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>
