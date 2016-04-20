@@ -51,86 +51,15 @@ class CreateListing extends Component{
     });
   }
 
-<<<<<<< 94391d82f8781a3eac0437bf5c07140100b6011e
   
 
   submitListing(that) {
   
-=======
-  // sendFriendRequest() {
-  //   var userId = this.props.userInfo.uid;
-  //   var friendId = this.state.newFriend[0].uid;
-  //   var that = this;
-
-  //   api.addFriend(userId, friendId)
-
-  //   that.setState({
-  //     updateAlert: 'You have added a new friend!',
-  //     foundFriend: false
-  //   })
-
-  //   that.props.handleFriendsRender(that.state.newFriend[0]);
-
-  //   setTimeout(function() {
-  //     that.setState({ updateAlert: '' })
-  //   }, 3000);
-  // }
-
-  // searchForFriend() {
-  //   var that = this;
-  //   var friendEmail = that.state.friendEmail;
-  //   var allFriends = that.props.allFriends;
-  //   var foundFriend = false;
-
-  //   that.setState({
-  //     isLoading: true
-  //   })
-
-  //   if (allFriends.length > 0) {
-  //     for (var i = 0; i < allFriends.length; i++) {
-  //       if (allFriends[i].email === friendEmail) {
-  //         that.setState({
-  //           updateAlert: 'You are already friends with that person!',
-  //           isLoading: false
-  //         })
-  //         foundFriend = true;
-  //       }
-  //     }
-  //   }
-
-  //   if (foundFriend === false) {
-  //     console.log('friend email is ', that.state.friendEmail)
-  //     api.findUserByEmail(friendEmail)
-  //       .then(function(res) {
-  //         that.setState({
-  //           newFriend: res, 
-  //           isLoading: false,
-  //           foundFriend: true
-  //         })
-  //       })
-  //       .catch(function(err) {
-  //         that.setState({
-  //           updateAlert: 'That user was not found.',
-  //           isLoading: false,
-  //           foundFriend: false
-  //         })
-  //       })
-  //   }
-
-  //   setTimeout(function() {
-  //     that.setState({ updateAlert: ''})
-  //   }, 3000);
-  // }
-
-  submitListing(that) {
-    
->>>>>>> successfully adding listing to db
     console.log(that.props);
     var data = {
       createdBy: that.props.userInfo.uid,
       category: that.state.category,
       activity: CATEGORIES[that.state.category].items[that.state.itemIndex]
-<<<<<<< 94391d82f8781a3eac0437bf5c07140100b6011e
     };
     navigator.geolocation.getCurrentPosition((position) => {
       console.log('loading.js user current location is', position);
@@ -152,13 +81,6 @@ class CreateListing extends Component{
     });
 
 
-=======
-    }
-    //DO API CALL HERE
-    api.addListing(data);
-    // console.log(this.state.category);
-    // console.log(CATEGORIES[this.state.category][this.state.itemIndex]);
->>>>>>> successfully adding listing to db
   }
   
   render() {

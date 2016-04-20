@@ -167,10 +167,24 @@ var api = {
 
   },
 
+  
+  addListing(data) {
+    // var newGroup = new Firebase(`${firebaseUrl}/Groups/${groupName}`);
+    var newListing = new Firebase(`${firebaseUrl}/Listings/${data.createdBy}`);
+    newListing.child('title').set('Non-Sexual Casual Encounter');
+    newListing.child('category').set(data.category);
+    newListing.child('activity').set(data.activity);
+
+  },
+
   getListings(miles) {
     var listings = firebaseUrl + '/Listings.json';
       //TODO fetch listings within X miles
-
+    return fetch(listings)
+      .then(res => res.json())
+      .then((listings) => {
+        return listings;
+      })
   }
 
 };
