@@ -4,6 +4,9 @@ var api = require('../Utils/api');
 var ProfileFriend = require('./ProfileFriend');
 var AddFriendButton = require('./AddFriendButton');
 var CreateListing = require('./FriendsAdd');
+var CreateListingButton = require('./CreateListingButton');
+var CreateListing = require('./CreateListing');
+var _ = require('underscore');
 
 
 import React, {
@@ -25,7 +28,7 @@ class Listings extends Component{
     this.state = {
       isLoading: true,
       updateAlert: '',
-      listingData: []
+      listingData: null
     };
   }
 
@@ -49,8 +52,13 @@ class Listings extends Component{
           friendData: res,
     var that = this;
     //GET LISTINGS HERE
-    api.getUserFriends(that.props.userInfo.uid)
+    api.getListings(that.props.userInfo.uid)
       .then(function(res) {
+        console.log(res);
+        // var list = [];
+        // for(var listing in res) {
+        //   list.push(listing);
+        // }
         that.setState({
           listingData: res,
           isLoading: false
@@ -117,9 +125,11 @@ class Listings extends Component{
     } else {
       var user = this.props.userInfo;
       var listings = this.state.listingData;
-
+      console.log(listings);
       if (listings.length > 0) {
         var listingsView = friends.map((item, index) => {
+      if (Object.keys(listings).length > 0) {
+        var listingsView = _.map(listings, (item, index) => {
           return (
             <View key={index}>
               <TouchableHighlight
@@ -127,10 +137,7 @@ class Listings extends Component{
                 onPress={() => this.handleRoute(item)}
                 underlayColor="#EEE">
                 <View>
-                <Image
-                  style={styles.image}
-                  source={{uri: item.profileImageURL}} />
-                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.alertText}>{item.category} - {item.activity}</Text>
                 </View>
               </TouchableHighlight>
               <Separator />
@@ -144,7 +151,6 @@ class Listings extends Component{
             </View>
         var listingsView = ( 
             <View>
-
               <Text style={styles.friendAlert}>No Listings close by. Try a wider search area?</Text>
             </View> 
           )
