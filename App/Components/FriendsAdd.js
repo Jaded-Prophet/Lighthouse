@@ -18,7 +18,7 @@ var PickerItemIOS = PickerIOS.Item;
 var CATEGORIES = {
   Dining: {
     name: 'Dining',
-    items: ['Breakfast', 'Italian', 'Sushi', 'Mexican', 'Indian']
+    items: ['Breakfast', 'Italian', 'Sushi', 'Mexican', 'Indian', 'Bar']
   },
   Fitness: {
     name: 'Fitness',
@@ -26,7 +26,7 @@ var CATEGORIES = {
   },
   Other: {
     name: 'Other',
-    items: ['Chess', 'Making America Great Again']
+    items: ['Chess', 'Bowling', 'Making America Great Again']
   }
 
 }
@@ -118,10 +118,9 @@ class CreateListing extends Component{
   
   render() {
       var category = CATEGORIES[this.state.category];
-      var selectionString = category.name + ' ' + category.items[this.state.itemIndex];
+      var selectionString = category.name + ' - ' + category.items[this.state.itemIndex];
       return (
         <View>
-          <Text>Create a new Listing:</Text>
           <PickerIOS
             selectedValue={this.state.category}
             onValueChange={(category) => this.setState({category, itemIndex: 0})}>
@@ -133,11 +132,11 @@ class CreateListing extends Component{
               />
             ))}
           </PickerIOS>
-          <Text>Please choose a model of {category.name}:</Text>
+          <Text>What type of {category.name} activity?:</Text>
           <PickerIOS
             selectedValue={this.state.itemIndex}
             key={this.state.category}
-            onValueChange={(itemIndex) => this.setState({itemIndex})}>
+            onValueChange= {(itemIndex) => this.setState({itemIndex})}>
             {CATEGORIES[this.state.category].items.map((modelName, itemIndex) => (
               <PickerItemIOS
                 key={this.state.category + '_' + itemIndex}

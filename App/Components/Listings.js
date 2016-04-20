@@ -98,6 +98,9 @@ class Listings extends Component{
       title: 'Add Friends',
       component: FriendsAdd,
       passProps: {userInfo: this.props.userInfo, allFriends: this.state.friendData, handleFriendsRender: this.handleFriendsRender.bind(this)}
+    var that = this;
+    that.props.navigator.push({
+      title: 'Create New Listing',
       component: CreateListing,
       passProps: {userInfo: that.props.userInfo, allFriends: that.state.friendData, handleFriendsRender: that.handleFriendsRender.bind(that)}
     });
