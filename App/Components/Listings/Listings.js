@@ -1,13 +1,13 @@
-var Connections = require('./Connections');
-var Separator = require('./Helpers/Separator');
-var api = require('../Utils/api');
-var ProfileFriend = require('./ProfileFriend');
-var AddFriendButton = require('./Helpers/AddFriendButton');
-var CreateListing = require('./FriendsAdd');
+var Connections = require('../Connections');
+var Separator = require('../Helpers/Separator');
+var api = require('../../Utils/api');
+var ProfileFriend = require('../Profile/ProfileFriend');
+var AddFriendButton = require('../Helpers/AddFriendButton');
+var CreateListing = require('../FriendsAdd');
 var CreateListingButton = require('./CreateListingButton');
 var CreateListing = require('./CreateListing');
 var _ = require('underscore');
-var util = require('../Utils/location-util');
+var util = require('../../Utils/location-util');
 var Promise = require('bluebird');
 
 
@@ -139,7 +139,7 @@ class Listings extends Component{
     if (this.state.isLoading) {
       return (
         <View style={styles.isLoadingContainer}>
-          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
+          <Image style={styles.loadingImage} source={require('../../Images/loading.gif')} />
         </View>
       )
     } else {
@@ -176,7 +176,7 @@ class Listings extends Component{
         <View style={styles.container}>
           <Text style={styles.alertText}>{'\n'}{this.state.updateAlert}</Text>
           <TouchableHighlight onPress={() => this.addFriends()}>
-            <Image style={styles.userImages} source={require('../Images/plus.png')} />
+            <Image style={styles.userImages} source={require('../../Images/plus.png')} />
           </TouchableHighlight>
           <ScrollView
             showsVerticalScrollIndicator={true}

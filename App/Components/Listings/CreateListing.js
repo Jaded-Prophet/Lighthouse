@@ -1,6 +1,5 @@
-var api = require('../Utils/api');
-var Separator = require('./Helpers/Separator');
-var util = require('../Utils/location-util.js')
+var api = require('../../Utils/api');
+var util = require('../../Utils/location-util.js')
 import React, {
   View,
   Text,

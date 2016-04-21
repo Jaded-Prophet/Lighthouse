@@ -7,8 +7,6 @@ import React, {
   TouchableHighlight,
   Image
 } from 'react-native';
-import api from '../Utils/api';
-import Separator from './Helpers/Separator';
 
 class CreateListingButton extends Component{
   addFriend(){
