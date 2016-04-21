@@ -30,7 +30,7 @@ class Chat extends React.Component{
 
   componentWillMount() {
     Firebase.enableLogging(true);
-
+    console.log('this props: ', this.props);
     this.ref.on('value', function(snapshot) {
       var items = [];
       snapshot.forEach(function(child) {
@@ -97,14 +97,14 @@ var styles = StyleSheet.create({
     marginBottom:8
   },
   messageUsername: {
-    color: '#888'
+    color: '#999'
   },
   messageText: {
     backgroundColor: '#eee',
     borderRadius: 10,
     paddingTop:10,
     paddingBottom:10,
-    marginRight:50,
+    marginRight:70,
     paddingLeft:10,
     paddingRight:10
   },
@@ -112,6 +112,8 @@ var styles = StyleSheet.create({
     backgroundColor: '#30A3FC',
     borderRadius: 10,
     color: '#fff',
+    marginLeft:70,
+
     paddingTop:20,
     paddingBottom:20,
     paddingLeft:15,
