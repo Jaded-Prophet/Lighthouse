@@ -54,10 +54,9 @@ class CreateListing extends Component{
   
 
   submitListing(that) {
-  
-    console.log(that.props);
     var data = {
       createdBy: that.props.userInfo.uid,
+      imgUrl: that.props.userInfo.password.profileImageURL,
       category: that.state.category,
       activity: CATEGORIES[that.state.category].items[that.state.itemIndex]
     };
@@ -66,8 +65,6 @@ class CreateListing extends Component{
       data.latitude = position.coords.latitude;
       data.longitude = position.coords.longitude;
 
-      console.log(data.latitude);
-      console.log(data.longitude);
       api.addListing(data);
 
     }, (err) => {

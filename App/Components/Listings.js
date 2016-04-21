@@ -60,7 +60,6 @@ class Listings extends Component{
           long: pos.coords.longitude
         });
         api.getListings((res) => {
-          console.log(res);
 
           that.setState({
             listingData: res,
@@ -78,7 +77,6 @@ class Listings extends Component{
         })
       }, (err) => {
         api.getListings((res) => {
-          console.log(res);
 
           that.setState({
             listingData: res,
@@ -94,7 +92,7 @@ class Listings extends Component{
         })
       });
 
-   }, 3000);
+   }, 3500);
 
   }
 
@@ -147,10 +145,9 @@ class Listings extends Component{
     } else {
       var user = this.props.userInfo;
       var listings = this.state.listingData;
-      console.log(this.state);
-      console.log(listings);
       if (listings !== null && Object.keys(listings).length > 0) {
         var listingsView = _.map(listings, (item, index) => {
+          console.log(item);
           return (
             <View key={index}>
               <TouchableHighlight
@@ -158,7 +155,8 @@ class Listings extends Component{
                 onPress={() => this.handleRoute(item)}
                 underlayColor="#EEE">
                 <View>
-                  <Text style={styles.alertText}>{item.category} - {item.activity}</Text>
+                  <Image style={styles.userImages} source={{uri: item.imgUrl}} />
+                  <Text style={styles.name}>{item.category} - {item.activity} - {util.getDistanceFromLatLonInMiles(this.state.lat, this.state.long, item.latitude, item.longitude)} Miles</Text>
                 </View>
               </TouchableHighlight>
               <Separator />
@@ -179,7 +177,7 @@ class Listings extends Component{
         <View style={styles.container}>
           <Text style={styles.alertText}>{'\n'}{this.state.updateAlert}</Text>
           <TouchableHighlight onPress={() => this.addFriends()}>
-            <Image style={styles.addFriendsImage} source={require('../Images/plus.png')} />
+            <Image style={styles.userImages} source={require('../Images/plus.png')} />
           </TouchableHighlight>
           <ScrollView
             showsVerticalScrollIndicator={true}
@@ -220,29 +218,37 @@ var styles = {
     color: 'red'
   },
   rowContainer: {
+    backgroundColor: 'lightblue',
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
     padding: 30,
-    height: 110,
+    marginLeft: 20,
+    marginRight: 20,
+    height: 75,
     flexDirection: 'row',
   },
   image: {
     height: 50,
     width: 50,
     borderRadius: 25,
-    position: 'absolute'
+    position: 'relative',
+    top: -20,
+    left: -20
   },
   name: {
-    paddingLeft: 80,
-    marginTop: 15,
-    fontSize: 20,
+    paddingLeft: 100,
+    fontSize: 14,
     backgroundColor: 'rgba(0,0,0,0)'
   },
-  addFriendsImage: {
-    height: 30,
-    width: 30,
-    alignSelf: 'flex-end',
-    marginRight: 20,
-    marginTop: 40,
-    flex: 1
+  userImages: {
+    height: 60,
+    width: 60,
+    borderRadius: 4,
+    // alignSelf: 'flex-end',
+    // marginRight: 20,
+    // marginTop: 40,
+    // flex: 1
   },
 };
 
