@@ -1,6 +1,5 @@
 var React = require('react-native');
 var Firebase = require('firebase');
-var api = require('../Utils/api');
 var Signup = require('./Signup');
 var TabBar = require('./TabBar');
 var firebaseUrl = require('../Utils/config')
@@ -18,7 +17,7 @@ var {
 } = React;
 
 
-class Main extends React.Component{
+class Login extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +33,7 @@ class Main extends React.Component{
       authData = JSON.parse(authData);
       api.checkAuthToken(authData.token, (error, result) => {
         if(result) {
-          this.props.navigator.push({
+          this.props.navigator.replace({
             component: TabBar,
             passProps: {
               userInfo: authData
@@ -78,24 +77,13 @@ class Main extends React.Component{
         api.getUserData(authData.uid)
         .then((res) => {
           authData.name = res.name;
-          that.props.navigator.push({
+          that.props.navigator.replace({
             component: TabBar,
             passProps: {
               userInfo: authData
             }
           });
         })
-
-        authData = JSON.stringify(authData)
-
-
-
-        that.props.navigator.push({
-          component: TabBar,
-          passProps: {
-            userInfo: authData
-          }
-        });
       }
     });
 
@@ -244,4 +232,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Main;
+module.exports = Login;

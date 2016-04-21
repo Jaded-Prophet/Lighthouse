@@ -7,7 +7,6 @@ import React, {
   TabBarIOS
 } from 'react-native';
 
-import Main from './Main';
 import Listings from './Listings';
 import Profile from './Profile';
 import Map from './Map';
