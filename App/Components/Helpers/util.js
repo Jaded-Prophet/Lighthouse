@@ -14,10 +14,11 @@ exports.getDistanceFromLatLonInM = (lat1,lon1,lat2,lon2) => {
   return (d * 1000) / 1609.344; // Return distance in miles
 };
 
-exports.getPosition = () => {
-  var pos = navigator.geolocation.getCurrentPosition((position) => {
+exports.getPosition = (cb, errCb) => {
+  navigator.geolocation.getCurrentPosition((position) => {
     console.log('loading.js user current location is', position);
-    return position;
+    cb(position);
+  }, (err) => {
+    errCb(err);
   });
-  return pos;
 };

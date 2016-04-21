@@ -7,6 +7,7 @@ var CreateListing = require('./FriendsAdd');
 var CreateListingButton = require('./CreateListingButton');
 var CreateListing = require('./CreateListing');
 var _ = require('underscore');
+var util = require('./Helpers/util');
 
 
 import React, {
@@ -28,7 +29,9 @@ class Listings extends Component{
     this.state = {
       isLoading: true,
       updateAlert: '',
-      listingData: {}
+      listingData: {},
+      lat: 37.783610,
+      long: -122.409002
     };
   }
 
@@ -51,12 +54,27 @@ class Listings extends Component{
     //GET LISTINGS HERE
     api.getListings(that.props.userInfo.uid)
       .then(function(res) {
-        console.log(res);
 
+        console.log(res);
+        util.getPosition((pos) => {
         that.setState({
           listingData: res,
-          isLoading: false
-        })
+          isLoading: false,
+          lat: pos.coords.latitude,
+          long: pos.coords.longitude
+        });
+
+        }, (err) => {
+        that.setState({
+          listingData: res,
+          isLoading: false,
+
+        });
+        });
+
+
+       
+
       })
       .catch(function(err) {
 
@@ -116,6 +134,7 @@ class Listings extends Component{
     } else {
       var user = this.props.userInfo;
       var listings = this.state.listingData;
+      console.log(this.state);
       console.log(listings);
       if (listings !== null && Object.keys(listings).length > 0) {
         var listingsView = _.map(listings, (item, index) => {
