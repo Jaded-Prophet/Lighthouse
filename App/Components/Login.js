@@ -1,5 +1,6 @@
 var React = require('react-native');
 var Firebase = require('firebase');
+var api = require('../Utils/api');
 var Signup = require('./Signup');
 var TabBar = require('./TabBar');
 var firebaseUrl = require('../Utils/config')
@@ -72,8 +73,8 @@ class Login extends React.Component{
           error: 'Login failed'
         });
       } else {
+        //store the authentication info
         AsyncStorage.setItem('authData', JSON.stringify(authData))
-
         api.getUserData(authData.uid)
         .then((res) => {
           authData.name = res.name;
