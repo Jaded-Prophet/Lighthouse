@@ -179,13 +179,13 @@ var api = {
 
   },
 
-  getListings(miles) {
+  getListings(cb, miles) {
     var listings = firebaseUrl + '/Listings.json';
       //TODO fetch listings within X miles
     return fetch(listings)
       .then(res => res.json())
       .then((listings) => {
-        return listings;
+        cb(listings);
       })
   }
 

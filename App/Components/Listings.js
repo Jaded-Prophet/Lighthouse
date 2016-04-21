@@ -8,6 +8,7 @@ var CreateListingButton = require('./CreateListingButton');
 var CreateListing = require('./CreateListing');
 var _ = require('underscore');
 var util = require('./Helpers/util');
+var Promise = require('bluebird');
 
 
 import React, {
@@ -52,37 +53,53 @@ class Listings extends Component{
 
     var that = this;
     //GET LISTINGS HERE
-    api.getListings(that.props.userInfo.uid)
-      .then(function(res) {
-
+    util.getPosition((pos) => {
+      that.setState({
+        lat: pos.coords.latitude,
+        long: pos.coords.longitude
+      });
+      api.getListings((res) => {
         console.log(res);
-        util.getPosition((pos) => {
+
         that.setState({
           listingData: res,
           isLoading: false,
-          lat: pos.coords.latitude,
-          long: pos.coords.longitude
         });
 
-        }, (err) => {
+      }).catch((err) => {
+
         that.setState({
-          listingData: res,
-          isLoading: false,
+          updateAlert: 'The hamsters running the server are too tired. Try again later.',
+          isLoading: false
+        })
 
-        });
-        });
+
+      })
+
 
 
        
 
-      })
-      .catch(function(err) {
+
+    }), (err) => {
+      api.getListings((res) => {
+        console.log(res);
+
+        that.setState({
+          listingData: res,
+          isLoading: false,
+        });
+
+      }).catch((err) => {
 
         that.setState({
           updateAlert: 'The hamsters running the server are too tired. Try again later.',
           isLoading: false
         })
       })
+    }
+
+    
   }
 
   startConnection(rowData) {
