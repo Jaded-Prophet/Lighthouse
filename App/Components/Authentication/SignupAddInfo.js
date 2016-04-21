@@ -1,10 +1,10 @@
 var React = require('react-native');
 var Firebase = require('firebase');
-var api = require('../Utils/api');
-var TabBar = require('./TabBar');
-var Signup = require('./Signup');
 var KeyboardSpacer = require('react-native-keyboard-spacer');
-var firebaseUrl = require('../Utils/config');
+var api = require('../../Utils/api');
+var TabBar = require('../TabBar');
+var Signup = require('./Signup');
+var firebaseUrl = require('../../Utils/config');
 
 
 var {

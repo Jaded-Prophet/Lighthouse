@@ -9,8 +9,8 @@ import React, {
 
 import Listings from './Listings';
 import Profile from './Profile';
-import Map from './Map';
-import MapboxMap from './MapboxMap';
+import Map from './Map/Map';
+import MapboxMap from './Map/MapboxMap';
 import Chat from './Chat';
 
 class TabBar extends React.Component {

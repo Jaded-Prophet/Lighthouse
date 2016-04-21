@@ -1,9 +1,9 @@
 var React = require('react-native');
 var Firebase = require('firebase');
-var api = require('../Utils/api');
+var api = require('../../Utils/api');
 var Signup = require('./Signup');
-var TabBar = require('./TabBar');
-var firebaseUrl = require('../Utils/config')
+var TabBar = require('../TabBar');
+var firebaseUrl = require('../../Utils/config')
 
 
 var {
@@ -114,7 +114,7 @@ class Login extends React.Component{
 
     return (
         <View style={styles.mainContainer}>
-          <Image style={styles.logo} source={require('../Images/lighthouse.png')} />
+          <Image style={styles.logo} source={require('../../Images/lighthouse.png')} />
           <Text style={styles.title}>Lighthouse</Text>
 
           <Text style={styles.pageText}>Email</Text>

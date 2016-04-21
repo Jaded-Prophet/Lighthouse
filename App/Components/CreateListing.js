@@ -1,6 +1,6 @@
 var api = require('../Utils/api');
 var Separator = require('./Helpers/Separator');
-var util = require('./Helpers/util.js')
+var util = require('../Utils/location-util.js')
 import React, {
   View,
   Text,
@@ -51,7 +51,7 @@ class CreateListing extends Component{
     });
   }
 
-  
+
 
   submitListing(that) {
     var data = {
@@ -78,10 +78,10 @@ class CreateListing extends Component{
     });
       // latitude:
       // longitutde:
-    
+
     //DO API CALL HERE
   }
-  
+
   render() {
     console.log(this.props);
     var category = CATEGORIES[this.state.category];
@@ -141,13 +141,13 @@ var styles = {
     margin: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'lightblue', 
-    padding:10, 
-    height:45, 
-    overflow:'hidden', 
+    backgroundColor: 'lightblue',
+    padding:10,
+    height:45,
+    overflow:'hidden',
     borderRadius:4,
   },
-  
+
   listContainer: {
     padding: 20
   },
@@ -198,7 +198,7 @@ var styles = {
     marginTop: 15,
     fontSize: 20,
     backgroundColor: 'rgba(0,0,0,0)'
-  },  
+  },
   searchInput: {
     height: 30,
     borderWidth: 1,
@@ -210,4 +210,3 @@ var styles = {
 };
 
 module.exports = CreateListing;
-

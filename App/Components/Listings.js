@@ -2,12 +2,12 @@ var Connections = require('./Connections');
 var Separator = require('./Helpers/Separator');
 var api = require('../Utils/api');
 var ProfileFriend = require('./ProfileFriend');
-var AddFriendButton = require('./AddFriendButton');
+var AddFriendButton = require('./Helpers/AddFriendButton');
 var CreateListing = require('./FriendsAdd');
 var CreateListingButton = require('./CreateListingButton');
 var CreateListing = require('./CreateListing');
 var _ = require('underscore');
-var util = require('./Helpers/util');
+var util = require('../Utils/location-util');
 var Promise = require('bluebird');
 
 
