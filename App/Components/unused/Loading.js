@@ -66,7 +66,7 @@ class Loading extends Component{
     });
   }
 
-  // isLastCheck will tell the function whether or not this is the last time the app will check of a match. 
+  // isLastCheck will tell the function whether or not this is the last time the app will check of a match.
   retrieveMatch(isLastCheck) {
     console.log('loading.js retrieving a match end point: ',`${IP_address}/match`);
     fetch(`${IP_address}/match`, {
@@ -93,7 +93,7 @@ class Loading extends Component{
           clearTimeout(checkTimeout);
           this.setState({isLoading: false});
           AlertIOS.alert('Sorry, we were unable to find a match for you');
-          this.props.navigator.pop(); 
+          this.props.navigator.pop();
         }
       });
   }
@@ -123,7 +123,7 @@ class Loading extends Component{
           style={{transform: [{scale: 3}]}}>
         </ActivityIndicatorIOS>
       </View>
-    )    
+    )
   }
 }
 

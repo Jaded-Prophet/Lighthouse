@@ -7,12 +7,10 @@ import React, {
   TouchableHighlight,
   Image
 } from 'react-native';
-import api from '../Utils/api';
-import Separator from './Helpers/Separator';
 
-class AddFriendsButton extends Component{
+class CreateListingButton extends Component{
   addFriend(){
-    console.log('Add Friends Props: ', this.props);
+    console.log('Create New Listing Props: ', this.props);
   }
   render(){
     return(
@@ -22,11 +20,11 @@ class AddFriendsButton extends Component{
         onPress={this.addFriend}
         underlayColor="#EEE"
         >
-        <Text>+ Add friend</Text>
+        <Text>+ New Listing</Text>
         </TouchableHighlight>
       </View>
     )
   }
 }
 
-module.exports = AddFriendsButton;
+module.exports = CreateListingButton;

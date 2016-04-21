@@ -1,6 +1,6 @@
 var React = require('react-native');
-var api = require('../Utils/api');
-var flux = require('../Images/flux.png');
+var api = require('../../Utils/api');
+var flux = require('../../Images/flux.png');
 
 var {
   Image,

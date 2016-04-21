@@ -74,8 +74,8 @@ class LooksGood extends Component{
   render(){
     return (
       <View style={styles.mainContainer}>
-        <Image 
-          style={styles.image} 
+        <Image
+          style={styles.image}
           source={{uri: this.props.picture}} />
         <Text style={styles.title}>How do you look?</Text>
         <TouchableHighlight

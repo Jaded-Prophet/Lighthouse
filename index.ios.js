@@ -1,4 +1,4 @@
-var Login = require('./App/Components/Login');
+var Login = require('./App/Components/Authentication/Login');
 var api = require('./App/Utils/api');
 
 /**
