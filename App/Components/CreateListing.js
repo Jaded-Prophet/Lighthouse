@@ -55,16 +55,17 @@ class CreateListing extends Component{
 
   submitListing(that) {
     var data = {
-      createdBy: that.props.userInfo.uid,
+      createdById: that.props.userInfo.uid,
+      createdByName: that.props.userInfo.name,
       imgUrl: that.props.userInfo.password.profileImageURL,
       category: that.state.category,
-      activity: CATEGORIES[that.state.category].items[that.state.itemIndex]
+      activity: CATEGORIES[that.state.category].items[that.state.itemIndex],
+
     };
     navigator.geolocation.getCurrentPosition((position) => {
       console.log('loading.js user current location is', position);
       data.latitude = position.coords.latitude;
       data.longitude = position.coords.longitude;
-
       api.addListing(data);
 
     }, (err) => {
@@ -82,47 +83,48 @@ class CreateListing extends Component{
   }
   
   render() {
-      var category = CATEGORIES[this.state.category];
-      var selectionString = category.name + ' - ' + category.items[this.state.itemIndex];
-      return (
-        <View>
-          <Text>Pick a Category: </Text>
-          <PickerIOS
-            itemStyle={{fontSize: 25, color: 'green', textAlign: 'center', fontWeight: 'bold'}}
-            selectedValue={this.state.category}
-            onValueChange={(category) => this.setState({category, itemIndex: 0})}>
-            {Object.keys(CATEGORIES).map((category) => (
-              <PickerItemIOS
-                key={category}
-                value={category}
-                label={CATEGORIES[category].name}
-              />
-            ))}
-          </PickerIOS>
-          <PickerIOS
-            itemStyle={{fontSize: 20, color: 'green', textAlign: 'center'}}
-            selectedValue={this.state.itemIndex}
-            key={this.state.category}
-            onValueChange= {(itemIndex) => this.setState({itemIndex})}>
-            {CATEGORIES[this.state.category].items.map((modelName, itemIndex) => (
-              <PickerItemIOS
-                key={this.state.category + '_' + itemIndex}
-                value={itemIndex}
-                label={modelName}
-              />
-            ))}
-          </PickerIOS>
-          <Text style={styles.alertText}>You selected: {selectionString}</Text>
-          <TouchableHighlight
-          style={styles.buttonContainer}
-          onPress={this.submitListing(this)}
-          underlayColor="#EEE"
-          >
-          <Text style={styles.buttonText}> Create this listing! </Text>
-          </TouchableHighlight>
-        </View>
-      );
-    }
+    console.log(this.props);
+    var category = CATEGORIES[this.state.category];
+    var selectionString = category.name + ' - ' + category.items[this.state.itemIndex];
+    return (
+      <View>
+        <Text>Pick a Category: </Text>
+        <PickerIOS
+          itemStyle={{fontSize: 25, color: 'green', textAlign: 'center', fontWeight: 'bold'}}
+          selectedValue={this.state.category}
+          onValueChange={(category) => this.setState({category, itemIndex: 0})}>
+          {Object.keys(CATEGORIES).map((category) => (
+            <PickerItemIOS
+              key={category}
+              value={category}
+              label={CATEGORIES[category].name}
+            />
+          ))}
+        </PickerIOS>
+        <PickerIOS
+          itemStyle={{fontSize: 20, color: 'green', textAlign: 'center'}}
+          selectedValue={this.state.itemIndex}
+          key={this.state.category}
+          onValueChange= {(itemIndex) => this.setState({itemIndex})}>
+          {CATEGORIES[this.state.category].items.map((modelName, itemIndex) => (
+            <PickerItemIOS
+              key={this.state.category + '_' + itemIndex}
+              value={itemIndex}
+              label={modelName}
+            />
+          ))}
+        </PickerIOS>
+        <Text style={styles.alertText}>You selected: {selectionString}</Text>
+        <TouchableHighlight
+        style={styles.buttonContainer}
+        onPress={this.submitListing(this)}
+        underlayColor="#EEE"
+        >
+        <Text style={styles.buttonText}> Create this listing! </Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
 
 }
 

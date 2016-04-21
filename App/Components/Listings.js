@@ -147,7 +147,6 @@ class Listings extends Component{
       var listings = this.state.listingData;
       if (listings !== null && Object.keys(listings).length > 0) {
         var listingsView = _.map(listings, (item, index) => {
-          console.log(item);
           return (
             <View key={index}>
               <TouchableHighlight
