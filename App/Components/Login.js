@@ -13,11 +13,12 @@ var {
   TextInput,
   TouchableHighlight,
   ActivityIndicatorIOS,
-  Image
+  Image,
+  AsyncStorage,
 } = React;
 
 
-class Main extends React.Component{
+class Login extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +26,25 @@ class Main extends React.Component{
       password: '',
       error: false
     };
+  }
+  componentDidMount() {
+
+    AsyncStorage.getItem('authData').then(authData => {
+
+      authData = JSON.parse(authData);
+      api.checkAuthToken(authData.token, (error, result) => {
+        if(result) {
+          this.props.navigator.replace({
+            component: TabBar,
+            passProps: {
+              userInfo: authData
+            }
+          });
+        } else {
+          console.log(error, authData);
+        }
+      });
+    });
   }
 
   handleEmail(event) {
@@ -49,18 +69,16 @@ class Main extends React.Component{
     }, function(error, authData) {
       if (error) {
         console.log("Login Failed!", error);
-        // Shows error on client if login fails
         that.setState({
           error: 'Login failed'
         });
-
       } else {
-        console.log("Authenticated successfully with payload:", authData);
-        // navigate to Dashboard
+        //store the authentication info
+        AsyncStorage.setItem('authData', JSON.stringify(authData))
         api.getUserData(authData.uid)
         .then((res) => {
           authData.name = res.name;
-          that.props.navigator.push({
+          that.props.navigator.replace({
             component: TabBar,
             passProps: {
               userInfo: authData
@@ -215,4 +233,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Main;
+module.exports = Login;

@@ -163,10 +163,10 @@ class Listings extends Component{
           )
         })
       } else {
-        var listingsView = ( 
+        var listingsView = (
             <View>
               <Text style={styles.friendAlert}>No Listings close by. Try a wider search area?</Text>
-            </View> 
+            </View>
           )
       };
 
