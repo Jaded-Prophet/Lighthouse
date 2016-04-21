@@ -13,7 +13,8 @@ var {
   TextInput,
   TouchableHighlight,
   ActivityIndicatorIOS,
-  Image
+  Image,
+  AsyncStorage,
 } = React;
 
 
@@ -25,6 +26,25 @@ class Main extends React.Component{
       password: '',
       error: false
     };
+  }
+  componentDidMount() {
+
+    AsyncStorage.getItem('authData').then(authData => {
+
+      authData = JSON.parse(authData);
+      api.checkAuthToken(authData.token, (error, result) => {
+        if(result) {
+          this.props.navigator.push({
+            component: TabBar,
+            passProps: {
+              userInfo: authData
+            }
+          });
+        } else {
+          console.log(error, authData);
+        }
+      });
+    });
   }
 
   handleEmail(event) {
@@ -49,14 +69,12 @@ class Main extends React.Component{
     }, function(error, authData) {
       if (error) {
         console.log("Login Failed!", error);
-        // Shows error on client if login fails
         that.setState({
           error: 'Login failed'
         });
-
       } else {
-        console.log("Authenticated successfully with payload:", authData);
-        // navigate to Dashboard
+        AsyncStorage.setItem('authData', JSON.stringify(authData))
+
         api.getUserData(authData.uid)
         .then((res) => {
           authData.name = res.name;
@@ -67,6 +85,17 @@ class Main extends React.Component{
             }
           });
         })
+
+        authData = JSON.stringify(authData)
+
+
+
+        that.props.navigator.push({
+          component: TabBar,
+          passProps: {
+            userInfo: authData
+          }
+        });
       }
     });
 

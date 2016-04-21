@@ -167,7 +167,7 @@ var api = {
 
   },
 
-  
+
   addListing(data) {
     // var newGroup = new Firebase(`${firebaseUrl}/Groups/${groupName}`);
     var newListing = new Firebase(`${firebaseUrl}/Listings/${data.createdBy}`);
@@ -188,8 +188,17 @@ var api = {
       .then((listings) => {
         cb(listings);
       })
-  }
+  },
 
+
+  //new stuff
+
+  checkAuthToken(token, callback) {
+    var ref = new Firebase(`${firebaseUrl}/UserData/`);
+    ref.authWithCustomToken(token, function(error, authData) {
+      callback(error, authData);
+    });
+  }
 };
 
 module.exports = api;
