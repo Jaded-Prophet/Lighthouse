@@ -50,56 +50,52 @@ class Listings extends Component{
   }
 
   getAsyncData() {
-
     var that = this;
-    //GET LISTINGS HERE
-    util.getPosition((pos) => {
-      that.setState({
-        lat: pos.coords.latitude,
-        long: pos.coords.longitude
+    setInterval(() => {
+
+      //GET LISTINGS HERE
+      util.getPosition((pos) => {
+        that.setState({
+          lat: pos.coords.latitude,
+          long: pos.coords.longitude
+        });
+        api.getListings((res) => {
+          console.log(res);
+
+          that.setState({
+            listingData: res,
+            isLoading: false,
+          });
+
+        }).catch((err) => {
+
+          that.setState({
+            updateAlert: 'The hamsters running the server are too tired. Try again later.',
+            isLoading: false
+          });
+
+
+        })
+      }, (err) => {
+        api.getListings((res) => {
+          console.log(res);
+
+          that.setState({
+            listingData: res,
+            isLoading: false,
+          });
+
+        }).catch((err) => {
+
+          that.setState({
+            updateAlert: 'The hamsters running the server are too tired. Try again later.',
+            isLoading: false
+          });
+        })
       });
-      api.getListings((res) => {
-        console.log(res);
 
-        that.setState({
-          listingData: res,
-          isLoading: false,
-        });
+   }, 3000);
 
-      }).catch((err) => {
-
-        that.setState({
-          updateAlert: 'The hamsters running the server are too tired. Try again later.',
-          isLoading: false
-        })
-
-
-      })
-
-
-
-       
-
-
-    }), (err) => {
-      api.getListings((res) => {
-        console.log(res);
-
-        that.setState({
-          listingData: res,
-          isLoading: false,
-        });
-
-      }).catch((err) => {
-
-        that.setState({
-          updateAlert: 'The hamsters running the server are too tired. Try again later.',
-          isLoading: false
-        })
-      })
-    }
-
-    
   }
 
   startConnection(rowData) {
