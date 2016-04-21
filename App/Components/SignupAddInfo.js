@@ -102,7 +102,8 @@ class SignupAddInfo extends React.Component{
           isLoading: false
         });
       } else {
-        console.log("Authenticated successfully with payload, delayInfo:", authData);
+        //store the authentication info
+        AsyncStorage.setItem('authData', JSON.stringify(authData))
         // navigate to Dashboard
         api.setUserData(authData, that.state.name, that.state.phoneNumber);
 
