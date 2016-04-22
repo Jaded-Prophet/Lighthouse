@@ -77,7 +77,8 @@ class Login extends React.Component{
         AsyncStorage.setItem('authData', JSON.stringify(authData))
         api.getUserData(authData.uid)
         .then((res) => {
-          authData.name = res.name;
+          console.log(res)
+          AsyncStorage.setItem('name', res.name);
           that.props.navigator.replace({
             component: TabBar,
             passProps: {

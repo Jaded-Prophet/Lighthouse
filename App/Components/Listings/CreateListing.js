@@ -9,7 +9,8 @@ import React, {
   ScrollView,
   TouchableHighlight,
   TextInput,
-  PickerIOS
+  PickerIOS,
+  AsyncStorage
 } from 'react-native';
 
 var PickerItemIOS = PickerIOS.Item;
@@ -36,6 +37,7 @@ class CreateListing extends Component{
   constructor(props) {
     super(props)
     this.state = {
+      user: null,
       category: 'Dining',
       itemIndex: 0,
       updateAlert: '',
@@ -43,6 +45,7 @@ class CreateListing extends Component{
       foundFriend: false
     };
   }
+  
 
   captureItemChange(event) {
     this.setState({
@@ -50,17 +53,23 @@ class CreateListing extends Component{
     });
   }
 
-
+  componentDidMount() {
+    AsyncStorage.getItem('name').then((name) => {
+      this.setState({user: name});
+    }).done();
+  }
 
   submitListing(that) {
+    console.log(that.state.user);
     var data = {
-      createdById: that.props.userInfo.uid,
-      createdByName: that.props.userInfo.name,
+      description: 'Non Sexual Casual Encounter',
       imgUrl: that.props.userInfo.password.profileImageURL,
       category: that.state.category,
       activity: CATEGORIES[that.state.category].items[that.state.itemIndex],
-
+      createdBy: that.state.user,
+      createdById: that.props.userInfo.uid
     };
+
     navigator.geolocation.getCurrentPosition((position) => {
       console.log('loading.js user current location is', position);
       data.latitude = position.coords.latitude;
@@ -74,15 +83,12 @@ class CreateListing extends Component{
       //DO API CALL HERE
       api.addListing(data);
 
-    });
-      // latitude:
-      // longitutde:
 
-    //DO API CALL HERE
+    });
+
   }
 
   render() {
-    console.log(this.props);
     var category = CATEGORIES[this.state.category];
     var selectionString = category.name + ' - ' + category.items[this.state.itemIndex];
     return (
@@ -116,7 +122,7 @@ class CreateListing extends Component{
         <Text style={styles.alertText}>You selected: {selectionString}</Text>
         <TouchableHighlight
         style={styles.buttonContainer}
-        onPress={this.submitListing(this)}
+        onPress={() => this.submitListing(this)}
         underlayColor="#EEE"
         >
         <Text style={styles.buttonText}> Create this listing! </Text>

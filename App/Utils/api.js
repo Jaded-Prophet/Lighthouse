@@ -170,13 +170,14 @@ var api = {
 
   addListing(data) {
     // var newGroup = new Firebase(`${firebaseUrl}/Groups/${groupName}`);
-    var newListing = new Firebase(`${firebaseUrl}/Listings/${data.createdBy}`);
-    newListing.child('description').set('Non-Sexual Casual Encounter');
+    var newListing = new Firebase(`${firebaseUrl}/Listings/${data.createdById}`);
+    newListing.child('description').set(data.description);
     newListing.child('imgUrl').set(data.imgUrl);
     newListing.child('category').set(data.category);
     newListing.child('activity').set(data.activity);
     newListing.child('latitude').set(data.latitude);
     newListing.child('longitude').set(data.longitude);
+    newListing.child('createdBy').set(data.createdBy);
 
   },
 
