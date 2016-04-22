@@ -12,7 +12,6 @@ import React, {
   ScrollView,
   TouchableHighlight,
   TextInput,
-  PickerIOS,
   AsyncStorage
 } from 'react-native';
 
@@ -22,8 +21,6 @@ import Menu, {
   MenuOption,
   MenuTrigger
 } from 'react-native-menu';
-
-var PickerItemIOS = PickerIOS.Item;
 
 var CATEGORIES = {
   Dining: {
