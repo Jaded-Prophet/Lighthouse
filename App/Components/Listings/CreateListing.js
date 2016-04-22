@@ -50,6 +50,7 @@ class CreateListing extends Component{
       user: null,
       category: 'Select a Category',
       activity: 'Select an Activity',
+      description: '',
       itemIndex: 0,
       updateAlert: '',
       isLoading: false,
@@ -65,16 +66,19 @@ class CreateListing extends Component{
     });
   }
 
+
   componentDidMount() {
     AsyncStorage.getItem('name').then((name) => {
       this.setState({user: name});
     }).done();
   }
+  
+
 
   submitListing(that) {
     console.log(that.state.user);
     var data = {
-      description: 'Non Sexual Casual Encounter',
+      description: that.state.description,
       imgUrl: that.props.userInfo.password.profileImageURL,
       category: that.state.category,
       activity: that.state.activity,
@@ -86,6 +90,7 @@ class CreateListing extends Component{
       console.log('loading.js user current location is', position);
       data.latitude = position.coords.latitude;
       data.longitude = position.coords.longitude;
+      console.log(data);
       api.addListing(data);
 
     }, (err) => {
@@ -103,7 +108,7 @@ class CreateListing extends Component{
   getActivityList(that) {
     return _.map(that.state.activityList, (item, index) => {
       return (
-        <MenuOption value={item}>
+        <MenuOption key={index} value={item}>
           <Text>{item}</Text>
         </MenuOption>
 
@@ -117,7 +122,7 @@ class CreateListing extends Component{
 
     var categoryList = _.map(CATEGORIES, (item, index) => {
       return (
-        <MenuOption value={item.name}>
+        <MenuOption key={index} value={item.name}>
           <Text>{item.name}</Text>
         </MenuOption>
 
@@ -145,6 +150,14 @@ class CreateListing extends Component{
             {this.getActivityList(this)}
             </MenuOptions>
           </Menu>
+          <Text> Enter a description(100 characters max) </Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(text) => this.setState({ description: text})}
+            value={this.state.text}
+            placeholder="Description"
+            />
+          
           <TouchableHighlight
           style={styles.buttonContainer}
           onPress={() => this.submitListing(this)}
@@ -286,6 +299,21 @@ var styles = {
     borderWidth: 2,
     width: 300,
     height: 200
+  }, 
+  textInput: {
+    height: 50,
+    marginTop:5,
+    marginBottom:4,
+    paddingTop:5,
+    paddingBottom:5,
+    paddingLeft:15,
+    paddingRight:15,
+    backgroundColor: '#eee',
+    flex: 1,
+    fontSize: 15,
+    color: '#333',
+    borderColor: '#ddd',
+    borderWidth: 1
   }
 };
 

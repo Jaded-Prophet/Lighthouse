@@ -166,7 +166,6 @@ class Listings extends Component{
                   </View>
                 </View>
               </TouchableHighlight>
-              <Separator />
             </View>
           )
         })
