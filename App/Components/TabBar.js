@@ -11,7 +11,7 @@ import Listings from './Listings/Listings';
 import Profile from './Profiles/Profile';
 import Map from './Map/Map';
 import MapboxMap from './Map/MapboxMap';
-import Chat from './Chat';
+import Chat from './Chat/Chat';
 
 class TabBar extends React.Component {
   constructor(){
