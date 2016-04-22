@@ -1,8 +1,7 @@
 var api = require('../../Utils/api');
 var util = require('../../Utils/location-util.js')
 var _ = require('underscore');
-
-
+var Chat = require('../Chat.js');
 import React, {
   View,
   Text,
@@ -70,35 +69,58 @@ class CreateListing extends Component{
     }).done();
   }
   
+  chatRedirect(data, that) {
+
+    that.props.navigator.push({
+      title: 'Chat',
+      component: Chat,
+      passProps: {listingData: data}
+    });
+  }
 
 
   submitListing(that) {
-    console.log(that.state.user);
-    var data = {
-      description: that.state.description,
-      imgUrl: that.props.userInfo.password.profileImageURL,
-      category: that.state.category,
-      activity: that.state.activity,
-      createdBy: that.state.user,
-      createdById: that.props.userInfo.uid
-    };
+    if(that.state.category !== 'Select a Category' && that.state.activity !== 'Select an Activity') {
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log('loading.js user current location is', position);
-      data.latitude = position.coords.latitude;
-      data.longitude = position.coords.longitude;
-      console.log(data);
-      api.addListing(data);
+      var data = {
+        description: that.state.description,
+        imgUrl: that.props.userInfo.password.profileImageURL,
+        category: that.state.category,
+        activity: that.state.activity,
+        createdBy: that.state.user,
+        createdById: that.props.userInfo.uid
+      };
 
-    }, (err) => {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log('loading.js user current location is', position);
+        data.latitude = position.coords.latitude;
+        data.longitude = position.coords.longitude;
+        console.log(data);
+        api.addListing(data, () => {
+          api.createChat(data.createdById, data.createdBy, data.description, () => {
+            console.log('!!!!!!');
+            this.chatRedirect(data, this);
+          });
+          
+        });
+        //redirectToChat
+      }, (err) => {
 
-      data.latitude = 37.783610;
-      data.longitude = -122.409002;
-      //DO API CALL HERE
-      api.addListing(data);
+        data.latitude = 37.783610;
+        data.longitude = -122.409002;
+        //DO API CALL HERE
+        api.addListing(data, () => {
+          api.createChat(data.createdById, data.createdBy, data.description, () => {
+            console.log('!!!!!!');
+            this.chatRedirect(data, this);
+          });
+          
+        });
 
-
-    });
+      });
+    } else {
+      that.setState({updateAlert: 'Please select a category and activity'});
+    }
 
   }
 
@@ -128,6 +150,7 @@ class CreateListing extends Component{
     return (
       <MenuContext style={{ flex: 1 }} ref="MenuContext">
         <View style={styles.container}>
+          <Text style={styles.alertText}>{this.state.updateAlert}</Text>
           <Text style={styles.name}>Pick a category....</Text>
           <Menu style={styles.dropdown} onSelect={(value) => this.setState({ category: value, activity: 'Select an Activity', activityList: CATEGORIES[value].items})}>
             <MenuTrigger>
