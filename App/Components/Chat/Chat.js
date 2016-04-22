@@ -7,7 +7,6 @@ var firebaseUrl = require('../../Utils/config')
 var ChatMessage = require('./ChatMessage');
 
 var {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -62,7 +61,7 @@ class Chat extends React.Component{
     return(
       <ChatMessage
         key = {index}
-        currentUser = {this.user.id}
+        currentUserId = {this.user.id}
         message = {message}/>
     );
   };

@@ -1,24 +1,13 @@
-'use strict';
-
 var React = require('react-native');
-var Firebase = require('firebase');
-var reactfire = require('reactfire');
-var firebaseUrl = require('../../Utils/config')
 
 var {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableHighlight,
-  ScrollView,
-  AsyncStorage
 } = React;
 
 
 class ChatMessage extends React.Component{
-  mixins: [reactfire]
   constructor(props) {
     super(props);
   }
@@ -28,7 +17,7 @@ class ChatMessage extends React.Component{
   }
 
   render() {
-    var currentUserId = this.props.currentUser.id;
+    var currentUserId = this.props.currentUserId;
     var message = this.props.message;
       if(currentUserId === message.author.id) {
         return (
@@ -49,21 +38,6 @@ class ChatMessage extends React.Component{
 }
 
 var styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fafafa',
-    flex: 1,
-    flexDirection: 'column',
-    marginBottom: 198,
-    alignSelf: 'stretch'
-  },
-  innerContainer: {
-    flex: .1,
-  },
-  messages: {
-    flex:8,
-    marginLeft:15,
-    marginRight:15,
-  },
   message: {
     marginTop:10,
   },
@@ -89,32 +63,6 @@ var styles = StyleSheet.create({
     paddingBottom:7,
     paddingLeft:15,
     paddingRight:15
-  },
-  textInput: {
-    height: 50,
-    marginTop:5,
-    marginBottom:4,
-    paddingTop:5,
-    paddingBottom:5,
-    paddingLeft:15,
-    paddingRight:15,
-    backgroundColor: '#eee',
-    flex: 1,
-    fontSize: 15,
-    color: '#333',
-    borderColor: '#ddd',
-    borderWidth: 1
-  },
-  SubmitButton: {
-    paddingTop:15,
-    paddingBottom:15,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,.30)',
-    alignSelf: 'stretch',
-    marginTop:8,
-    marginBottom:60,
-    marginTop: 0
   }
 });
 
