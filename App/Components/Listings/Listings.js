@@ -59,7 +59,7 @@ class Listings extends Component{
           lat: pos.coords.latitude,
           long: pos.coords.longitude
         });
-        api.getListings((res) => {
+        api.getListings({latitude: that.state.lat, longitude: that.state.long}, (res) => {
 
           that.setState({
             listingData: res,
@@ -76,7 +76,7 @@ class Listings extends Component{
 
         })
       }, (err) => {
-        api.getListings((res) => {
+        api.getListings({latitude: that.state.lat, longitude: that.state.long}, (res) => {
 
           that.setState({
             listingData: res,

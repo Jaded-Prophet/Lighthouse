@@ -115,8 +115,8 @@ class Login extends React.Component{
 
     return (
         <View style={styles.mainContainer}>
-          <Image style={styles.logo} source={require('../../Images/lighthouse.png')} />
-          <Text style={styles.title}>Lighthouse</Text>
+          <Image style={styles.logo} source={require('../../Images/tortoise.png')} />
+          <Text style={styles.title}>FriendFinder</Text>
 
           <Text style={styles.pageText}>Email</Text>
           <TextInput

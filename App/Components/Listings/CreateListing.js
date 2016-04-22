@@ -98,7 +98,6 @@ class CreateListing extends Component{
         console.log(data);
         api.addListing(data, () => {
           api.createChat(data.createdById, data.createdBy, data.description, () => {
-            console.log('!!!!!!');
             this.chatRedirect(data, this);
           });
           
@@ -111,7 +110,6 @@ class CreateListing extends Component{
         //DO API CALL HERE
         api.addListing(data, () => {
           api.createChat(data.createdById, data.createdBy, data.description, () => {
-            console.log('!!!!!!');
             this.chatRedirect(data, this);
           });
           

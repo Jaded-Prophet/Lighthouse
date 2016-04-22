@@ -93,7 +93,7 @@ class Signup extends React.Component{
 
     return (
       <View style={styles.mainContainer}>
-        <Image style={styles.logo} source={require('../../Images/lighthouse.png')} />
+        <Image style={styles.logo} source={require('../../Images/tortoise.png')} />
         <Text style={styles.title}>Sign Up</Text>
 
         <Text style={styles.pageText}>Email</Text>

@@ -24,7 +24,7 @@ class projectSapphire extends Component {
       style={styles.container}
       initialRoute={{
         component: Login,
-        title: 'Find Me Friends'
+        title: 'Find Some Friends'
       }}
     />
     );

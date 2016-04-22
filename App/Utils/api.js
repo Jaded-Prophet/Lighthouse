@@ -1,5 +1,7 @@
 var Firebase = require('firebase');
 var firebaseUrl = require('./config')
+var _ = require('underscore');
+var util = require('./location-util');
 
 // Table Names: UserData, Friends, Groups, PeopleInGroups
 
@@ -182,13 +184,16 @@ var api = {
     cb();
   },
 
-  getListings(cb, miles) {
+  getListings(location, cb) {
     var listings = firebaseUrl + '/Listings.json';
       //TODO fetch listings within X miles
     return fetch(listings)
       .then(res => res.json())
       .then((listings) => {
-        cb(listings);
+        var filtered = _.filter(listings, (listing) => {
+          return util.getDistanceFromLatLonInMiles(location.latitude, location.longitude, listing.latitude, listing.longitude) <= 100;
+        })
+        cb(filtered);
       })
   },
 
