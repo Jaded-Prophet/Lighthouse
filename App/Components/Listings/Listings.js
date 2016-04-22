@@ -157,11 +157,11 @@ class Listings extends Component{
                 <View style={styles.listingContainer}> 
                   <Image style={styles.userImages} source={{uri: item.imgUrl}} />
                   <View style={styles.centerContainer}>
-                    <Text style={styles.entryText}>{item.createdBy}</Text>
-                    <Text style={styles.entryText}>{item.category} - {item.activity}</Text>
-                    <Text style={styles.entryText}>{item.description}</Text>
+                    <Text style={styles.headlineText}>{item.category} - {item.activity}</Text>
+                    <Text style={styles.descriptionText}>{item.description}</Text>
+                    <Text style={styles.authorText}>Listed by: {item.createdBy}</Text>
                     <View style={styles.rightContainer}>
-                      <Text style={styles.entryText}>{util.getDistanceFromLatLonInMiles(this.state.lat, this.state.long, item.latitude, item.longitude)} Miles</Text>
+                      <Text style={styles.descriptionText}>{util.getDistanceFromLatLonInMiles(this.state.lat, this.state.long, item.latitude, item.longitude)} Miles</Text>
                     </View>
                   </View>
                 </View>
@@ -224,37 +224,55 @@ var styles = {
     fontSize: 16,
     color: 'red'
   },
-  rowContainer: {
-    flex: 1,
-    backgroundColor: 'lightblue',
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    padding: 30,
-    marginLeft: 20,
-    marginRight: 20,
-    height: 75,
-    flexDirection: 'column'
-  },
+  // rowContainer: {
+  //   flex: 1,
+  //   backgroundColor: 'lightblue',
+  //   borderRadius: 4,
+  //   borderWidth: 0.5,
+  //   borderColor: '#d6d7da',
+  //   padding: 30,
+  //   marginLeft: 20,
+  //   marginRight: 20,
+  //   height: 75,
+  //   flexDirection: 'column'
+  // },
 
-  entryText: {
-    fontSize: 16,
-    color: '#feb732'
+  headlineText: {
+    fontSize: 14,
+    fontWeight: 'bold'
+    // color: 'black'
+  }, 
+
+  descriptionText: {
+    fontSize: 12,
+    // color: '#feb732'
+  },  
+
+  authorText: {
+    fontSize: 12,
+    // color: '#feb732'
   },
 
   listingContainer: {
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    flexWrap: 'wrap',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
     padding: 10
   },
   centerContainer: {
-    flex: 1
+    flex: 1, 
+    alignSelf: 'center',
+    paddingLeft: 20
   },
   rightContainer: {
-    flex: 1
+    flex: 1,
+    alignSelf: 'flex-end'
   },
 
   image: {
