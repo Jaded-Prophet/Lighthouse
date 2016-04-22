@@ -8,7 +8,7 @@ import React, {
   StyleSheet,
   Component,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 
 class Profile extends Component{
