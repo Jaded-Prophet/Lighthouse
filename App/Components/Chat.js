@@ -29,12 +29,13 @@ class Chat extends React.Component{
   }
 
   componentWillMount() {
+    var that = this;
     Firebase.enableLogging(true);
-    console.log('this props: ', this.props);
     this.ref.on('value', function(snapshot) {
       var items = [];
       snapshot.forEach(function(child) {
         items.push(child.val());
+
       });
       this.setState({ 'items': items });
     }.bind(this));
@@ -54,7 +55,7 @@ class Chat extends React.Component{
     };
     return (
       <View style={styles.container}>
-          <ScrollView style={styles.messages}>
+          <ScrollView ref='_scrollView' style={styles.messages}>
             {this.state.items.map(createItem)}
           </ScrollView>
           <TextInput
