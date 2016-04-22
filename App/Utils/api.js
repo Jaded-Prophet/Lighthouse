@@ -168,7 +168,7 @@ var api = {
   },
 
 
-  addListing(data) {
+  addListing(data, cb) {
     // var newGroup = new Firebase(`${firebaseUrl}/Groups/${groupName}`);
     var newListing = new Firebase(`${firebaseUrl}/Listings/${data.createdById}`);
     newListing.child('description').set(data.description);
@@ -179,7 +179,7 @@ var api = {
     newListing.child('longitude').set(data.longitude);
     newListing.child('createdBy').set(data.createdBy);
     newListing.child('userId').set(data.createdById);
-
+    cb();
   },
 
   getListings(cb, miles) {
@@ -203,8 +203,24 @@ var api = {
     });
   },
 
-
-  //new stuff
+  createChat(userId, username, description, cb) {
+  var newChat = new Firebase(`${firebaseUrl}/chat/${userId}`);
+  newChat.child('ownerName').set(username);
+  newChat.child('ownerId').set(userId);
+  newChat.child('description').set(description);
+  cb();
+  },
+  
+  destroyChat(ownerId) {
+    var chat = new Firebase(`${firebaseUrl}/chat/${ownerId}`);
+    chat.remove((error) => {
+      if(error) {
+        console.log('ERROR IN CHAT DELETION');
+      } else {
+        console.log('CHAT REMOVAL SUCCESSFUL');
+      }
+    });
+  },
 
   checkAuthToken(token, callback) {
     var ref = new Firebase(`${firebaseUrl}/UserData/`);
