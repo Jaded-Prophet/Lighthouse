@@ -192,9 +192,15 @@ var api = {
       })
   },
 
-  deleteListing(id, cb) {
+  deleteListing(id) {
     var listing = new Firebase(`${firebaseUrl}/Listings/${id}`);
-    listing.remove(cb);
+    listing.remove((error) => {
+      if(error) {
+        console.log('ERROR IN DATA DELETION');
+      } else {
+        console.log('DATA REMOVAL SUCCESSFUL');
+      }
+    });
   },
 
 
