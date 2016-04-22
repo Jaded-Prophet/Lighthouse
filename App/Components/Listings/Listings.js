@@ -181,10 +181,14 @@ class Listings extends Component{
 
       //this.addFriends -> open chat, close to further connections, remove from active listings
       return (
-        <View style={styles.container}>
+        <View >
           <Text style={styles.alertText}>{'\n'}{this.state.updateAlert}</Text>
-          <TouchableHighlight onPress={() => this.addFriends()}>
-            <Image style={styles.userImages} source={require('../../Images/plus.png')} />
+          <TouchableHighlight
+          style={styles.buttonContainer}
+          onPress={() => this.addFriends()}
+          underlayColor="#EEE"
+          >
+          <Text style={styles.buttonText}> Create New Listing </Text>
           </TouchableHighlight>
           <ScrollView
             showsVerticalScrollIndicator={true}
@@ -201,6 +205,19 @@ var styles = {
   container: {
     flex: 1,
     marginTop: 0
+  },
+
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'lightblue',
+    padding:10,
+    height:20,
+    overflow:'hidden',
+    borderRadius:4,
   },
   isLoadingContainer: {
     flex: 1,
@@ -257,6 +274,7 @@ var styles = {
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '#d6d7da',
+    margin: 10,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
