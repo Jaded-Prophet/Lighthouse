@@ -178,6 +178,7 @@ var api = {
     newListing.child('latitude').set(data.latitude);
     newListing.child('longitude').set(data.longitude);
     newListing.child('createdBy').set(data.createdBy);
+    newListing.child('userId').set(data.createdById);
 
   },
 

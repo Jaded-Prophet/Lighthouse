@@ -29,7 +29,7 @@ var styles = {
     marginTop: 150
   },
   text: {
-    size: 20
+    fontSize: 20
   }
 }
 
