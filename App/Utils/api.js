@@ -192,6 +192,11 @@ var api = {
       })
   },
 
+  deleteListing(id, cb) {
+    var listing = new Firebase(`${firebaseUrl}/Listings/${id}`);
+    listing.remove(cb);
+  },
+
 
   //new stuff
 
