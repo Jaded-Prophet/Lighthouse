@@ -15,7 +15,7 @@ var {
   ScrollView,
   AsyncStorage
 } = React;
-
+//.
 
 class Chat extends React.Component{
 
