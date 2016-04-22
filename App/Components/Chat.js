@@ -119,9 +119,9 @@ var styles = StyleSheet.create({
   messageText: {
     backgroundColor: '#eee',
     borderRadius: 10,
-    paddingTop:5,
-    paddingBottom:5,
-    marginRight:70,
+    paddingTop:7,
+    paddingBottom:7,
+    marginRight:90,
     paddingLeft:10,
     paddingRight:10
   },
@@ -129,10 +129,10 @@ var styles = StyleSheet.create({
     backgroundColor: '#30A3FC',
     borderRadius: 10,
     color: '#fff',
-    marginLeft:70,
-
-    paddingTop:20,
-    paddingBottom:20,
+    textAlign: 'right',
+    marginLeft:90,
+    paddingTop:7,
+    paddingBottom:7,
     paddingLeft:15,
     paddingRight:15
   },
