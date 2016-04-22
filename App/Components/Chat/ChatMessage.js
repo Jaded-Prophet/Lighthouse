@@ -23,6 +23,7 @@ class ChatMessage extends React.Component{
     var currentUserId = this.props.currentUserId;
     var message = this.props.message;
     console.log(message);
+
       if(currentUserId === message.author.id) {
         return (
           <TouchableHighlight

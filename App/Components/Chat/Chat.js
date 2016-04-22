@@ -57,7 +57,7 @@ class Chat extends React.Component{
   }
 
   _onPressButton() {
-    this.ref.push({ name: this.user, message: this.state.text });
+    this.ref.push({ author: this.user, message: this.state.text });
   }
 
 
@@ -91,26 +91,8 @@ class Chat extends React.Component{
 
     return (
       <View style={styles.container}>
-          <ScrollView ref='_scrollView' style={styles.messages}>
-            {this.state.items.map(this.createItem.bind(this))}
-          </ScrollView>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => this.setState({ text: text})}
-            value={this.state.text}
-            placeholder="message"
-            autoFocus = {true}
-            />
-          <TouchableHighlight
-            style={styles.SubmitButton}
-            onPress={this._onPressButton.bind(this)}>
-            <Text>Send</Text>
-          </TouchableHighlight>
-          <View style={styles.innerContainer}>
-
-          </View>
         <ScrollView ref='_scrollView' style={styles.messages}>
-          {this.state.items.map(this.createMessage.bind(this))}
+          {this.state.items.map(this.createItem.bind(this))}
         </ScrollView>
         <TextInput
           style={styles.textInput}
