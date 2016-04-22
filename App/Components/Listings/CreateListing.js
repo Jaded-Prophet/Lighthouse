@@ -1,5 +1,8 @@
 var api = require('../../Utils/api');
 var util = require('../../Utils/location-util.js')
+var _ = require('underscore');
+
+
 import React, {
   View,
   Text,
@@ -12,6 +15,13 @@ import React, {
   PickerIOS,
   AsyncStorage
 } from 'react-native';
+
+import Menu, {
+  MenuContext,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger
+} from 'react-native-menu';
 
 var PickerItemIOS = PickerIOS.Item;
 
@@ -38,11 +48,13 @@ class CreateListing extends Component{
     super(props)
     this.state = {
       user: null,
-      category: 'Dining',
+      category: 'Select a Category',
+      activity: 'Select an Activity',
       itemIndex: 0,
       updateAlert: '',
       isLoading: false,
-      foundFriend: false
+      foundFriend: false,
+      activityList: []
     };
   }
   
@@ -65,7 +77,7 @@ class CreateListing extends Component{
       description: 'Non Sexual Casual Encounter',
       imgUrl: that.props.userInfo.password.profileImageURL,
       category: that.state.category,
-      activity: CATEGORIES[that.state.category].items[that.state.itemIndex],
+      activity: that.state.activity,
       createdBy: that.state.user,
       createdById: that.props.userInfo.uid
     };
@@ -88,46 +100,60 @@ class CreateListing extends Component{
 
   }
 
+  getActivityList(that) {
+    return _.map(that.state.activityList, (item, index) => {
+      return (
+        <MenuOption value={item}>
+          <Text>{item}</Text>
+        </MenuOption>
+
+      )
+    });
+  }
+
   render() {
-    var category = CATEGORIES[this.state.category];
-    var selectionString = category.name + ' - ' + category.items[this.state.itemIndex];
+    // var category = CATEGORIES[this.state.category];
+    // var selectionString = category.name + ' - ' + category.items[this.state.itemIndex];
+
+    var categoryList = _.map(CATEGORIES, (item, index) => {
+      return (
+        <MenuOption value={item.name}>
+          <Text>{item.name}</Text>
+        </MenuOption>
+
+      )
+    });
     return (
-      <View>
-        <Text>Pick a Category: </Text>
-        <PickerIOS
-          itemStyle={{fontSize: 25, color: 'green', textAlign: 'center', fontWeight: 'bold'}}
-          selectedValue={this.state.category}
-          onValueChange={(category) => this.setState({category, itemIndex: 0})}>
-          {Object.keys(CATEGORIES).map((category) => (
-            <PickerItemIOS
-              key={category}
-              value={category}
-              label={CATEGORIES[category].name}
-            />
-          ))}
-        </PickerIOS>
-        <PickerIOS
-          itemStyle={{fontSize: 20, color: 'green', textAlign: 'center'}}
-          selectedValue={this.state.itemIndex}
-          key={this.state.category}
-          onValueChange= {(itemIndex) => this.setState({itemIndex})}>
-          {CATEGORIES[this.state.category].items.map((modelName, itemIndex) => (
-            <PickerItemIOS
-              key={this.state.category + '_' + itemIndex}
-              value={itemIndex}
-              label={modelName}
-            />
-          ))}
-        </PickerIOS>
-        <Text style={styles.alertText}>You selected: {selectionString}</Text>
-        <TouchableHighlight
-        style={styles.buttonContainer}
-        onPress={() => this.submitListing(this)}
-        underlayColor="#EEE"
-        >
-        <Text style={styles.buttonText}> Create this listing! </Text>
-        </TouchableHighlight>
-      </View>
+      <MenuContext style={{ flex: 1 }} ref="MenuContext">
+        <View style={styles.content}>
+
+          <Menu style={styles.dropdown} onSelect={(value) => this.setState({ category: value, activity: 'Select an Activity', activityList: CATEGORIES[value].items})}>
+            <MenuTrigger>
+              <Text>{this.state.category}</Text>
+            </MenuTrigger>
+            <MenuOptions optionsContainerStyle={styles.dropdownOptions}
+                         renderOptionsContainer={(options) => <ScrollView><Text>Pick a category....</Text>{options}</ScrollView>}>
+            {categoryList}
+            </MenuOptions>
+          </Menu>
+          <Menu style={styles.dropdown} onSelect={(value) => this.setState({ activity: value })}>
+            <MenuTrigger>
+              <Text>{this.state.activity}</Text>
+            </MenuTrigger>
+            <MenuOptions optionsContainerStyle={styles.dropdownOptions}
+                         renderOptionsContainer={(options) => <ScrollView><Text>Pick an activity....</Text>{options}</ScrollView>}>
+            {this.getActivityList(this)}
+            </MenuOptions>
+          </Menu>
+          <TouchableHighlight
+          style={styles.buttonContainer}
+          onPress={() => this.submitListing(this)}
+          underlayColor="#EEE"
+          >
+          <Text style={styles.buttonText}> Create this listing! </Text>
+          </TouchableHighlight>
+        </View>
+      </MenuContext>
     );
   }
 
@@ -211,6 +237,55 @@ var styles = {
     marginBottom: 5,
     marginTop: 5,
     padding: 3
+  },
+  topbar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    backgroundColor: 'black',
+    paddingHorizontal: 5,
+    paddingVertical: 10
+  },
+  menuTrigger: {
+    flexDirection: 'row',
+    paddingHorizontal: 10
+  },
+  menuTriggerText: {
+    color: 'lightgrey',
+    fontWeight: '600',
+    fontSize: 20
+  },
+  disabled: {
+    color: '#ccc'
+  },
+  divider: {
+    marginVertical: 5,
+    marginHorizontal: 2,
+    borderBottomWidth: 1,
+    borderColor: '#ccc'
+  },
+  content: {
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    paddingTop: 100,
+    paddingBottom: 30,
+    borderBottomWidth: 1,
+    borderColor: '#ccc'
+  },
+  contentText: {
+    fontSize: 18
+  },
+  dropdown: {
+    width: 300,
+    borderColor: '#999',
+    borderWidth: 1,
+    padding: 5
+  },
+  dropdownOptions: {
+    marginTop: 30,
+    borderColor: '#ccc',
+    borderWidth: 2,
+    width: 300,
+    height: 200
   }
 };
 
