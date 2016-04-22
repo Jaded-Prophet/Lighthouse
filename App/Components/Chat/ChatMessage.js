@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Firebase = require('firebase');
 var reactfire = require('reactfire');
-var firebaseUrl = require('../Utils/config')
+var firebaseUrl = require('../../Utils/config')
 
 var {
   AppRegistry,
@@ -28,19 +28,18 @@ class ChatMessage extends React.Component{
   }
 
   render() {
-    var currentUser = this.props.currentUser;
+    var currentUserId = this.props.currentUser.id;
     var message = this.props.message;
-    var index = this.props.index;
-      if(currentUser === message.name) {
+      if(currentUserId === message.author.id) {
         return (
-          <View>
+          <View style={styles.message}>
             <Text style={styles.messageTextAuthor}>{message.message}</Text>
           </View>
         );
       } else {
         return (
-          <View>
-            <Text style={styles.messageUsername}>{message.name}</Text>
+          <View style={styles.message}>
+            <Text style={styles.messageUsername}>{message.author.name}</Text>
             <Text style={styles.messageText}>{message.message}</Text>
           </View>
         );
@@ -64,6 +63,9 @@ var styles = StyleSheet.create({
     flex:8,
     marginLeft:15,
     marginRight:15,
+  },
+  message: {
+    marginTop:10,
   },
   messageUsername: {
     color: '#999'

@@ -1,7 +1,7 @@
 var api = require('../../Utils/api');
 var util = require('../../Utils/location-util.js')
 var _ = require('underscore');
-var Chat = require('../Chat.js');
+var Chat = require('../Chat/Chat.js');
 import React, {
   View,
   Text,
@@ -54,7 +54,7 @@ class CreateListing extends Component{
       activityList: []
     };
   }
-  
+
 
   captureItemChange(event) {
     this.setState({
@@ -68,7 +68,7 @@ class CreateListing extends Component{
       this.setState({user: name});
     }).done();
   }
-  
+
   chatRedirect(data, that) {
 
     that.props.navigator.push({
@@ -100,7 +100,7 @@ class CreateListing extends Component{
           api.createChat(data.createdById, data.createdBy, data.description, () => {
             this.chatRedirect(data, this);
           });
-          
+
         });
         //redirectToChat
       }, (err) => {
@@ -112,7 +112,7 @@ class CreateListing extends Component{
           api.createChat(data.createdById, data.createdBy, data.description, () => {
             this.chatRedirect(data, this);
           });
-          
+
         });
 
       });
@@ -177,7 +177,7 @@ class CreateListing extends Component{
             placeholder="Description"
             maxLength={100}
             />
-          
+
           <TouchableHighlight
           style={styles.button}
           onPress={() => this.submitListing(this)}
@@ -322,7 +322,7 @@ var styles = {
     borderWidth: 2,
     width: 300,
     height: 200
-  }, 
+  },
   textInput: {
     height: 50,
     marginTop:5,

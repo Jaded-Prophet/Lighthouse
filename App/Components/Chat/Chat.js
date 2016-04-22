@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Firebase = require('firebase');
 var reactfire = require('reactfire');
-var firebaseUrl = require('../Utils/config')
+var firebaseUrl = require('../../Utils/config')
 var ChatMessage = require('./ChatMessage');
 
 var {
@@ -28,10 +28,15 @@ class Chat extends React.Component{
     };
     this.ref = new Firebase(firebaseUrl + '/chat');
 
-    this.user = '';
+    this.user = {};
     AsyncStorage.getItem('name').then(name => {
-      this.user = name;
+      this.user.name = name;
     });
+    AsyncStorage.getItem('authData').then(authData => {
+      var currentUserId = JSON.parse(authData).uid
+      this.user.id = currentUserId;
+    });
+
 
   }
 
@@ -49,7 +54,7 @@ class Chat extends React.Component{
   }
 
   _onPressButton() {
-    this.ref.push({ name: this.user, message: this.state.text });
+    this.ref.push({ author: this.user, message: this.state.text });
   }
 
 
@@ -57,8 +62,7 @@ class Chat extends React.Component{
     return(
       <ChatMessage
         key = {index}
-        style = {styles.message}
-        currentUser = {this.user}
+        currentUser = {this.user.id}
         message = {message}/>
     );
   };
@@ -104,9 +108,6 @@ var styles = StyleSheet.create({
     flex:8,
     marginLeft:15,
     marginRight:15,
-  },
-  message: {
-    marginTop:8
   },
   textInput: {
     height: 50,
