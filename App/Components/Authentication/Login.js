@@ -34,6 +34,19 @@ class Login extends React.Component{
       authData = JSON.parse(authData);
       api.checkAuthToken(authData.token, (error, result) => {
         if(result) {
+          api.getUserData(authData.uid).then((res) => {
+            AsyncStorage.setItem('name', res.name);
+            this.props.navigator.replace({
+              component: TabBar,
+              passProps: {
+                userInfo: authData
+              }
+            });
+          })
+
+
+
+
           this.props.navigator.replace({
             component: TabBar,
             passProps: {
