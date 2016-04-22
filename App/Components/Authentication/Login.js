@@ -181,7 +181,7 @@ var styles = StyleSheet.create({
     marginTop: 30,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor:'#498183'
+    backgroundColor: '#9DC261'
   },
   pageText: {
     color: '#fff'

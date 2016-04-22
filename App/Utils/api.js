@@ -184,14 +184,14 @@ var api = {
     cb();
   },
 
-  getListings(location, cb) {
+  getListings(location, miles, cb) {
     var listings = firebaseUrl + '/Listings.json';
       //TODO fetch listings within X miles
     return fetch(listings)
       .then(res => res.json())
       .then((listings) => {
         var filtered = _.filter(listings, (listing) => {
-          return util.getDistanceFromLatLonInMiles(location.latitude, location.longitude, listing.latitude, listing.longitude) <= 100;
+          return util.getDistanceFromLatLonInMiles(location.latitude, location.longitude, listing.latitude, listing.longitude) <= miles;
         })
         cb(filtered);
       })

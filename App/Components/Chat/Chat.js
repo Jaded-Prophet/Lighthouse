@@ -3,10 +3,10 @@
 var React = require('react-native');
 var Firebase = require('firebase');
 var reactfire = require('reactfire');
-var firebaseUrl = require('../Utils/config')
+var firebaseUrl = require('../../Utils/config')
+var ChatMessage = require('./ChatMessage');
 
 var {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -27,10 +27,19 @@ class Chat extends React.Component{
     };
     this.ref = new Firebase(firebaseUrl + '/chat');
 
-    this.user = '';
+    // this.user = '';
+    // AsyncStorage.getItem('name').then(name => {
+    //   this.user = name;
+    // });
+    this.user = {};
     AsyncStorage.getItem('name').then(name => {
-      this.user = name;
+      this.user.name = name;
     });
+    AsyncStorage.getItem('authData').then(authData => {
+      var currentUserId = JSON.parse(authData).uid
+      this.user.id = currentUserId;
+    });
+
 
   }
 
@@ -65,6 +74,17 @@ class Chat extends React.Component{
         <Text style={styles.messageText}>{item.message}</Text></View>
       )
     }
+    this.ref.push({ author: this.user, message: this.state.text });
+  }
+
+
+  createMessage(message, index) {
+    return(
+      <ChatMessage
+        key = {index}
+        currentUserId = {this.user.id}
+        message = {message}/>
+    );
   };
 
   render() {
@@ -89,6 +109,23 @@ class Chat extends React.Component{
           <View style={styles.innerContainer}>
 
           </View>
+        <ScrollView ref='_scrollView' style={styles.messages}>
+          {this.state.items.map(this.createMessage.bind(this))}
+        </ScrollView>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={(text) => this.setState({ text: text})}
+          value={this.state.text}
+          placeholder="message"
+          autoFocus = {true}
+          />
+        <TouchableHighlight
+          style={styles.SubmitButton}
+          onPress={this._onPressButton.bind(this)}>
+          <Text>Send</Text>
+        </TouchableHighlight>
+        <View style={styles.innerContainer}>
+        </View>
       </View>
     );
   }
