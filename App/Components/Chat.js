@@ -12,7 +12,8 @@ var {
   View,
   TextInput,
   TouchableHighlight,
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } = React;
 
 
@@ -26,6 +27,11 @@ class Chat extends React.Component{
     };
     this.ref = new Firebase(firebaseUrl + '/chat');
 
+    this.user = '';
+    AsyncStorage.getItem('name').then(name => {
+      this.user = name;
+    });
+
   }
 
   componentWillMount() {
@@ -33,30 +39,40 @@ class Chat extends React.Component{
     Firebase.enableLogging(true);
     this.ref.on('value', function(snapshot) {
       var items = [];
-      snapshot.forEach(function(child) {
+      snapshot.forEach(child => {
         items.push(child.val());
-
       });
       this.setState({ 'items': items });
+
     }.bind(this));
   }
 
   _onPressButton() {
-    this.ref.push({ name: 'puf', message: this.state.text });
+    this.ref.push({ name: this.user, message: this.state.text });
   }
 
-  render() {
-    var createItem = function(item, index) {
+
+  createItem(item, index) {
+    if(this.user === item.name) {
+      return (
+        <View style={styles.message} key={index}>
+        <Text style={styles.messageTextAuthor}>{item.message}</Text></View>
+      )
+    } else {
       return (
         <View style={styles.message} key={index}>
         <Text style={styles.messageUsername}>{item.name}</Text>
         <Text style={styles.messageText}>{item.message}</Text></View>
       )
-    };
+    }
+  };
+
+  render() {
+
     return (
       <View style={styles.container}>
           <ScrollView ref='_scrollView' style={styles.messages}>
-            {this.state.items.map(createItem)}
+            {this.state.items.map(this.createItem.bind(this))}
           </ScrollView>
           <TextInput
             style={styles.textInput}
@@ -95,7 +111,7 @@ var styles = StyleSheet.create({
     marginRight:15,
   },
   message: {
-    marginBottom:8
+    marginTop:8
   },
   messageUsername: {
     color: '#999'
@@ -103,8 +119,8 @@ var styles = StyleSheet.create({
   messageText: {
     backgroundColor: '#eee',
     borderRadius: 10,
-    paddingTop:10,
-    paddingBottom:10,
+    paddingTop:5,
+    paddingBottom:5,
     marginRight:70,
     paddingLeft:10,
     paddingRight:10
