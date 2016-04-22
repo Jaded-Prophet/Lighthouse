@@ -62,6 +62,7 @@ class Listings extends Component{
         api.getListings({latitude: that.state.lat, longitude: that.state.long}, 100, (res) => {
 
           that.setState({
+            updateAlert: '',
             listingData: res,
             isLoading: false,
           });
@@ -79,6 +80,7 @@ class Listings extends Component{
         api.getListings({latitude: that.state.lat, longitude: that.state.long}, 100, (res) => {
 
           that.setState({
+            updateAlert: '',
             listingData: res,
             isLoading: false,
           });
