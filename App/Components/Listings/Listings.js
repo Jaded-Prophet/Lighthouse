@@ -140,6 +140,7 @@ class Listings extends Component{
       return (
         <View style={styles.isLoadingContainer}>
           <Image style={styles.loadingImage} source={require('../../Images/loading.gif')} />
+          <Text> Fetching listings... </Text>
         </View>
       )
     } else {
@@ -147,15 +148,22 @@ class Listings extends Component{
       var listings = this.state.listingData;
       if (listings !== null && Object.keys(listings).length > 0) {
         var listingsView = _.map(listings, (item, index) => {
+          console.log(item);
           return (
             <View key={index}>
               <TouchableHighlight
-                style={styles.rowContainer}
                 onPress={() => this.handleRoute(item)}
                 underlayColor="#EEE">
-                <View>
+                <View style={styles.listingContainer}> 
                   <Image style={styles.userImages} source={{uri: item.imgUrl}} />
-                  <Text style={styles.name}>{item.category} - {item.activity} - {util.getDistanceFromLatLonInMiles(this.state.lat, this.state.long, item.latitude, item.longitude)} Miles</Text>
+                  <View style={styles.centerContainer}>
+                    <Text style={styles.entryText}>{item.createdBy}</Text>
+                    <Text style={styles.entryText}>{item.category} - {item.activity}</Text>
+                    <Text style={styles.entryText}>{item.description}</Text>
+                    <View style={styles.rightContainer}>
+                      <Text style={styles.entryText}>{util.getDistanceFromLatLonInMiles(this.state.lat, this.state.long, item.latitude, item.longitude)} Miles</Text>
+                    </View>
+                  </View>
                 </View>
               </TouchableHighlight>
               <Separator />
@@ -217,6 +225,7 @@ var styles = {
     color: 'red'
   },
   rowContainer: {
+    flex: 1,
     backgroundColor: 'lightblue',
     borderRadius: 4,
     borderWidth: 0.5,
@@ -225,15 +234,38 @@ var styles = {
     marginLeft: 20,
     marginRight: 20,
     height: 75,
-    flexDirection: 'row',
+    flexDirection: 'column'
   },
+
+  entryText: {
+    fontSize: 16,
+    color: '#feb732'
+  },
+
+  listingContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    padding: 10
+  },
+  centerContainer: {
+    flex: 1
+  },
+  rightContainer: {
+    flex: 1
+  },
+
   image: {
+    flex: 1,
     height: 50,
     width: 50,
     borderRadius: 25,
-    position: 'relative',
-    top: -20,
-    left: -20
+    // position: 'relative',
+    // top: -20,
+    // left: -20
+    alignSelf: 'flex-start'
   },
   name: {
     paddingLeft: 100,
