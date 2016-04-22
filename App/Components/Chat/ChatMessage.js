@@ -19,6 +19,7 @@ class ChatMessage extends React.Component{
   render() {
     var currentUserId = this.props.currentUserId;
     var message = this.props.message;
+    console.log(message);
       if(currentUserId === message.author.id) {
         return (
           <View style={styles.message}>
