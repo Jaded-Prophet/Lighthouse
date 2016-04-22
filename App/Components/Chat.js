@@ -56,23 +56,11 @@ class Chat extends React.Component{
   createMessage(message, index) {
     return(
       <ChatMessage
-        index = {index}
+        key = {index}
+        style = {styles.message}
         currentUser = {this.user}
-        message = {message} />
-    )
-    if(this.user === message.name) {
-      return (
-        <View style={styles.message} key={index}>
-        <Text style={styles.messageTextAuthor}>{message.message}</Text></View>
-      )
-    } else {
-      return (
-        <View style={styles.message} key={index}>
-          <Text style={styles.messageUsername}>{message.name}</Text>
-          <Text style={styles.messageText}>{item.message}</Text>
-        </View>
-      )
-    }
+        message = {message}/>
+    );
   };
 
   render() {
@@ -119,29 +107,6 @@ var styles = StyleSheet.create({
   },
   message: {
     marginTop:8
-  },
-  messageUsername: {
-    color: '#999'
-  },
-  messageText: {
-    backgroundColor: '#eee',
-    borderRadius: 10,
-    paddingTop:7,
-    paddingBottom:7,
-    marginRight:90,
-    paddingLeft:10,
-    paddingRight:10
-  },
-  messageTextAuthor: {
-    backgroundColor: '#30A3FC',
-    borderRadius: 10,
-    color: '#fff',
-    textAlign: 'right',
-    marginLeft:90,
-    paddingTop:7,
-    paddingBottom:7,
-    paddingLeft:15,
-    paddingRight:15
   },
   textInput: {
     height: 50,

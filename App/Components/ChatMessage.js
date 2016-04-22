@@ -33,12 +33,13 @@ class ChatMessage extends React.Component{
     var index = this.props.index;
       if(currentUser === message.name) {
         return (
-          <View style={styles.message} key={index}>
-          <Text style={styles.messageTextAuthor}>{message.message}</Text></View>
+          <View>
+            <Text style={styles.messageTextAuthor}>{message.message}</Text>
+          </View>
         );
       } else {
         return (
-          <View style={styles.message} key={index}>
+          <View>
             <Text style={styles.messageUsername}>{message.name}</Text>
             <Text style={styles.messageText}>{message.message}</Text>
           </View>
@@ -63,9 +64,6 @@ var styles = StyleSheet.create({
     flex:8,
     marginLeft:15,
     marginRight:15,
-  },
-  message: {
-    marginTop:8
   },
   messageUsername: {
     color: '#999'
