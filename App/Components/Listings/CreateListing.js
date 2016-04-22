@@ -130,36 +130,38 @@ class CreateListing extends Component{
     });
     return (
       <MenuContext style={{ flex: 1 }} ref="MenuContext">
-        <View style={styles.content}>
-
+        <View style={styles.container}>
+          <Text style={styles.name}>Pick a category....</Text>
           <Menu style={styles.dropdown} onSelect={(value) => this.setState({ category: value, activity: 'Select an Activity', activityList: CATEGORIES[value].items})}>
             <MenuTrigger>
               <Text>{this.state.category}</Text>
             </MenuTrigger>
             <MenuOptions optionsContainerStyle={styles.dropdownOptions}
-                         renderOptionsContainer={(options) => <ScrollView><Text>Pick a category....</Text>{options}</ScrollView>}>
+                         renderOptionsContainer={(options) => <ScrollView>{options}</ScrollView>}>
             {categoryList}
             </MenuOptions>
           </Menu>
+          <Text style={styles.name}>Pick an activity....</Text>
           <Menu style={styles.dropdown} onSelect={(value) => this.setState({ activity: value })}>
             <MenuTrigger>
               <Text>{this.state.activity}</Text>
             </MenuTrigger>
             <MenuOptions optionsContainerStyle={styles.dropdownOptions}
-                         renderOptionsContainer={(options) => <ScrollView><Text>Pick an activity....</Text>{options}</ScrollView>}>
+                         renderOptionsContainer={(options) => <ScrollView>{options}</ScrollView>}>
             {this.getActivityList(this)}
             </MenuOptions>
           </Menu>
-          <Text> Enter a description(100 characters max) </Text>
+          <Text style={styles.name} > Enter a description(100 characters max) </Text>
           <TextInput
             style={styles.textInput}
             onChangeText={(text) => this.setState({ description: text})}
             value={this.state.text}
             placeholder="Description"
+            maxLength={100}
             />
           
           <TouchableHighlight
-          style={styles.buttonContainer}
+          style={styles.button}
           onPress={() => this.submitListing(this)}
           underlayColor="#EEE"
           >
@@ -174,10 +176,10 @@ class CreateListing extends Component{
 
 var styles = {
   container: {
-    flex: 1,
-    marginLeft: 20,
-    marginRight: 10,
-    marginTop: 100
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
   },
   buttonContainer: {
     flex: 1,
@@ -204,21 +206,25 @@ var styles = {
     width: 100,
     alignSelf: 'center'
   },
-  button: {
-    height: 25,
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    borderColor: 'white',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginRight: 15,
-    alignSelf: 'flex-end',
-    justifyContent: 'center'
+  title: {
+    fontSize: 30,
+    alignSelf: 'center',
+    marginBottom: 30
   },
   buttonText: {
-    padding: 10,
-    fontSize: 24,
-    color: 'black'
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   },
   alertText: {
     marginTop: 20,
@@ -238,7 +244,6 @@ var styles = {
     position: 'absolute'
   },
   name: {
-    paddingLeft: 80,
     marginTop: 15,
     fontSize: 20,
     backgroundColor: 'rgba(0,0,0,0)'
