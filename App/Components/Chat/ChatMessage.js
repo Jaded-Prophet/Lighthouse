@@ -4,6 +4,7 @@ var {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight,
 } = React;
 
 
@@ -13,7 +14,9 @@ class ChatMessage extends React.Component{
   }
 
   messageTapped() {
-    console.log(this.props);
+    this.props.navigator.push({
+      title: 'View Friend'
+    });
   }
 
   render() {
@@ -22,16 +25,22 @@ class ChatMessage extends React.Component{
     console.log(message);
       if(currentUserId === message.author.id) {
         return (
-          <View style={styles.message}>
+          <TouchableHighlight
+            style={styles.message}
+            onPress={this.messageTapped.bind(this)}
+            underlayColor='#fff'>
             <Text style={styles.messageTextAuthor}>{message.message}</Text>
-          </View>
+          </TouchableHighlight>
         );
       } else {
         return (
-          <View style={styles.message}>
+          <TouchableHighlight
+            style={styles.message}
+            onPress={this.messageTapped.bind(this)}
+            underlayColor='#fff'>
             <Text style={styles.messageUsername}>{message.author.name}</Text>
             <Text style={styles.messageText}>{message.message}</Text>
-          </View>
+          </TouchableHighlight>
         );
       }
   }
