@@ -4,6 +4,7 @@ var React = require('react-native');
 var Firebase = require('firebase');
 var reactfire = require('reactfire');
 var firebaseUrl = require('../Utils/config')
+var ChatMessage = require('./ChatMessage');
 
 var {
   AppRegistry,
@@ -52,17 +53,24 @@ class Chat extends React.Component{
   }
 
 
-  createItem(item, index) {
-    if(this.user === item.name) {
+  createMessage(message, index) {
+    return(
+      <ChatMessage
+        index = {index}
+        currentUser = {this.user}
+        message = {message} />
+    )
+    if(this.user === message.name) {
       return (
         <View style={styles.message} key={index}>
-        <Text style={styles.messageTextAuthor}>{item.message}</Text></View>
+        <Text style={styles.messageTextAuthor}>{message.message}</Text></View>
       )
     } else {
       return (
         <View style={styles.message} key={index}>
-        <Text style={styles.messageUsername}>{item.name}</Text>
-        <Text style={styles.messageText}>{item.message}</Text></View>
+          <Text style={styles.messageUsername}>{message.name}</Text>
+          <Text style={styles.messageText}>{item.message}</Text>
+        </View>
       )
     }
   };
@@ -71,24 +79,23 @@ class Chat extends React.Component{
 
     return (
       <View style={styles.container}>
-          <ScrollView ref='_scrollView' style={styles.messages}>
-            {this.state.items.map(this.createItem.bind(this))}
-          </ScrollView>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => this.setState({ text: text})}
-            value={this.state.text}
-            placeholder="message"
-            autoFocus = {true}
-            />
-          <TouchableHighlight
-            style={styles.SubmitButton}
-            onPress={this._onPressButton.bind(this)}>
-            <Text>Send</Text>
-          </TouchableHighlight>
-          <View style={styles.innerContainer}>
-
-          </View>
+        <ScrollView ref='_scrollView' style={styles.messages}>
+          {this.state.items.map(this.createMessage.bind(this))}
+        </ScrollView>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={(text) => this.setState({ text: text})}
+          value={this.state.text}
+          placeholder="message"
+          autoFocus = {true}
+          />
+        <TouchableHighlight
+          style={styles.SubmitButton}
+          onPress={this._onPressButton.bind(this)}>
+          <Text>Send</Text>
+        </TouchableHighlight>
+        <View style={styles.innerContainer}>
+        </View>
       </View>
     );
   }

@@ -154,7 +154,7 @@ class Listings extends Component{
               <TouchableHighlight
                 onPress={() => this.handleRoute(item)}
                 underlayColor="#EEE">
-                <View style={styles.listingContainer}> 
+                <View style={styles.listingContainer}>
                   <Image style={styles.userImages} source={{uri: item.imgUrl}} />
                   <View style={styles.centerContainer}>
                     <Text style={styles.headlineText}>{item.category} - {item.activity}</Text>
@@ -257,12 +257,12 @@ var styles = {
     fontSize: 14,
     fontWeight: 'bold'
     // color: 'black'
-  }, 
+  },
 
   descriptionText: {
     fontSize: 12,
     // color: '#feb732'
-  },  
+  },
 
   authorText: {
     fontSize: 12,
@@ -283,7 +283,7 @@ var styles = {
     padding: 10
   },
   centerContainer: {
-    flex: 1, 
+    flex: 1,
     alignSelf: 'center',
     paddingLeft: 20
   },
