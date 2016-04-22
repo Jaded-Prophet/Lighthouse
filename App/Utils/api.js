@@ -203,9 +203,24 @@ var api = {
     });
   },
 
-
-  //new stuff
-
+  createChat(userId, username, description) {
+  var newChat = new Firebase(`${firebaseUrl}/chat/${userId}`);
+  newChat.child('ownerName').set(username);
+  newChat.child('ownerId').set(userId);
+  newChat.child('description').set(description);
+  },
+  
+  destroyChat(ownerId) {
+    var chat = new Firebase(`${firebaseUrl}/chat/${ownerId}`);
+    chat.remove((error) => {
+      if(error) {
+        console.log('ERROR IN CHAT DELETION');
+      } else {
+        console.log('CHAT REMOVAL SUCCESSFUL');
+      }
+    });
+  },
+  
   checkAuthToken(token, callback) {
     var ref = new Firebase(`${firebaseUrl}/UserData/`);
     ref.authWithCustomToken(token, function(error, authData) {
