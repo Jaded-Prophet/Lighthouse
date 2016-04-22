@@ -107,6 +107,7 @@ class Listings extends Component{
 
   viewFriend(rowData){
     var rowData = rowData;
+    console.log(rowData);
     this.props.navigator.push({
       title: 'View Friend',
       component: ProfileFriend,
@@ -148,7 +149,6 @@ class Listings extends Component{
       var listings = this.state.listingData;
       if (listings !== null && Object.keys(listings).length > 0) {
         var listingsView = _.map(listings, (item, index) => {
-          console.log(item);
           return (
             <View key={index}>
               <TouchableHighlight

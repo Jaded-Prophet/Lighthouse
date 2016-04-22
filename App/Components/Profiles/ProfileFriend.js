@@ -41,7 +41,7 @@ class ProfileFriend extends Component{
   getAsyncData() {
     var that = this;
     //change to friend data uid
-    api.getUserData(that.props.friendData.uid)
+    api.getUserData(that.props.friendData.userId)
       .then(function(res) {
         that.setState({
           friendData: res,
