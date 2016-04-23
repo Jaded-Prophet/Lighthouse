@@ -5,6 +5,7 @@ var Firebase = require('firebase');
 var reactfire = require('reactfire');
 var firebaseUrl = require('../../Utils/config')
 var ChatMessage = require('./ChatMessage');
+var api = require('../../Utils/api.js');
 
 var {
   StyleSheet,
@@ -54,6 +55,19 @@ class Chat extends React.Component{
       this.setState({ 'items': items });
 
     }.bind(this));
+  }
+
+  componentWillUnmount() {
+    console.log(this.props);
+    AsyncStorage.getItem('authData').then(authData => {
+      var currentUserId = JSON.parse(authData).uid;
+      if(currentUserId === this.props.listingData.createdById) {
+        api.destroyChat(currentUserId, () => {
+          console.log('THING HAPPENED');
+        });       
+      }
+    });
+
   }
 
   _onPressButton() {
