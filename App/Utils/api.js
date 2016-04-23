@@ -213,6 +213,7 @@ var api = {
   newChat.child('ownerName').set(username);
   newChat.child('ownerId').set(userId);
   newChat.child('description').set(description);
+  newChat.child('messages').set({});
   cb();
   },
   
