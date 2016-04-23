@@ -74,24 +74,6 @@ class Chat extends React.Component{
     this.ref.push({ author: this.user, message: this.state.text });
   }
 
-
-  createItem(item, index) {
-    if(this.user === item.name) {
-      return (
-        <View style={styles.message} key={index}>
-        <Text style={styles.messageTextAuthor}>{item.message}</Text></View>
-      )
-    } else {
-      return (
-        <View style={styles.message} key={index}>
-        <Text style={styles.messageUsername}>{item.name}</Text>
-        <Text style={styles.messageText}>{item.message}</Text></View>
-      )
-    }
-    this.ref.push({ author: this.user, message: this.state.text });
-  }
-
-
   createMessage(message, index) {
     return(
       <ChatMessage
@@ -106,7 +88,7 @@ class Chat extends React.Component{
     return (
       <View style={styles.container}>
         <ScrollView ref='_scrollView' style={styles.messages}>
-          {this.state.items.map(this.createItem.bind(this))}
+          {this.state.items.map(this.createMessage.bind(this))}
         </ScrollView>
         <TextInput
           style={styles.textInput}

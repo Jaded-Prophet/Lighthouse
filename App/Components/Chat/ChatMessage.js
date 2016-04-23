@@ -20,9 +20,9 @@ class ChatMessage extends React.Component{
   }
 
   render() {
+    debugger;
     var currentUserId = this.props.currentUserId;
     var message = this.props.message;
-    
     if(currentUserId === message.author.id) {
       return (
         <TouchableHighlight
@@ -38,8 +38,10 @@ class ChatMessage extends React.Component{
           style={styles.message}
           onPress={this.messageTapped.bind(this)}
           underlayColor='#fff'>
-          <Text style={styles.messageUsername}>{message.author.name}</Text>
-          <Text style={styles.messageText}>{message.message}</Text>
+          <View>
+            <Text style={styles.messageUsername}>{message.author.name}</Text>
+            <Text style={styles.messageText}>{message.message}</Text>
+          </View>
         </TouchableHighlight>
       );
     }
