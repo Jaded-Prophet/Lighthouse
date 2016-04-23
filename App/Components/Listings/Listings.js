@@ -214,11 +214,12 @@ var styles = {
     margin: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'lightblue',
+    backgroundColor: '#2D97ED',
     padding:10,
-    height:20,
+    height:30,
     overflow:'hidden',
     borderRadius:4,
+    borderWidth: 2
   },
   isLoadingContainer: {
     flex: 1,
