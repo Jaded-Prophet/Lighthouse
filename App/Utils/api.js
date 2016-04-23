@@ -1,4 +1,7 @@
 var Firebase = require('firebase');
+var firebaseUrl = require('./config')
+var _ = require('underscore');
+var util = require('./location-util');
 
 // Table Names: UserData, Friends, Groups, PeopleInGroups
 
@@ -7,7 +10,7 @@ var api = {
   // Add data to user, use after creating new user DONE
   setUserData(myData, name, phone) {
     var userId  = myData.uid;
-    var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
+    var userData = new Firebase(`${firebaseUrl}/UserData/${userId}`);
 
     userData.child('email').set(myData.password.email);
     userData.child('profileImageURL').set(myData.password.profileImageURL);
@@ -17,67 +20,67 @@ var api = {
 
   setUserLocation(myData, location) {
     var userId  = myData.uid;
-    var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
+    var userData = new Firebase(`${firebaseUrl}/UserData/${userId}`);
 
     userData.child('location').set(location);
   },
 
   updateUserData(myData, item, value) {
     var userId  = myData.uid;
-    var userData = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}`);
+    var userData = new Firebase(`${firebaseUrl}/UserData/${userId}`);
 
     if(item && value) {
-      userData.child(item).set(value);    
+      userData.child(item).set(value);
     }
   },
 
   // Add groups to Groups table DONE
   addGroup(groupName, groupDescription, userId) {
     // Add new group to Groups table
-    var newGroup = new Firebase(`https://project-sapphire.firebaseio.com/Groups/${groupName}`);
+    var newGroup = new Firebase(`${firebaseUrl}/Groups/${groupName}`);
     // Set the description and add first member (the creator)
     newGroup.child('description').set(groupDescription);
     newGroup.child('members').push(userId);
     // Add group to creator's Groups table
-    var myGroups = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}/Groups`);
+    var myGroups = new Firebase(`${firebaseUrl}/UserData/${userId}/Groups`);
     myGroups.push(groupName);
   },
 
   // Add user to specific Group table DONE
   joinGroup(groupName, userId) {
     // Add user to group's Members table
-    var groupToJoin = new Firebase(`https://project-sapphire.firebaseio.com/Groups/${groupName}/members`);
+    var groupToJoin = new Firebase(`${firebaseUrl}/Groups/${groupName}/members`);
     groupToJoin.push(userId);
     // Add group to user's Groups table
-    var myGroups = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}/Groups`);
+    var myGroups = new Firebase(`${firebaseUrl}/UserData/${userId}/Groups`);
     myGroups.push(groupName);
   },
 
   // Add user friends  to Friends table DONE
   addFriend(userId, friendId) {
     // Adding friend to my userdata Friends table
-    var myFriends = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${userId}/Friends`);
+    var myFriends = new Firebase(`${firebaseUrl}/UserData/${userId}/Friends`);
     myFriends.push(friendId);
 
     // Adding myself to my friend's userdata Friends table.
-    var theirFriends = new Firebase(`https://project-sapphire.firebaseio.com/UserData/${friendId}/Friends`);
+    var theirFriends = new Firebase(`${firebaseUrl}/UserData/${friendId}/Friends`);
     theirFriends.push(userId);
   },
 
   // Get user data DONE
   getUserData(userId) {
-    var userData = `https://project-sapphire.firebaseio.com/UserData/${userId}.json`;
+    var userData = `${firebaseUrl}/UserData/${userId}.json`;
     return fetch(userData).then((res) => res.json());
   },
 
   getGroupData(groupName) {
-    var groupData = `https://project-sapphire.firebaseio.com/Groups/${groupName}.json`;
+    var groupData = `${firebaseUrl}/Groups/${groupName}.json`;
     return fetch(groupData).then((res) => res.json());
   },
 
   // Get all friends in my Groups table DONE
   getUserGroups(userId) {
-    var groups = `https://project-sapphire.firebaseio.com/UserData/${userId}/Groups.json`;
+    var groups = `${firebaseUrl}/UserData/${userId}/Groups.json`;
     return fetch(groups)
       .then((res) => res.json())
       .then((groups) => {
@@ -101,7 +104,7 @@ var api = {
 
   // Get all friends in my Friends table DONE
   getUserFriends(userId) {
-    var friends = `https://project-sapphire.firebaseio.com/UserData/${userId}/Friends.json`;
+    var friends = `${firebaseUrl}/UserData/${userId}/Friends.json`;
     return fetch(friends)
       .then((res) => res.json())
       .then((friends) => {
@@ -124,7 +127,7 @@ var api = {
   },
 
   findUserByEmail(emailInput) {
-    var users = 'https://project-sapphire.firebaseio.com/UserData.json';
+    var users = firebaseUrl + '/UserData.json';
     return fetch(users)
       .then((res) => res.json())
       .then((users) => {
@@ -150,7 +153,7 @@ var api = {
   },
 
   findGroupByName(nameInput) {
-    var groups = 'https://project-sapphire.firebaseio.com/Groups.json';
+    var groups = firebaseUrl + '/Groups.json';
     return fetch(groups)
       .then(res => res.json())
       .then((groups) => {
@@ -164,6 +167,74 @@ var api = {
         return results;
       })
 
+  },
+
+
+  addListing(data, cb) {
+    // var newGroup = new Firebase(`${firebaseUrl}/Groups/${groupName}`);
+    var newListing = new Firebase(`${firebaseUrl}/Listings/${data.createdById}`);
+    newListing.child('description').set(data.description);
+    newListing.child('imgUrl').set(data.imgUrl);
+    newListing.child('category').set(data.category);
+    newListing.child('activity').set(data.activity);
+    newListing.child('latitude').set(data.latitude);
+    newListing.child('longitude').set(data.longitude);
+    newListing.child('createdBy').set(data.createdBy);
+    newListing.child('userId').set(data.createdById);
+    cb();
+  },
+
+  getListings(location, miles, cb) {
+    var listings = firebaseUrl + '/Listings.json';
+      //TODO fetch listings within X miles
+    return fetch(listings)
+      .then(res => res.json())
+      .then((listings) => {
+        var filtered = _.filter(listings, (listing) => {
+          return util.getDistanceFromLatLonInMiles(location.latitude, location.longitude, listing.latitude, listing.longitude) <= miles;
+        })
+        cb(filtered);
+      })
+  },
+
+  deleteListing(id) {
+    var listing = new Firebase(`${firebaseUrl}/Listings/${id}`);
+    listing.remove((error) => {
+      if(error) {
+        console.log('ERROR IN DATA DELETION');
+      } else {
+        console.log('DATA REMOVAL SUCCESSFUL');
+      }
+    });
+  },
+
+  createChat(userId, username, description, cb) {
+  var newChat = new Firebase(`${firebaseUrl}/chat/${userId}`);
+  newChat.child('ownerName').set(username);
+  newChat.child('ownerId').set(userId);
+  newChat.child('description').set(description);
+  newChat.child('messages').set({});
+  cb();
+  },
+  
+  destroyChat(ownerId, cb) {
+    var chat = new Firebase(`${firebaseUrl}/chat/${ownerId}`);
+    chat.remove((error) => {
+      if(error) {
+        console.log('ERROR IN CHAT DELETION');
+      } else {
+        console.log('CHAT REMOVAL SUCCESSFUL');
+
+      }
+      cb();
+    });
+  },
+
+  checkAuthToken(token, callback) {
+    var ref = new Firebase(`${firebaseUrl}/UserData/`);
+    ref.authWithCustomToken(token, function(error, authData) {
+      callback(error, authData);
+    });
   }
 };
 

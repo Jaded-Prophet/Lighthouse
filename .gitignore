@@ -12,5 +12,8 @@ ios/build
 
 # osx noise
 ios/.DS_Store
+ios/main.jsbundle
+App/Utils/config.js
+
 profile
 *.xcuserdatad

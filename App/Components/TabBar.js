@@ -7,11 +7,11 @@ import React, {
   TabBarIOS
 } from 'react-native';
 
-import Main from './Main';
-import Friends from './Friends';
-import Profile from './Profile';
-import Map from './Map';
-import MapboxMap from './MapboxMap';
+import Listings from './Listings/Listings';
+import Profile from './Profiles/Profile';
+import Map from './Map/Map';
+import MapboxMap from './Map/MapboxMap';
+import Chat from './Chat/Chat';
 
 class TabBar extends React.Component {
   constructor(){
@@ -33,9 +33,9 @@ class TabBar extends React.Component {
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabOne'}
           onPress={() => this.setTab('tabOne')}
-          title="Friends"
+          title="Listings"
           icon={require("../Images/friends.png")}>
-          <Friends {...this.props} />
+          <Listings {...this.props} />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'tabTwo'}
@@ -53,6 +53,15 @@ class TabBar extends React.Component {
           icon={require("../Images/map.png")}>
             <View style={styles.tabContent}>
             <MapboxMap {...this.props} />
+            </View>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          selected={this.state.selectedTab === 'tabFour'}
+          onPress={() => this.setTab('tabFour')}
+          title="Chat"
+          icon={require("../Images/flux.png")}>
+            <View style={styles.tabContent}>
+            <Chat {...this.props} />
             </View>
         </TabBarIOS.Item>
       </TabBarIOS>

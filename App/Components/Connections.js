@@ -6,7 +6,7 @@ import React, {
 } from 'react-native';
 
 class Connections extends React.Component{
-  
+
   constructor(props) {
     super(props);
   }
@@ -29,7 +29,7 @@ var styles = {
     marginTop: 150
   },
   text: {
-    size: 20
+    fontSize: 20
   }
 }
 

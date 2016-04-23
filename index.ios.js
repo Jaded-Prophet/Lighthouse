@@ -1,4 +1,5 @@
-var Main = require('./App/Components/Main');
+var Login = require('./App/Components/Authentication/Login');
+var api = require('./App/Utils/api');
 
 /**
  * Sample React Native App
@@ -22,8 +23,8 @@ class projectSapphire extends Component {
     <NavigatorIOS
       style={styles.container}
       initialRoute={{
-        component: Main,
-        title: 'Log In'
+        component: Login,
+        title: 'Find Some Friends'
       }}
     />
     );

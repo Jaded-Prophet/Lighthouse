@@ -9,14 +9,36 @@ import React, {
   Component,
   ScrollView,
   TouchableHighlight,
-  TextInput
+  TextInput,
+  PickerIOS
 } from 'react-native';
 
-class FriendsAdd extends Component{
+var PickerItemIOS = PickerIOS.Item;
+
+var CATEGORIES = {
+  Dining: {
+    name: 'Dining',
+    items: ['Breakfast', 'Italian', 'Sushi', 'Mexican', 'Indian', 'Bar']
+  },
+  Fitness: {
+    name: 'Fitness',
+    items: ['Tennis', 'Jogging', 'Biking']
+  },
+  Other: {
+    name: 'Other',
+    items: ['Chess', 'Bowling', 'Making America Great Again']
+  }
+
+}
+
+
+class CreateListing extends Component{
 
   constructor(props) {
     super(props)
     this.state = {
+      category: 'Dining',
+      itemIndex: 0,
       updateAlert: '',
       isLoading: false,
       foundFriend: false
@@ -93,87 +115,41 @@ class FriendsAdd extends Component{
       that.setState({ updateAlert: ''})
     }, 3000);
   }
-
-  render(){
-
-    if (this.state.foundFriend) {
-
-      var friends = this.state.newFriend;
-      var allFriends = this.props.allFriends;
-      var friendList = [];
-      var that = this;
-
-      for (var i=0; i < friends.length; i++) {
-        var currentFriend = false;
-        for (var j=0; j < allFriends.length; j++) {
-          if (friends[i].info.email === allFriends[j].email) {
-            currentFriend = true;
-          }
-        }
-
-        if (currentFriend === false) {
-          friendList.push(friends[i])
-        }
-      }
-
-      var friendDisplay = friendList.map((item, index) => {
-        
-        return (
-
-          <View key={index}>
-            <View style={styles.listContainer}>
-            <Image
-              style={styles.image}
-              source={{uri: item.info.profileImageURL}} />
-            <Text style={styles.name}> {item.info.name} </Text>
-            <TouchableHighlight
-              style={styles.button}
-              onPress={this.sendFriendRequest.bind(this)}
-              underlayColor='white' >
-              <Text style={styles.buttonText}> ADD FRIEND </Text>
-            </TouchableHighlight>
-            </View>
-            <Separator />
-          </View>
-        )
-      })
-    }
-
-    if (this.state.isLoading) {
-      var loadingFriend = (
-        <View style={styles.isLoadingContainer}>
-          <Image style={styles.loadingImage} source={require('../Images/loading.gif')} />
+  
+  render() {
+      var category = CATEGORIES[this.state.category];
+      var selectionString = category.name + ' - ' + category.items[this.state.itemIndex];
+      return (
+        <View>
+          <PickerIOS
+            selectedValue={this.state.category}
+            onValueChange={(category) => this.setState({category, itemIndex: 0})}>
+            {Object.keys(CATEGORIES).map((category) => (
+              <PickerItemIOS
+                key={category}
+                value={category}
+                label={CATEGORIES[category].name}
+              />
+            ))}
+          </PickerIOS>
+          <Text>What type of {category.name} activity?:</Text>
+          <PickerIOS
+            selectedValue={this.state.itemIndex}
+            key={this.state.category}
+            onValueChange= {(itemIndex) => this.setState({itemIndex})}>
+            {CATEGORIES[this.state.category].items.map((modelName, itemIndex) => (
+              <PickerItemIOS
+                key={this.state.category + '_' + itemIndex}
+                value={itemIndex}
+                label={modelName}
+              />
+            ))}
+          </PickerIOS>
+          <Text>You selected: {selectionString}</Text>
         </View>
-      )
+      );
     }
 
-    var userData = this.props.userData;
-    
-    return (
-      <View style={styles.container}>
-        <Text style={styles.alertText}>{this.state.updateAlert}</Text>
-        <View style={styles.rowContainer}>
-            <Text style={styles.rowTitle}> Search by Email Address </Text>
-            <TextInput
-              autoCapitalize='none'
-              style={styles.searchInput}
-              onChange={(event)=>this.captureItemChange(event)} />
-            <TouchableHighlight 
-              style={styles.button}
-              onPress={()=>this.searchForFriend()}
-              underlayColor='white' >
-              <Text style={styles.buttonText}> SEARCH </Text>
-            </TouchableHighlight>
-            </View>
-        <ScrollView
-          showsVerticalScrollIndicator={true}
-        >
-        {loadingFriend}
-        {friendDisplay}
-        </ScrollView>
-      </View>
-    )
-  }
 }
 
 var styles = {
@@ -243,5 +219,5 @@ var styles = {
   }
 };
 
-module.exports = FriendsAdd;
+module.exports = CreateListing;
 
