@@ -22,28 +22,32 @@ class ChatMessage extends React.Component{
   render() {
     var currentUserId = this.props.currentUserId;
     var message = this.props.message;
-    if(currentUserId === message.author.id) {
-      return (
-        <TouchableHighlight
-          style={styles.message}
-          onPress={this.messageTapped.bind(this)}
-          underlayColor='#fff'>
-          <Text style={styles.messageTextAuthor}>{message.message}</Text>
-        </TouchableHighlight>
-      );
+    if(message.author) {
+      if(currentUserId === message.author.id) {
+        return (
+          <TouchableHighlight
+            style={styles.message}
+            onPress={this.messageTapped.bind(this)}
+            underlayColor='#fff'>
+            <Text style={styles.messageTextAuthor}>{message.message}</Text>
+          </TouchableHighlight>
+        );
+      } else {
+        return (
+          <TouchableHighlight
+            style={styles.message}
+            onPress={this.messageTapped.bind(this)}
+            underlayColor='#fff'>
+            <View>
+              <Text style={styles.messageUsername}>{message.author.name}</Text>
+              <Text style={styles.messageText}>{message.message}</Text>
+            </View>
+          </TouchableHighlight>
+        );
+      }
     } else {
-      return (
-        <TouchableHighlight
-          style={styles.message}
-          onPress={this.messageTapped.bind(this)}
-          underlayColor='#fff'>
-          <View>
-            <Text style={styles.messageUsername}>{message.author.name}</Text>
-            <Text style={styles.messageText}>{message.message}</Text>
-          </View>
-        </TouchableHighlight>
-      );
-    }
+     return(<View></View>)
+   }
   }
 
 }
