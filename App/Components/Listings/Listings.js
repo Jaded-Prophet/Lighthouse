@@ -4,6 +4,7 @@ var api = require('../../Utils/api');
 var ProfileFriend = require('../Profiles/ProfileFriend');
 var AddFriendButton = require('../Helpers/AddFriendButton');
 var CreateListing = require('../FriendsAdd');
+var Chat = require('../Chat/Chat.js')
 var CreateListingButton = require('./CreateListingButton');
 var CreateListing = require('./CreateListing');
 var _ = require('underscore');
@@ -98,12 +99,12 @@ class Listings extends Component{
 
   }
 
-  startConnection(rowData) {
-    var rowData = rowData;
+  startConnection(listingData) {
+    console.log(listingData);
     this.props.navigator.push({
-      title: 'Connection',
-      component: Connections,
-      passProps: {friendData: rowData}
+      title: 'Chat',
+      component: Chat,
+      passProps: {listingCreatedBy: listingData.userId}
     });
   }
 
@@ -119,13 +120,14 @@ class Listings extends Component{
 
   handleRoute(rowData){
     var rowData = rowData;
-    AlertIOS.alert('Friend Time!', 'Do you want to start a connection?', [
-      {text: 'No, Cancel', onPress: () => { console.log('back to page') }, style: 'default'},
-      {text: 'Yes, Start Connection', onPress: () => { this.startConnection(rowData) }, style: 'cancel'},
-      {text: 'No, View User\'s Profile', onPress: () => { this.viewFriend(rowData) }, style: 'default'}
+    this.startConnection(rowData);
+    // AlertIOS.alert('Friend Time!', 'Do you want to start a connection?', [
+    //   {text: 'No, Cancel', onPress: () => { console.log('back to page') }, style: 'default'},
+    //   {text: 'Yes, Start Connection', onPress: () => { this.startConnection(rowData) }, style: 'cancel'},
+    //   {text: 'No, View User\'s Profile', onPress: () => { this.viewFriend(rowData) }, style: 'default'}
 
-      ]
-    );
+    //   ]
+    // );
   }
 
   addFriends(){
