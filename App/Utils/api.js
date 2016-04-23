@@ -217,14 +217,16 @@ var api = {
   cb();
   },
   
-  destroyChat(ownerId) {
+  destroyChat(ownerId, cb) {
     var chat = new Firebase(`${firebaseUrl}/chat/${ownerId}`);
     chat.remove((error) => {
       if(error) {
         console.log('ERROR IN CHAT DELETION');
       } else {
         console.log('CHAT REMOVAL SUCCESSFUL');
+
       }
+      cb();
     });
   },
 
