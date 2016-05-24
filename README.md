@@ -1,6 +1,6 @@
-# Project Sapphire
+# Lighthouse
 
-Welcome to Project Sapphire
+Welcome to Lighthouse
 
 > This project creates a map-based communications mechanism for users to share travel paths. The intended use is primarily for friends and family that would like to keep track of travel paths to ensure the traveller arrives safe and sound and within expectations.
 
