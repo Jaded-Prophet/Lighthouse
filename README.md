@@ -1,17 +1,23 @@
 # Lighthouse
 
-Welcome to Lighthouse
+This project is a mobile, map-based communications platform for users to share travel paths. The intended use is primarily for friends and family that would like to keep track of travel paths to ensure the traveller arrives safe and sound and within expectations.
 
-> This project creates a map-based communications mechanism for users to share travel paths. The intended use is primarily for friends and family that would like to keep track of travel paths to ensure the traveller arrives safe and sound and within expectations.
+## Table of Contents
+
+1. [Team](#team)
+1. [Setup](#setup)
+1. [Database](#database)
+1. [Deployment](#deployment)
+1. [Map Features](#map-features)
+1. [Troubleshooting](#troubleshooting)
+1. [Backlog](#backlog)
+
 
 ## Team
 - <img src="https://avatars.githubusercontent.com/u/4149515?v=3" width="64"> [**Inje Yeo**] (https://github.com/byeo630)
 - <img src="https://avatars0.githubusercontent.com/u/11085115?v=3" width="64"> [**Steven Tran**](https://github.com/steventran06)
 - <img src="https://avatars1.githubusercontent.com/u/5761911?v=3" width="64"> [**Krista Moroder**](https://github.com/kmoroder)
 - <img src="https://avatars2.githubusercontent.com/u/12990522?v=3" width="64"> [**Tor Sinclair**](https://github.com/torsinclair)
-
-## Requirements
-Refer to the wiki (link above) for more information about requirements and set up.
 
 ## Setup
 Install these global tools by typing the following commands into your terminal:
@@ -23,7 +29,8 @@ Install these global tools by typing the following commands into your terminal:
 - Latest version of Xcode: Run and update Xcode
 - React Native CLI: npm install -g react-native-cli
 
-## Development
+
+## Database
 
 For our database, we used Firebase, which not only stores each individual user’s data and group data, but also manages our authentication as well.
 
@@ -31,7 +38,6 @@ Setting up is as easy as creating a free account and installing the Firebase thr
 
 `npm install —save firebase
 var Firebase = require(‘firebase’)`
-
 
 ### Authentication
 Once you have a Firebase account set up and installed, you can easily set up authentication. We choose to authenticate our users with email and password. Logging in and signing up new users is as easy as using the examples on this page: https://www.firebase.com/docs/web/guide/login/password.html
@@ -87,12 +93,12 @@ We have created several Firebase helper functions within Components/Utils/api.js
 
 ## Deployment
 Before deploying on Bitrise, a continuous integration platform, certificates have to be set up through Apple Developer Account (iOS).
-1. Apple Developer Account: set up certificates and register users and respective UDID of app. Enter into the Certificates, Identifiers & Profiles section and create the necessary certificates, app ids, register devices and complete the necessary provisioning profiles that links the devices.
-2. Bitrise.io for deployment. Bitrise is a continuous integration platform that allows users to deploy apps quickly and also to work with 3rd party integrations.
-3. Set up an account with Bitrise (14 days free PRO account) and link your github repository to a new app.
-4. Bitrise has a well documented how-to with examples from users. The deployment site will identify the type of deployment you are setting up and will initialize the necessary scripts. After registering the certificates and adding testers/users to the app its a matter of running the build. Prior to running the build, the certificates signing on Bitrise must be complete, having imported the certificates produced on Apple Developer Account.
-5. If you have configured the users correctly with email notifications Bitrise will email the testers with installation files for app.
-6. You may need to adjust the Bitrise.yml configuration file. Ensure all users are registered with Bitrise and have accepted the invitation from you, the developer.
+- Apple Developer Account: set up certificates and register users and respective UDID of app. Enter into the Certificates, Identifiers & Profiles section and create the necessary certificates, app ids, register devices and complete the necessary provisioning profiles that links the devices.
+- Bitrise.io for deployment. Bitrise is a continuous integration platform that allows users to deploy apps quickly and also to work with 3rd party integrations.
+- Set up an account with Bitrise (14 days free PRO account) and link your github repository to a new app.
+- Bitrise has a well documented how-to with examples from users. The deployment site will identify the type of deployment you are setting up and will initialize the necessary scripts. After registering the certificates and adding testers/users to the app its a matter of running the build. Prior to running the build, the certificates signing on Bitrise must be complete, having imported the certificates produced on Apple Developer Account.
+- If you have configured the users correctly with email notifications Bitrise will email the testers with installation files for app.
+- You may need to adjust the Bitrise.yml configuration file. Ensure all users are registered with Bitrise and have accepted the invitation from you, the developer.
 
 ## Map Features
 The map in Lighthouse is built with React-Native-Mapbox-GL. https://github.com/mapbox/react-native-mapbox-gl
