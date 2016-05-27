@@ -2,6 +2,8 @@
 
 This project is a mobile, map-based communications platform for users to share travel paths. The intended use is primarily for friends and family that would like to keep track of travel paths to ensure the traveller arrives safe and sound and within expectations.
 
+![lighthouse-demo-1-1](https://cloud.githubusercontent.com/assets/5761911/15593941/b92c2e3a-2365-11e6-908c-536f4e16af18.gif)
+
 ## Table of Contents
 
 1. [Team](#team)
