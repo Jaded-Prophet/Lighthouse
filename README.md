@@ -10,6 +10,7 @@ This project is a mobile, map-based communications platform for users to share t
 1. [Setup](#setup)
 1. [Database](#database)
 1. [Deployment](#deployment)
+1. [System Architecture](#system-architecture)
 1. [Map Features](#map-features)
 1. [Troubleshooting](#troubleshooting)
 1. [Backlog](#backlog)
@@ -101,6 +102,9 @@ Before deploying on Bitrise, a continuous integration platform, certificates hav
 - Bitrise has a well documented how-to with examples from users. The deployment site will identify the type of deployment you are setting up and will initialize the necessary scripts. After registering the certificates and adding testers/users to the app its a matter of running the build. Prior to running the build, the certificates signing on Bitrise must be complete, having imported the certificates produced on Apple Developer Account.
 - If you have configured the users correctly with email notifications Bitrise will email the testers with installation files for app.
 - You may need to adjust the Bitrise.yml configuration file. Ensure all users are registered with Bitrise and have accepted the invitation from you, the developer.
+
+## System Architecture
+<img src="https://github.com/Jaded-Prophet/Lighthouse/blob/master/README_IMGS/lighthousearchitecture.png?raw=true">
 
 ## Map Features
 The map in Lighthouse is built with React-Native-Mapbox-GL. https://github.com/mapbox/react-native-mapbox-gl
